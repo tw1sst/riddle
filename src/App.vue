@@ -2,7 +2,8 @@
   <div class="account">
     <Header 
       v-if="$route.name != 'MarketItem' &&
-      $route.name != 'SkillQuizPage'"
+      $route.name != 'SkillQuizPage' &&
+      $route.name != 'Services'"
     />
       
     <router-view></router-view>

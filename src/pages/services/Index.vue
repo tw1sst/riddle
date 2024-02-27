@@ -1,67 +1,66 @@
 <template>
-<div class="services">  
+<div class="services">
+  <div class="services__header">
+    <a-input class="services__search" v-model:value="state.search" placeholder="Поиск..">
+      <template #suffix>
+        <span class="material-icons-round">search</span>
+      </template>
+    </a-input><br/>
+    
+    <div class="services__categories">
+      <a-button
+        v-for="category in categories" 
+        class="services__categories-item">
+          {{ category.name }}
+      </a-button>
+    </div> 
+  </div>
+  
   <div class="services__block">
-  <h2>🚀 Riddle Verse</h2><br/>
+    <h2>🚀 Сервисы и DApps</h2><br/>
   
-  <a-input class="services__search" v-model:value="state.search" placeholder="Поиск..">
-    <template #suffix>
-      <span class="material-icons-round">search</span>
+    <a-carousel arrows dots-class="slick-dots" class="services__slider" autoplay>
+      <div v-for="slide in mainSliderItems" 
+        class="services__slider-item">
+        <img :src="slide.cover" class="services__slider-cover">
+        <div class="services__slider-emoji">
+          {{ slide.emoji }}
+        </div>
+        <div class="services__slider-content">
+          <div class="services__slider-title">
+            {{ slide.title }}
+          </div>
+          <div class="services__slider-subtext">
+            {{ slide.subtext }}
+          </div>
+        </div>
+      </div>
+    </a-carousel><br/>
+  
+    <template v-for="category in categories">
+      <template v-if="category?.apps">
+        <div class="services__headblock">
+          <h3>{{ category.name }}</h3>
+          <a href="#">Смотреть все</a>
+        </div>
+        <div class="services__grid">
+          <div v-for="item in category.apps" 
+            @click="$router.push({ name: item.routeName })"
+            class="services__grid-item">
+            <div class="services__grid-icon">
+              <span class="material-icons-round">
+                {{ item.icon }}
+              </span>
+            </div>
+            <div class="services__grid-title">
+              {{ item.title }}
+            </div>
+          </div>
+        </div><br/>
+      </template>
     </template>
-  </a-input><br/><br/>
     
-  <div class="services__type">
-    <div :class="state.activeType == 1 ? 'services__type-active' : ''"
-      @click="state.activeType = 1"
-      class="services__type-item">
-      🔍 Обзор
-    </div>
-    <div :class="state.activeType == 2 ? 'services__type-active' : ''"
-      @click="state.activeType = 2"
-      class="services__type-item">
-      💙 Избранное
-    </div>
-  </div><br/>
-  
-  <a-carousel arrows dots-class="slick-dots" class="services__slider" autoplay>
-    <div v-for="slide in mainSliderItems" 
-      class="services__slider-item">
-      <img :src="slide.cover" class="services__slider-cover">
-      <div class="services__slider-emoji">
-        {{ slide.emoji }}
-      </div>
-      <div class="services__slider-content">
-        <div class="services__slider-title">
-          {{ slide.title }}
-        </div>
-        <div class="services__slider-subtext">
-          {{ slide.subtext }}
-        </div>
-        <div class="services__slider-button">
-          <a-button  
-            type="primary">
-            {{ slide.buttonText }}
-        </a-button>
-        </div>
-      </div>
-    </div>
-  </a-carousel><br/>
-  
-    <h3>Все сервисы</h3>
     
-    <div class="services__grid">
-      <div v-for="item in services" 
-        @click="$router.push({ name: item.routeName })"
-        class="services__grid-item">
-        <div class="services__grid-icon">
-          <span class="material-icons-round">
-            {{ item.icon }}
-          </span>
-        </div>
-        <div class="services__grid-title">
-          {{ item.title }}
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 </template>
@@ -75,37 +74,126 @@ const state = reactive({
   search: ""
 });
 
+const categories = [
+  {
+    id: 0,
+    name: "🔥 HOT",
+    apps: [
+      {
+        id: 2,
+        title: "Свайп",
+        icon: "swipe_vertical",
+        routeName: "ServiceNewsSwipe"
+      },
+      {
+        id: 4,
+        title: "Skill",
+        icon: "school",
+        routeName: "SkillHome"
+      },
+      {
+        id: 5,
+        title: "Wallet",
+        icon: "wallet",
+        routeName: "ServiceWallet"
+      }
+    ]
+  },
+  {
+    id: 1,
+    name: "⭐ Избранное",
+    apps: [
+      {
+        id: 4,
+        title: "Skill",
+        icon: "school",
+        routeName: "SkillHome",
+      },
+      {
+        id: 5,
+        title: "Wallet",
+        icon: "wallet",
+        routeName: "ServiceWallet",
+      },
+    ]
+  },
+  {
+    id: 2,
+    name: "🚀 Riddle",
+    apps: [
+      {
+        id: 1,
+        title: "Лента",
+        icon: "feed",
+        routeName: "ContentHome",
+      },
+      {
+        id: 2,
+        title: "Свайп",
+        icon: "swipe_vertical",
+        routeName: "ServiceNewsSwipe",
+      },
+      {
+        id: 3,
+        title: "Motors",
+        icon: "directions_car",
+        routeName: "AutoMarket",
+      },
+      {
+        id: 4,
+        title: "Skill",
+        icon: "school",
+        routeName: "SkillHome",
+      },
+      {
+        id: 5,
+        title: "Wallet",
+        icon: "wallet",
+        routeName: "ServiceWallet",
+      },
+    ]
+  },
+  {
+    id: 3,
+    name: "🎲 Game"
+  },
+  {
+    id: 4,
+    name: "BSC"
+  },
+  {
+    id: 5,
+    name: "ETH"
+  },
+  {
+    id: 6,
+    name: "Solana"
+  },
+]
+
 const mainSliderItems = [
   {
     title: "Умная лента",
     subtext: "Умная лента по вашим интересам на основе AI, которая подстраивается под вас",
     cover: "https://framerusercontent.com/images/AQJgmakK2cb0EcVoMZe1ZmFF0Q.jpg",
-    buttonText: "Перейти к ленте",
-    buttonRedirect: "ContentHome",
     emoji: "📚"
   },
   {
     title: "Свайп-Лента",
     subtext: "Читайте новости в новом удобном формате, просто свайпая их вправо и влево",
     cover: "https://static.vecteezy.com/system/resources/previews/034/440/425/non_2x/light-blue-red-blurred-backdrop-vector.jpg",
-    buttonText: "Начать свайпать",
-    buttonRedirect: "ServiceNewsSwipe",
-    emoji: "👆"
+    emoji: ""
   },
   {
     title: "Riddle Motors",
     subtext: "Покупайте и продавайте авто с выгодой у проверенных пользователей",
     cover: "https://img.freepik.com/premium-photo/abstract-background-images-wallpaper-ai-generated_643360-49273.jpg",
-    buttonText: "Перейти к маркету",
-    buttonRedirect: "AutoMarket",
     emoji: "🚘"
   },
   {
     title: "Riddle Skill",
     subtext: "Найдите школу по интересам или создайте свою и настройте процесс обучения",
     cover: "https://static.vecteezy.com/system/resources/previews/002/537/004/original/light-pink-blue-abstract-blurred-background-colorful-abstract-illustration-with-gradient-background-for-ui-designers-vector.jpg",
-    buttonText: "Найти школу",
-    buttonRedirect: "SkillHome",
     emoji: "🎓"
   },
 ]
@@ -113,31 +201,49 @@ const mainSliderItems = [
 const services = [
   {
     id: 1,
-    title: "Лента новостей",
+    title: "Лента",
     icon: "feed",
     routeName: "ContentHome",
   },
   {
     id: 2,
-    title: "Свайп новостей",
+    title: "Свайп",
     icon: "swipe_vertical",
     routeName: "ServiceNewsSwipe",
   },
   {
     id: 3,
-    title: "Riddle Motors",
+    title: "Motors",
     icon: "directions_car",
     routeName: "AutoMarket",
   },
   {
     id: 4,
-    title: "Riddle Skill (обучение)",
+    title: "Skill",
     icon: "school",
     routeName: "SkillHome",
   },
   {
     id: 5,
-    title: "Riddle Wallet",
+    title: "Wallet",
+    icon: "wallet",
+    routeName: "ServiceWallet",
+  },
+  {
+    id: 3,
+    title: "Motors",
+    icon: "directions_car",
+    routeName: "AutoMarket",
+  },
+  {
+    id: 4,
+    title: "Skill",
+    icon: "school",
+    routeName: "SkillHome",
+  },
+  {
+    id: 5,
+    title: "Wallet",
     icon: "wallet",
     routeName: "ServiceWallet",
   },
@@ -148,6 +254,40 @@ const services = [
 <style lang="scss" scoped>
 .services {
   padding: 10px 20px;
+  &__headblock {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    & a {
+     font-size: 12px;
+    }
+  }
+  &__header {
+    position: fixed;
+    width: 100%;
+    background-color: white;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    padding: 10px 20px 10px 20px;
+  }
+  &__categories {
+    gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    box-sizing: content-box;
+    overflow-x: auto;
+    width: 100%;
+    padding: 0 20px;
+    margin: 10px -20px 0 -20px;
+    &-item {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 120px;
+      font-size: 12px;
+      height: 28px;
+    }
+  }
   &__slider {
     margin: 0 -20px;
     :deep(.slick-dots) {
@@ -157,7 +297,7 @@ const services = [
       display: none !important;
     }
     &-item {
-      height: 200px;
+      height: 140px;
       overflow: hidden;
       position: relative;
       padding: 0 20px;
@@ -172,7 +312,7 @@ const services = [
       object-fit: cover;
     }
     &-emoji {
-      font-size: 100px;
+      font-size: 90px;
       position: absolute;
       right: 0;
       top: 0px;
@@ -180,6 +320,7 @@ const services = [
     }
     &-content {
       position: absolute;
+      font-size: 12px;
       top: 0;
       padding: 10px 20px 20px 20px;
       width: 280px;
@@ -203,6 +344,7 @@ const services = [
     display: grid;
     grid-template-columns: 1fr 1fr;
     text-align: center;
+    margin-top: 20px;
     &-item {
      padding-bottom: 10px;
      border-bottom: 1px solid #e6e6e6;
@@ -215,7 +357,7 @@ const services = [
     }
   } 
   &__block {
-    margin: -20px -20px 40px -20px;
+    margin: 20px -20px 0 -20px;
     background-color: white;
     width: 100vw;
     padding: 20px;
@@ -223,9 +365,12 @@ const services = [
   
   &__grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     gap: 20px;
-    margin-top: 10px;
+    padding: 0 20px;
+    margin: 10px -20px 0 -20px;
+    box-sizing: content-box;
+    overflow-x: auto;
     &-item {
       display: flex;
       align-items: center;
@@ -234,9 +379,9 @@ const services = [
       flex-direction: column;
     }
     &-icon {
-      font-size: 18px;
+      font-size: 16px;
       background-color: #f6f6f6;
-      padding: 20px;
+      padding: 12px;
       border-radius: 10px;
       display: flex;
       align-items: center;
