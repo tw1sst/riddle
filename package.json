@@ -18,7 +18,6 @@
     "pinia": "2.1.7",
     "vue": "^3.3.9",
     "vue-axios": "^3.5.2",
-    "vue-cryptoicon": "^0.18.1",
     "vue-router": "4.0.5"
   },
   "devDependencies": {
