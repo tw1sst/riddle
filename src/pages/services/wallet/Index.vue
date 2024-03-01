@@ -89,20 +89,27 @@ const state = reactive({
 const userTokens = [
   {
     id: 1,
-    name: "RiddleCoin",
+    name: "Riddle Coin",
     code: "RAY",
     userBalance: 0.0025,
     tokenPrice: 24.53,
   },
   {
     id: 2,
+    name: "RiddleVerse Coin",
+    code: "GOLD",
+    userBalance: 0.0025,
+    tokenPrice: 24.53,
+  },
+  {
+    id: 3,
     name: "Bitcoin",
     code: "BTC",
     userBalance: 0.23,
     tokenPrice: 48365.19,
   },
   {
-    id: 3,
+    id: 4,
     name: "Ethereum",
     code: "ETH",
     userBalance: 4,
@@ -152,16 +159,16 @@ const getUserTokensBalance = (token) => {
   &__tokens {
     &-item {
       margin-bottom: 20px;
-      display: grid;
-      grid-template-columns: auto auto 100px auto;
-    }
-    &-info {
-      
+      display: flex;
     }
     &-logo {
       width: 32px;
       height: 32px;
-      margin-right: 0px;
+      margin-right: 10px;
+    }
+    &-info {
+      max-width: 100px;
+      width: 100%;
     }
     &-name {
       font-weight: 600;
@@ -189,7 +196,7 @@ const getUserTokensBalance = (token) => {
     color: white;
     display: grid;
     grid-template-rows: auto 1fr auto;
-    background-image: url('https://4kwallpapers.com/images/wallpapers/black-abstract-dark-3840x2160-9729.jpg');
+    background-image: url('https://wallpapers.com/images/hd/blue-abstract-background-05lhu0ttx8ti1ee9.jpg');
     &-header, &-bottom {
       display: flex;
       justify-content: space-between;

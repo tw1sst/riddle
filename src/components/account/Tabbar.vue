@@ -41,7 +41,7 @@ const menuItems = ref([
     title: "Свайп",
     routeName: "ServiceNewsSwipe",
     path: "/service/news-swipes",
-    icon: "swipe_vertical"
+    icon: "swipe"
   },
   {
     title: "Профиль",

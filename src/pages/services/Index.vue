@@ -1,19 +1,23 @@
 <template>
 <div class="services">
   <div class="services__header">
-    <a-input class="services__search" v-model:value="state.search" placeholder="Поиск..">
-      <template #suffix>
-        <span class="material-icons-round">search</span>
+    <a-input 
+      class="services__search" 
+      v-model:value="state.search" 
+      placeholder="Найдите DApp или введите ссылку">
+      <template #prefix>
+        <span class="services__header-searchIcon material-icons-round">search</span>
       </template>
     </a-input><br/>
     
-    <div class="services__categories">
-      <a-button
+    <a-tabs v-model:activeKey="activeKey"
+      class="services__categories">
+      <a-tab-pane 
+        class="services__categories-item"
         v-for="category in categories" 
-        class="services__categories-item">
-          {{ category.name }}
-      </a-button>
-    </div> 
+        :key="category.id" 
+        :tab="category.name" />
+    </a-tabs>
   </div>
   
   <div class="services__block">
@@ -47,13 +51,25 @@
           <div v-for="item in category.apps" 
             @click="$router.push({ name: item.routeName })"
             class="services__grid-item">
-            <div class="services__grid-icon">
-              <span class="material-icons-round">
-                {{ item.icon }}
-              </span>
+            <div 
+              v-if="item.type == 'external'"
+              @click="openExternalApp(item)">
+              <img :src="item.iconImg" 
+                class="services__grid-img">
+              <div class="services__grid-title">{{ item.title }}</div>
             </div>
-            <div class="services__grid-title">
-              {{ item.title }}
+            
+            <div v-else>
+              <div 
+                class="services__grid-icon">
+                <span class="material-icons-round">
+                  {{ item.icon }}
+                </span>
+              </div>
+              <div 
+              class="services__grid-title">
+                {{ item.title }}
+              </div>
             </div>
           </div>
         </div><br/>
@@ -63,115 +79,50 @@
     
   </div>
 </div>
+
+<FloatingPanel 
+  v-if="state.isShowExternalApp"
+  :title="state.selectedExternalApp.title"
+  @toggleFloating="toggleExternalApp"
+  :isShowFloating="state.selectedExternalApp">    
+   
+   <iframe 
+     class="services__externalApp-iframe"
+     :src="state.selectedExternalApp.link">
+   </iframe>
+   
+</FloatingPanel>
 </template>
 
 
 <script setup>
-import {reactive } from "vue";
+import FloatingPanel from '@/components/uikit/FloatingPanel.vue'
+import { categories } from '@/server/fakedata/services/Categories.js'
+import { reactive } from "vue";
 
 const state = reactive({
   activeType: "1",
-  search: ""
+  search: "",
+  isShowExternalApp: false,
+  selectedExternalApp: {}
 });
 
-const categories = [
-  {
-    id: 0,
-    name: "🔥 HOT",
-    apps: [
-      {
-        id: 2,
-        title: "Свайп",
-        icon: "swipe_vertical",
-        routeName: "ServiceNewsSwipe"
-      },
-      {
-        id: 4,
-        title: "Skill",
-        icon: "school",
-        routeName: "SkillHome"
-      },
-      {
-        id: 5,
-        title: "Wallet",
-        icon: "wallet",
-        routeName: "ServiceWallet"
-      }
-    ]
-  },
-  {
-    id: 1,
-    name: "⭐ Избранное",
-    apps: [
-      {
-        id: 4,
-        title: "Skill",
-        icon: "school",
-        routeName: "SkillHome",
-      },
-      {
-        id: 5,
-        title: "Wallet",
-        icon: "wallet",
-        routeName: "ServiceWallet",
-      },
-    ]
-  },
-  {
-    id: 2,
-    name: "🚀 Riddle",
-    apps: [
-      {
-        id: 1,
-        title: "Лента",
-        icon: "feed",
-        routeName: "ContentHome",
-      },
-      {
-        id: 2,
-        title: "Свайп",
-        icon: "swipe_vertical",
-        routeName: "ServiceNewsSwipe",
-      },
-      {
-        id: 3,
-        title: "Motors",
-        icon: "directions_car",
-        routeName: "AutoMarket",
-      },
-      {
-        id: 4,
-        title: "Skill",
-        icon: "school",
-        routeName: "SkillHome",
-      },
-      {
-        id: 5,
-        title: "Wallet",
-        icon: "wallet",
-        routeName: "ServiceWallet",
-      },
-    ]
-  },
-  {
-    id: 3,
-    name: "🎲 Game"
-  },
-  {
-    id: 4,
-    name: "BSC"
-  },
-  {
-    id: 5,
-    name: "ETH"
-  },
-  {
-    id: 6,
-    name: "Solana"
-  },
-]
+const openExternalApp = (app) => {
+  state.selectedExternalApp = app
+  toggleExternalApp()
+}
+
+const toggleExternalApp = () => {
+  state.isShowExternalApp = !state.isShowExternalApp
+}
 
 const mainSliderItems = [
+  {
+    title: "",
+    subtext: "",
+    cover: "https://public.bnbstatic.com/image/cms/content/body/202312/0bf19c6f3327904faa78af7f0821a8d6.png",
+    emoji: ""
+  },
   {
     title: "Умная лента",
     subtext: "Умная лента по вашим интересам на основе AI, которая подстраивается под вас",
@@ -198,62 +149,17 @@ const mainSliderItems = [
   },
 ]
 
-const services = [
-  {
-    id: 1,
-    title: "Лента",
-    icon: "feed",
-    routeName: "ContentHome",
-  },
-  {
-    id: 2,
-    title: "Свайп",
-    icon: "swipe_vertical",
-    routeName: "ServiceNewsSwipe",
-  },
-  {
-    id: 3,
-    title: "Motors",
-    icon: "directions_car",
-    routeName: "AutoMarket",
-  },
-  {
-    id: 4,
-    title: "Skill",
-    icon: "school",
-    routeName: "SkillHome",
-  },
-  {
-    id: 5,
-    title: "Wallet",
-    icon: "wallet",
-    routeName: "ServiceWallet",
-  },
-  {
-    id: 3,
-    title: "Motors",
-    icon: "directions_car",
-    routeName: "AutoMarket",
-  },
-  {
-    id: 4,
-    title: "Skill",
-    icon: "school",
-    routeName: "SkillHome",
-  },
-  {
-    id: 5,
-    title: "Wallet",
-    icon: "wallet",
-    routeName: "ServiceWallet",
-  },
-]
 </script> 
 
 
 <style lang="scss" scoped>
 .services {
   padding: 10px 20px;
+  &__externalApp {
+    &-iframe {
+      height: 500px;
+    }
+  }
   &__headblock {
     display: flex;
     align-items: center;
@@ -269,24 +175,16 @@ const services = [
     z-index: 10;
     top: 0;
     left: 0;
-    padding: 10px 20px 10px 20px;
+    padding: 10px 20px 0 20px;
+    &-searchIcon {
+      color: #e6e6e6;
+    }
   }
   &__categories {
-    gap: 10px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    box-sizing: content-box;
-    overflow-x: auto;
-    width: 100%;
+    width: 100vw;
+    height: 46px;
+    margin: 0 -20px;
     padding: 0 20px;
-    margin: 10px -20px 0 -20px;
-    &-item {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      min-width: 120px;
-      font-size: 12px;
-      height: 28px;
-    }
   }
   &__slider {
     margin: 0 -20px;
@@ -297,7 +195,7 @@ const services = [
       display: none !important;
     }
     &-item {
-      height: 140px;
+      height: 160px;
       overflow: hidden;
       position: relative;
       padding: 0 20px;
@@ -373,10 +271,15 @@ const services = [
     overflow-x: auto;
     &-item {
       display: flex;
-      align-items: center;
-      justify-content: center;
       text-align: center;
       flex-direction: column;
+      width: 48px;
+    }
+    &-img {
+      height: 48px;
+      width: 48px;
+      border-radius: 10px;
+      object-fit: cover;
     }
     &-icon {
       font-size: 16px;
@@ -393,6 +296,7 @@ const services = [
       font-size: 12px;
       color: black;
       margin-top: 5px;
+      word-break: break-word;
     }
   }
 }
