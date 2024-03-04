@@ -5,7 +5,7 @@ const categories = [
     apps: [
       {
         id: 2,
-        title: "Свайп",
+        title: "Posts Swipe",
         icon: "swipe",
         routeName: "ServiceNewsSwipe"
       },
@@ -27,7 +27,7 @@ const categories = [
       },
       {
         id: 4,
-        title: "Skill",
+        title: "Riddle Skill",
         icon: "school",
         routeName: "SkillHome"
       },
@@ -45,7 +45,7 @@ const categories = [
     apps: [
       {
         id: 4,
-        title: "Skill",
+        title: "Riddle Skill",
         icon: "school",
         routeName: "SkillHome",
       },
@@ -59,35 +59,47 @@ const categories = [
   },
   {
     id: 2,
-    name: "🚀 Riddle",
+    name: "🚀 Riddle Verse",
     apps: [
+      {
+        id: 8,
+        title: "Riddle Fit",
+        icon: "fitness_center",
+        routeName: "ServiceFit",
+      },
+      {
+        id: 7,
+        title: "Riddle Blooms",
+        icon: "local_florist",
+        routeName: "ServiceBlooms",
+      },
       {
         id: 6,
         title: "Riddle Castle",
         icon: "castle", // hive
-        routeName: "ServiceWallet",
+        routeName: "ServiceCastle",
       },
       {
         id: 1,
-        title: "Лента",
+        title: "Ваша Лента",
         icon: "feed",
         routeName: "ContentHome",
       },
       {
         id: 2,
-        title: "Свайп",
+        title: "Posts Swipe",
         icon: "swipe",
         routeName: "ServiceNewsSwipe",
       },
       {
         id: 3,
-        title: "Motors",
+        title: "Riddle Motors",
         icon: "directions_car",
         routeName: "AutoMarket",
       },
       {
         id: 4,
-        title: "Skill",
+        title: "Riddle Skill",
         icon: "school",
         routeName: "SkillHome",
       },
@@ -101,7 +113,7 @@ const categories = [
   },
   {
     id: 3,
-    name: "DeFi",
+    name: "🧩 DeFi",
     apps: [
       {
         id: 6,

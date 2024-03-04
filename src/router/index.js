@@ -22,7 +22,9 @@ import SkillLessonPage from "@/pages/skill/lesson/:id/Index.vue";
 import SkillQuizPage from "@/pages/skill/lesson/:id/quiz/Index.vue";
 
 import ServiceWallet from "@/pages/services/wallet/Index.vue";
-
+import ServiceCastle from "@/pages/services/castle/Index.vue";
+import ServiceBlooms from "@/pages/services/blooms/Index.vue";
+import ServiceFit from "@/pages/services/fit/Index.vue";
 
 const routes = [
   {
@@ -91,11 +93,27 @@ const routes = [
     component: SkillQuizPage,
   },
   {
-    path: "/pay",
+    path: "/wallet",
     name: "ServiceWallet",
     component: ServiceWallet,
   },
+  {
+    path: "/castle",
+    name: "ServiceCastle",
+    component: ServiceCastle,
+  },
+  {
+    path: "/blooms",
+    name: "ServiceBlooms",
+    component: ServiceBlooms,
+  },
+  {
+    path: "/fit",
+    name: "ServiceFit",
+    component: ServiceFit,
+  },
 ];
+
 
 const router = createRouter({
   history: createWebHistory(),

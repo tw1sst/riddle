@@ -42,12 +42,12 @@
       <div :class="state.activeType == 1 ? 'wallet__type-active' : ''"
         @click="state.activeType = 1"
         class="wallet__type-item">
-        Токены
+        💎 Токены
       </div>
       <div :class="state.activeType == 2 ? 'wallet__type-active' : ''"
         @click="state.activeType = 2"
         class="wallet__type-item">
-        Коллекции
+        🖼 Коллекции
       </div>
     </div><br/>
     
@@ -158,8 +158,12 @@ const getUserTokensBalance = (token) => {
   padding: 20px;
   &__tokens {
     &-item {
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       display: flex;
+      background-color: #f4f5f5;
+      padding: 10px;
+      border-radius: 10px;
+      align-items: center;
     }
     &-logo {
       width: 32px;
@@ -169,6 +173,7 @@ const getUserTokensBalance = (token) => {
     &-info {
       max-width: 100px;
       width: 100%;
+      margin-right: 10px;
     }
     &-name {
       font-weight: 600;
@@ -180,6 +185,7 @@ const getUserTokensBalance = (token) => {
     }
     &-balance {
       text-align: right;
+      margin-left: 20px;
     }
     &-chart {
       width: 100px;
