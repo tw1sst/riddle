@@ -53,8 +53,6 @@ const selectOption = (option) => {
   }
   state.answersArr.sort((a, b) => a - b)
   state.userAnswer = state.answersArr.join(',')
-  
-  console.log(state.userAnswer)
   $emit('updateTask', state.userAnswer)
 }
 </script>

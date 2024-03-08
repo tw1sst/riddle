@@ -1,28 +1,46 @@
 <template>
 <div class="page container">
-  <a-carousel arrows dots-class="slick-dots" class="page__slider" autoplay>
-    <div v-for="slide in mainSliderItems" 
-      class="page__slider-item">
-      <img :src="slide.cover" class="page__slider-cover">
-      <div class="page__slider-emoji">
-        {{ slide.emoji }}
+  <div class="page__stories">
+    <Stories 
+      v-if="state.isShowStories" 
+      class="page__stories-opened" 
+      @allStoriesEnd="toggleStory"
+      @seeMore="openSeeMore"
+      @storyStart="storyStart"
+      :currentIndex="state.currentIndex"
+      :style="{ background: 'linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('+ state.selectedStory.url +') no-repeat center 100% / cover' }"
+      :stories="state.stories">
+      <template #header="{ story }">
+        <div class="page__stories-header">
+          <Avatar 
+           :userName="story.header.authorName"
+           :subText="'Вчера в 22:46'"
+          />
+        </div>
+      </template>
+      
+      <template #default="attrs">
+         <default-slide 
+           :story="state.selectedStory"
+           class="flex-grow">
+         </default-slide>
+      </template>
+    </Stories>
+
+    <div 
+      v-for="(story, key) in state.stories"
+      @click="toggleStory(story, key)"
+      class="page__stories-item">      
+      <div 
+        v-if="!story.isView" 
+        class="page__stories-status">
       </div>
-      <div class="page__slider-content">
-        <div class="page__slider-title">
-          {{ slide.title }}
-        </div>
-        <div class="page__slider-subtext">
-          {{ slide.subtext }}
-        </div>
-        <div class="page__slider-button">
-          <a-button  
-            type="primary">
-            {{ slide.buttonText }}
-        </a-button>
-        </div>
+      <img :src="story.url" class="page__stories-cover">
+      <div class="page__stories-title">
+        {{ story.title }}
       </div>
     </div>
-  </a-carousel><br/>
+  </div>
  
   <div class="page__headblock">
     <h3>Популярные теги</h3>
@@ -47,16 +65,83 @@
       <Post :post="post" />
     </div>
   </div>
-
 </div>
 </template>
 
 
 <script setup>
 import { ref, reactive } from "vue";
+import { useRouter } from 'vue-router'
+import { Stories } from "vue-insta-stories"
+import { allPosts } from '@/server/fakedata/content/Posts.js'
+
 import axios from "axios";
 import Post from "@/components/content/Post.vue"
-import { allPosts } from '@/server/fakedata/content/Posts.js'
+import Avatar from '@/components/account/Avatar.vue'
+import DefaultSlide from '@/components/content/stories/DefaultSlide.vue'
+
+const router = useRouter()
+const state = reactive({
+  allNews: [],
+  activeCategoty: "0",
+  isShowStories: false,
+  selectedStory: {},
+  stories: [],
+  currentIndex: 0,
+});
+
+state.allNews = allPosts
+allPosts.forEach(post => {
+  let newStory = {
+    url: post.image,
+    title: post.title,
+    text: post.content.substring(0, 500),
+    duration: 5000,
+    isView: false,
+    template: "default",
+    header: {
+      authorName: post.provider
+    },
+    seeMore: { 
+      url: post.link,
+      postId: post.id,
+      post: post, // убираем когда готово апи
+      label: "👆 Открыть запись"
+    }
+  }
+  if (state.stories.length < 6) {
+    state.stories.push(newStory)
+  }
+})
+
+const toggleStory = (story, key) => {
+  if (story) {
+    storyStart(key)
+    state.isShowStories = true
+  } else {
+    state.selectedStory = {}
+    state.isShowStories = false
+  }
+}
+
+const storyStart = (index) => {
+  state.currentIndex = index
+  state.stories.forEach(function(story, i) { 
+    if (i == index) {
+      story.isView = true
+      state.selectedStory = story
+    }
+  })
+}
+
+const openSeeMore = (story) => {
+  router.push({ name: 'ContentPostPage', 
+    params: { 
+       id: story.seeMore.postId,
+       post: JSON.stringify(story.seeMore.post),
+    } 
+  })
+} 
 
 const tags = [
   {
@@ -89,32 +174,6 @@ const tags = [
   },
 ]
 
-const mainSliderItems = [
-  {
-    title: "Умная лента",
-    subtext: "Умная лента по вашим интересам на основе AI",
-    cover: "https://static.vecteezy.com/system/resources/previews/034/440/425/non_2x/light-blue-red-blurred-backdrop-vector.jpg",
-    buttonText: "Перейти к ленте",
-    buttonRedirect: "AutoMarket",
-    emoji: "🚀"
-  },
-  {
-    title: "Умная лента",
-    subtext: "Умная лента по вашим интересам на основе AI",
-    cover: "https://framerusercontent.com/images/AQJgmakK2cb0EcVoMZe1ZmFF0Q.jpg",
-    buttonText: "Перейти к ленте",
-    buttonRedirect: "AutoMarket",
-    emoji: "🦾"
-  }
-]
-
-const state = reactive({
-  allNews: [],
-  activeCategoty: "0"
-});
-
-state.allNews = allPosts
-
 const getNews = () => {
   axios
     .get("https://moneybell.ru/api/news")
@@ -139,6 +198,72 @@ const getNews = () => {
   padding: 20px;
 }
 .page {
+  &__stories {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 10px;
+    padding: 4px 20px;
+    margin: 0 -20px 20px -20px;
+    box-sizing: content-box;
+    overflow-x: auto;
+    &-opened {
+      position: absolute;
+      height: 100vh;
+      width: 100vw;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+    }
+    &-header {
+      color: white;
+      width: 100vw;
+      margin: 0 -20px;
+      padding: 0 20px;
+      z-index: 110;
+    }
+    &-cover {
+      width: 72px;
+      height: 72px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    &-title {
+      font-size: 12px;
+      line-height: 14px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -moz-box;
+      -moz-box-orient: vertical;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-clamp: 2;
+      box-orient: vertical;
+      margin-top: -30px;
+      padding: 0 5px;
+      color: white;
+      font-weight: 600;
+      text-shadow: 1px 1px 1px black, 0 0 4px black;
+    }
+    &-item {
+      width: 72px;
+      height: 72px;
+      border-radius: 10px;
+      margin-right: 10px;
+      background-color: black;
+      position: relative;
+    }
+    &-status {
+      border: 2px solid blue;
+      border-radius: 14px;
+      width: 80px;
+      height: 80px;
+      position: absolute;
+      top: -4px;
+      left: -4px;
+    }
+  }
   &__headblock {
     display: flex;
     align-items: center;
