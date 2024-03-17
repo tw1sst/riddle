@@ -59,8 +59,8 @@
     </div> 
   </div><br/>
   
-   <div class="course__content">
-      <h3 class="course__content-title">Модули курса</h3>
+  <div class="course__content">
+    <h3 class="course__content-title">Модули курса</h3>
      
      <div class="course__content-desc">
        <a-steps progress-dot :current="-1">
@@ -79,11 +79,71 @@
       </a-steps>
     </div>
   </div><br/>
-  
+ 
   <div class="course__content">
-      <h3 class="course__content-title">Описание курса</h3>
-     
-     <div class="course__content-desc">
+    <h3 class="course__content-title">Прогресс курса</h3>
+    <div class="course__progress">
+      <div class="course__progress-left">
+        <div class="course__progress-item">
+          <div class="course__progress-badge">
+            0/10
+          </div>
+          <div class="course__progress-text">
+            Видео просмотрено
+          </div>
+        </div>
+        <div class="course__progress-item">
+          <div class="course__progress-badge course__progress-badge2">
+            2/8
+          </div>
+          <div class="course__progress-text">
+            Уроков пройдено
+          </div>
+        </div>
+        <div class="course__progress-item">
+          <div class="course__progress-badge course__progress-badge3">
+            3/10
+          </div>
+          <div class="course__progress-text">
+            Заданий выполнено
+          </div>
+        </div>
+      </div>
+      <div class="course__progress-right">
+        <div class="course__progress-centerText">⏳</div>
+        <a-progress 
+          class="course__progress-circle1" 
+          :percent="25" 
+          type="circle"
+          :size="130" />
+        <a-progress 
+          class="course__progress-circle2" 
+          :percent="50" 
+          type="circle"
+          :stroke-color="'pink'"
+          :size="108" />
+        <a-progress 
+          class="course__progress-circle3" 
+          :percent="75" 
+          type="circle" 
+          :stroke-color="'lime'"
+          :size="88" />
+      </div>
+    </div>
+  </div><br/>
+  
+  <a-tabs v-model:activeKey="state.activeTabKey" class="course__tabs">
+    <a-tab-pane 
+      class="course__tabs-item"
+      v-for="tab in tabs" 
+      :key="tab.id" 
+      :tab="tab.name" />
+  </a-tabs>
+  <div v-if="state.activeTabKey == 1" class="course__content">
+    <h3 class="course__content-title">
+      Описание курса
+    </h3>
+    <div class="course__content-desc">
       {{ state.course.desc }}
     </div>
   </div><br/>
@@ -139,7 +199,8 @@ const state = reactive({
   course: {},
   baseInfoItems: [],
   currentModule: {},
-  isShowFloating: false
+  isShowFloating: false,
+  activeTabKey: 1
 });
 
 state.course = allCourses[1]
@@ -149,6 +210,29 @@ if (route.params?.course) {
   state.course = JSON.parse(route.params.course)
   state.id = route.params.id
 }
+
+const tabs = [
+  {
+    id: 1,
+    name: "Описание"
+  },
+  {
+    id: 2,
+    name: "Видео"
+  },
+  {
+    id: 3,
+    name: "Отзывы"
+  },
+  {
+    id: 4,
+    name: "Сертификаты"
+  },
+  {
+    id: 5,
+    name: "Похожие"
+  },
+]
 
 state.baseInfoItems = [
   {
@@ -190,8 +274,59 @@ if (route.params?.module) {
 
 <style lang="scss" scoped>  
 .course {
-  margin-bottom: 50px;
-  padding-bottom: 80px;
+  margin-bottom: 40px;
+  padding-bottom: 60px;
+  &__progress {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin-top: 10px;
+    &-right {
+      position: relative;
+    }
+    &-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    &-badge {
+      padding: 3px 5px;
+      border-radius: 10px;
+      background-color: #3E68F8;;
+      font-weight: 600;
+      display: inline-block;
+      color: white;
+      margin-right: 10px;
+      min-width: 60px;
+      text-align: center;
+    }
+    &-badge2 { background-color: pink; }
+    &-badge3 { background-color: lime; }
+    &-text {
+      font-size: 12px;
+      line-height: 14px;
+      max-width: 100px;
+    }
+    &-centerText {
+      position: absolute;
+      left: 55px;
+      top: 55px;
+    }
+    &-circle2 {
+      position: absolute;
+      left: 11px;
+      top: 11px;
+    }
+    &-circle3 {
+      position: absolute;
+      left: 21px;
+      top: 21px;
+    }
+  }
+  &__tabs {
+    border-radius: 10px 10px 0 0;
+    background-color: white;
+    padding: 0 20px;
+  }
   &__lessons {
     &-sub {
       display: flex;

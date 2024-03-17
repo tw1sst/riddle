@@ -1,7 +1,41 @@
-<template>
+<template> 
 <div class="skill">
-  <h2>🎓 Riddle Skill</h2><br/>
+  <div class="skill__header">
+    <a-input 
+      class="services__search" 
+      v-model:value="state.search" 
+      placeholder="Найдите курс, школу или программу тренировок">
+      <template #prefix>
+        <span class="services__header-searchIcon material-icons-round">search</span>
+      </template>
+    </a-input>
+    <a-button>
+      <span class="material-icons-round">tune</span>
+    </a-button>
+  </div>
   
+  <div class="skill__continue">
+     <h3>Продолжить обучение</h3>
+      <div class="skill__continue-block">
+       <div class="skill__continue-flex">
+         <div class="skill__continue-title">
+           {{ allCourses[0].name }} • 2/7
+         </div>
+         <a-progress 
+           :trailColor="'#f4f5f5'"
+           :strokeColor="'lime'"
+           :percent="30" 
+           :show-info="false" 
+           status="exception" 
+           size="small" />
+       </div>
+       <div class="skill__continue-button">
+         <span class="material-icons-round">arrow_forward</span>
+       </div>
+     </div>
+  </div>
+  
+  <h3>🎓 Riddle Skill</h3><br/>
   <a-carousel arrows dots-class="slick-dots" class="skill__slider" autoplay>
     <div v-for="slide in mainSliderItems" 
       class="skill__slider-item">
@@ -78,6 +112,11 @@
 import AccountBlock from "@/components/account/Avatar.vue"
 import { allCourses } from '@/server/fakedata/skill/Courses.js'
 import CourseCard from '@/components/skill/CourseCard.vue'
+import { reactive } from "vue";
+
+const state = reactive({
+  search: "",
+})
 
 const tags = [
   {
@@ -86,27 +125,27 @@ const tags = [
   },
   {
     id: 1,
-    name: "💻 Разработка"
+    name: "💪 Спорт"
   },
   {
     id: 2,
-    name: "🇬🇧 Языки"
+    name: "💻 Разработка"
   },
   {
     id: 3,
-    name: "🎨 Дизайн"
+    name: "🇬🇧 Языки"
   },
   {
     id: 4,
-    name: "👥 Маркетинг"
+    name: "🎨 Дизайн"
   },
   {
     id: 5,
-    name: "💵 Финансы"
+    name: "👥 Маркетинг"
   },
   {
     id: 6,
-    name: "💼 Бизнес"
+    name: "💵 Финансы"
   },
 ]
 
@@ -166,7 +205,53 @@ const mainSliderItems = [
 
 <style lang="scss" scoped>
 .skill {
-  padding: 10px 20px 40px 20px;
+  padding: 50px 20px 40px 20px;
+  &__continue {
+    margin-bottom: 20px;
+    &-block {
+      background-color: #3E68F8;
+      padding: 10px 20px;
+      border-radius: 10px;
+      color: white;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    &-flex {
+      display: flex;
+      width: 80%;
+      flex-direction: column;
+      margin-right: 20px;
+    }
+    &-button {
+      border-radius: 50%;
+      background-color: lime;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+    }
+    &-title {
+      font-weight: 600;
+    }
+  }
+  &__header {
+    background-color: white;
+    position: fixed;
+    width: 100%;
+    top: 50px;
+    left: 0;
+    padding: 0 20px 10px 20px;
+    z-index: 5;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr auto;
+    &-filters {
+     
+    }
+  }
   &__headblock {
     display: flex;
     align-items: center;
@@ -185,7 +270,7 @@ const mainSliderItems = [
     padding: 0 20px;
     margin: 10px -20px 0 -20px;
     &-item {
-      width: 230px;
+      width: 200px;
     }
   }
   &__tags {

@@ -2,17 +2,13 @@
   <div class="header">
      <div class="header__account">
        <a-badge>
-        <a-avatar size="middle" :src="userAvatar" shape="square">
+        <a-avatar size="middle" :src="logoImg" shape="square">
         </a-avatar>
        </a-badge>
-    
        <div class="header__account-info">
          <div class="header__account-msg">
-            Riddle Verse
+            RiddleVerse
            </div>
-         <div class="header__account-name">
-           {{ userStore.user.name }}
-         </div>
        </div>
      </div>
      
@@ -21,6 +17,8 @@
          <span class="material-icons-round header__actions-alerts__icon">search</span>
          <span class="material-icons-round header__actions-alerts__icon">notifications_none</span>
        </div>
+       <a-avatar size="middle" :src="userAvatar" shape="square">
+        </a-avatar>
      </div>
   </div>
 </template>
@@ -31,6 +29,7 @@
 
   const userStore = useUserStore()
   const userAvatar = "https://ui-avatars.com/api/?name=" + userStore.user.name + "&size=32&color=7F9CF5&background=EBF4FF"
+  const logoImg = "https://ui-avatars.com/api/?name=Riddle&size=32&color=FFFFFF&background=EFABFF"
 </script>
 
 
@@ -50,7 +49,7 @@
   background-color: white;
   &__account {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     align-items: center;
     &-info {
       display: flex;
@@ -60,13 +59,7 @@
       align-items: flex-start;
     }
     &-msg {
-      font-size: 10px;
-      color: grey;
-      line-height: 16px;
-    }
-    &-name {
       font-weight: bold;
-      line-height: 16px;
       font-size: 14px;
     }
   }
@@ -78,6 +71,7 @@
       display: grid;
       gap: 10px;
       grid-template-columns: auto auto;
+      margin-right: 10px;
       &__icon {
         font-size: 24px;
       }

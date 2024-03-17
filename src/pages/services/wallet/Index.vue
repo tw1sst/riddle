@@ -22,7 +22,7 @@
     </div>
   </div>
   
-  <div class="wallet__block">
+  <div class="wallet__block2">
     <div class="wallet__actions">
       <div 
         v-for="action in actions"
@@ -89,7 +89,7 @@ const state = reactive({
 const userTokens = [
   {
     id: 1,
-    name: "Riddle Coin",
+    name: "RiddleCoin",
     code: "RAY",
     userBalance: 0.0025,
     tokenPrice: 24.53,
@@ -155,19 +155,20 @@ const getUserTokensBalance = (token) => {
 
 <style scoped lang="scss">
 .wallet {
-  padding: 20px;
+  padding: 20px 20px 60px 20px;
   &__tokens {
+    border-radius: 0 0 10px 10px;
+    overflow: hidden;
+    margin: -24px -10px 0 -10px;
+    padding-top: 10px;
+    background-color: white;
     &-item {
-      margin-bottom: 10px;
       display: flex;
-      background-color: #f4f5f5;
-      padding: 10px;
-      border-radius: 10px;
-      align-items: center;
+      padding: 10px 20px; 
     }
     &-logo {
-      width: 32px;
-      height: 32px;
+      width: 42px;
+      height: 42px;
       margin-right: 10px;
     }
     &-info {
@@ -218,8 +219,10 @@ const getUserTokensBalance = (token) => {
   &__actions {
     display: flex;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 10px;
     color: #C5C5C5;
+    border-radius: 10px;
+    margin-top: 20px;
     &-item {
       display: flex;
       align-items: center;
@@ -234,14 +237,14 @@ const getUserTokensBalance = (token) => {
       }
     }
     &-button {
-      width: 42px;
-      height: 42px;
+      width: 52px;
+      height: 52px;
       border-radius: 50%;
       text-align: center;
-      border: 1px solid #C5C5C5;
       justify-content: center;
       display: flex;
       align-items: center;
+      background-color: white;
     }
     &-text {
       font-size: 12px;
@@ -250,15 +253,17 @@ const getUserTokensBalance = (token) => {
   }
   &__block {
     border-radius: 20px;
-    background-color: white;
-    padding: 20px;
+    padding: 10px;
     margin: 20px -20px;
   }
   &__type {
     display: grid;
     grid-template-columns: 1fr 1fr;
     text-align: center;
-    margin-top: 20px;
+    margin: 20px -10px 0 -10px;
+    background-color: white;
+    border-radius: 10px 10px 0 0;
+    padding-top: 10px;
     &-item {
      padding-bottom: 10px;
      border-bottom: 1px solid #e6e6e6;
@@ -267,7 +272,7 @@ const getUserTokensBalance = (token) => {
     }
     &-active {
       color: #3E68F8;
-      border-bottom: 2px solid #3E68F8;
+      border-bottom: 1px solid #3E68F8;
     }
   }
 }

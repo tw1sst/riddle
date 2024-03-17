@@ -6,6 +6,7 @@ const categories = [
       {
         id: 2,
         title: "Posts Swipe",
+        desc: "Читайте новости и публикации в удобном формате",
         icon: "swipe",
         routeName: "ServiceNewsSwipe"
       },
@@ -28,12 +29,14 @@ const categories = [
       {
         id: 4,
         title: "Riddle Skill",
+        desc: "Обучайтесь новому, совершенствуйте свои навыки, тренируйтесь",
         icon: "school",
         routeName: "SkillHome"
       },
       {
         id: 5,
         title: "Wallet",
+        desc: "Современный и удобный кошелек для хранения RiddleCoin",
         icon: "wallet",
         routeName: "ServiceWallet"
       }
@@ -46,12 +49,14 @@ const categories = [
       {
         id: 4,
         title: "Riddle Skill",
+        desc: "Обучайтесь новому, совершенствуйте свои навыки, тренируйтесь",
         icon: "school",
         routeName: "SkillHome",
       },
       {
         id: 5,
         title: "Wallet",
+        desc: "Современный и удобный кошелек для хранения RiddleCoin",
         icon: "wallet",
         routeName: "ServiceWallet",
       },
@@ -64,48 +69,56 @@ const categories = [
       {
         id: 8,
         title: "Riddle Fit",
+        desc: "Тренировки и спорт как смысл жизни",
         icon: "fitness_center",
         routeName: "ServiceFit",
       },
       {
         id: 7,
         title: "Riddle Blooms",
+        desc: "Маркетплейс поларков на любой вкус. Цветы, соадости, мягкие игрушки и авторские букеты",
         icon: "local_florist",
         routeName: "ServiceBlooms",
       },
       {
         id: 6,
         title: "Riddle Castle",
+        desc: "Карты, баттлы и сражения",
         icon: "castle", // hive
         routeName: "ServiceCastle",
       },
       {
         id: 1,
         title: "Ваша Лента",
+        desc: "Ваша персональная лента публикаций",
         icon: "feed",
         routeName: "ContentHome",
       },
       {
         id: 2,
         title: "Posts Swipe",
+        desc: "Читайте новости и публикации в удобном формате",
         icon: "swipe",
         routeName: "ServiceNewsSwipe",
       },
       {
         id: 3,
         title: "Riddle Motors",
+        desc: "Автомобильный маркетплейс",
         icon: "directions_car",
         routeName: "AutoMarket",
       },
       {
         id: 4,
         title: "Riddle Skill",
+        desc: "Обучайтесь новому, совершенствуйте свои навыки, тренируйтесь",
         icon: "school",
         routeName: "SkillHome",
       },
       {
         id: 5,
         title: "Wallet",
+        desc: "Современный и удобный кошелек для хранения RiddleCoin",
         icon: "wallet",
         routeName: "ServiceWallet",
       },

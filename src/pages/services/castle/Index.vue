@@ -1,6 +1,7 @@
 <template>
 
 castle
+<img :src="'img/services/castle/RadiantPaladin.gif'">
 
 </template>
 

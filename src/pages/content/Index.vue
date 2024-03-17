@@ -106,7 +106,7 @@ allPosts.forEach(post => {
       url: post.link,
       postId: post.id,
       post: post, // убираем когда готово апи
-      label: "👆 Открыть запись"
+      label: "Открыть запись 👆"
     }
   }
   if (state.stories.length < 6) {
@@ -201,7 +201,7 @@ const getNews = () => {
   &__stories {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    gap: 10px;
+    gap: 5px;
     padding: 4px 20px;
     margin: 0 -20px 20px -20px;
     box-sizing: content-box;
@@ -255,7 +255,7 @@ const getNews = () => {
       position: relative;
     }
     &-status {
-      border: 2px solid blue;
+      border: 1px solid blue;
       border-radius: 14px;
       width: 80px;
       height: 80px;

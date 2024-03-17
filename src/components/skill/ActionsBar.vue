@@ -48,7 +48,7 @@ defineProps({
       align-items: center;
       justify-content: center;
       width: 100%;
-        font-size: 16px;
+      font-size: 16px;
     }
   }
 }

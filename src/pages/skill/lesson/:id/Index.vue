@@ -133,7 +133,7 @@ if (route.params?.module) {
     }
   }
   &__content {
-    padding: 20px 20px 80px 20px;
+    padding: 20px 20px 100px 20px;
     margin-top: -10px;
     &-text {
       white-space: pre-wrap;

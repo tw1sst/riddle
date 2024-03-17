@@ -40,41 +40,43 @@
         </div>
       </div>
     </a-carousel><br/>
-  
-    <template v-for="category in categories">
-      <template v-if="category?.apps">
-        <div class="services__headblock">
-          <h3>{{ category.name }}</h3>
-          <a href="#">Смотреть все</a>
-        </div>
-        <div class="services__grid">
-          <div v-for="item in category.apps" 
-            @click="$router.push({ name: item.routeName })"
-            class="services__grid-item">
-            <div 
-              v-if="item.type == 'external'"
-              @click="openExternalApp(item)">
-              <img :src="item.iconImg" 
-                class="services__grid-img">
-              <div class="services__grid-title">{{ item.title }}</div>
-            </div>
+    
+    
+<template v-for="category in categories">
+  <template v-if="category?.apps">
+    <div class="services__headblock">
+      <h3>{{ category.name }}</h3>
+      <a href="#">Смотреть все</a>
+    </div>
+    <div class="services__blocks">
+      <div v-for="chank in _.chunk(category.apps, 3)" class="services__blocks-chank">
+        <div v-for="item in chank" 
+           @click="$router.push({ name: item.routeName })"
+          class="services__blocks-item">
+          
+          <img :src="item.iconImg" 
+            v-if="item.type == 'external'"
+            class="services__blocks-img">
+          <div v-else class="services__blocks-icon"><span class="material-icons-round">{{ item.icon }}</span>
+          </div>
             
-            <div v-else>
-              <div 
-                class="services__grid-icon">
-                <span class="material-icons-round">
-                  {{ item.icon }}
-                </span>
-              </div>
-              <div 
-              class="services__grid-title">
-                {{ item.title }}
-              </div>
+          <div class="services__blocks-info">
+            <div class="services__blocks-title">
+              {{ item.title }}
+            </div>
+            <div class="services__blocks-desc">
+              {{ item.desc }}
             </div>
           </div>
-        </div><br/>
-      </template>
-    </template>
+          <div class="services__blocks-arrow">
+            <span class="material-icons-round">arrow_forward_ios</span>
+          </div>
+        </div>
+      </div>
+      
+    </div><br/>
+  </template>
+</template>
     
   </div>
 </div>
@@ -98,6 +100,7 @@
 import FloatingPanel from '@/components/uikit/FloatingPanel.vue'
 import { categories } from '@/server/fakedata/services/Categories.js'
 import { reactive } from "vue";
+import _ from 'lodash';
 
 const state = reactive({
   activeType: "1",
@@ -157,6 +160,78 @@ const mainSliderItems = [
   &__externalApp {
     &-iframe {
       height: 500px;
+    }
+  }
+  &__blocks {
+    gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(5, 80%);
+    gap: 10px;
+    padding: 0 20px;
+    margin: 10px -20px 0 -20px;
+    box-sizing: content-box;
+    overflow-x: auto;
+    &-chank {
+      border-radius: 10px;
+      width: 100%;
+      overflow: hidden;
+    }
+    &-item {
+      background-color: white;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      padding: 10px;
+      border-bottom: 1px solid white;
+      &:last-child {
+        border-radius: 0 0 10px 10px;
+        border-bottom: 1px solid #f4f5f5;
+      }
+    }
+    &-arrow {
+      display: flex;
+      align-items: center;
+      color: #C5C5C5;
+      & span {
+        font-size: 16px;
+      }
+    }
+    &-img {
+      height: 48px;
+      width: 48px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    &-icon {
+      font-size: 16px;
+      background-color: white;
+      padding: 12px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #EFABFF;
+    }
+    &-title {
+      font-size: 12px;
+      color: black;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+    &-desc {
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -moz-box;
+      -moz-box-orient: vertical;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-clamp: 2;
+      box-orient: vertical;
+      margin-left: 10px;
+      color: #C5C5C5;
+      line-height: 16px;
     }
   }
   &__headblock {
@@ -255,48 +330,8 @@ const mainSliderItems = [
   } 
   &__block {
     margin: 20px -20px 0 -20px;
-    background-color: white;
     width: 100vw;
     padding: 20px;
-  }
-  
-  &__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    gap: 20px;
-    padding: 0 20px;
-    margin: 10px -20px 0 -20px;
-    box-sizing: content-box;
-    overflow-x: auto;
-    &-item {
-      display: flex;
-      text-align: center;
-      flex-direction: column;
-      width: 48px;
-    }
-    &-img {
-      height: 48px;
-      width: 48px;
-      border-radius: 10px;
-      object-fit: cover;
-    }
-    &-icon {
-      font-size: 16px;
-      background-color: #f6f6f6;
-      padding: 12px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #EFABFF;
-    }
-    &-title {
-      font-size: 12px;
-      color: black;
-      margin-top: 5px;
-      word-break: break-word;
-    }
   }
 }
 </style>
