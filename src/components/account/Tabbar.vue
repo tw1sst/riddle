@@ -38,10 +38,10 @@ const menuItems = ref([
     icon: "widgets"
   },
   {
-    title: "Свайп",
-    routeName: "ServiceNewsSwipe",
-    path: "/service/news-swipes",
-    icon: "swipe"
+    title: "Чат",
+    routeName: "Chat",
+    path: "/chat",
+    icon: "mail"
   },
   {
     title: "Профиль",

@@ -14,7 +14,7 @@
 </template>
 
 
-<script setup lang="ts">
+<script setup>
 import Header from "@/components/account/Header.vue"
 import Tabbar from "@/components/account/Tabbar.vue"    
 </script>

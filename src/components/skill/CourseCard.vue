@@ -40,12 +40,17 @@
           @click="$router.push({ name: 'SkillCoursePage', params: { id: state.course.id, course: JSON.stringify(state.course) } })"
           type="primary"
           class="card__actions-item card__actions-fullbtn">
-          Бесплатно
+          <template v-if="isCourseStarted">
+            Продолжить
+          </template>
+          <template v-else>
+            Бесплатно
+          </template>
         </a-button>
       </template>
       
       <a-button
-        v-if="props.type == 'full'"
+        v-if="props.type == 'full' && !isCourseStarted"
         class="card__actions-item">
         <span class="material-icons-round">favorite_border</span>
     </a-button>
@@ -57,10 +62,16 @@
 
 <script setup>
 import { reactive } from "vue";
+import { useUserStore } from '@/stores/UserStore.js'
+
+const userStore = useUserStore()
 const props = defineProps({
   course: Object,
   type: String
 });
+
+let isCourseStarted = false
+if (userStore.user.startedCourses.find(x => x.id == props.course.id)) isCourseStarted = true
 
 const state = reactive({
   course: {}

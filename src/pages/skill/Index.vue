@@ -14,27 +14,6 @@
     </a-button>
   </div>
   
-  <div class="skill__continue">
-     <h3>Продолжить обучение</h3>
-      <div class="skill__continue-block">
-       <div class="skill__continue-flex">
-         <div class="skill__continue-title">
-           {{ allCourses[0].name }} • 2/7
-         </div>
-         <a-progress 
-           :trailColor="'#f4f5f5'"
-           :strokeColor="'lime'"
-           :percent="30" 
-           :show-info="false" 
-           status="exception" 
-           size="small" />
-       </div>
-       <div class="skill__continue-button">
-         <span class="material-icons-round">arrow_forward</span>
-       </div>
-     </div>
-  </div>
-  
   <h3>🎓 Riddle Skill</h3><br/>
   <a-carousel arrows dots-class="slick-dots" class="skill__slider" autoplay>
     <div v-for="slide in mainSliderItems" 
@@ -51,7 +30,7 @@
           {{ slide.subtext }}
         </div>
         <div class="skill__slider-button">
-          <a-button  
+          <a-button 
             type="primary">
             {{ slide.buttonText }}
           </a-button>
@@ -59,6 +38,37 @@
       </div>
     </div>
   </a-carousel><br/>
+  
+  <div class="skill__headblock">
+    <h3>Ваши курсы</h3>
+    <a href="#">Смотреть все</a>
+  </div>
+  <div class="skill__caurosel">
+    <div v-for="course in userStore.user.startedCourses" class="skill__caurosel-item">
+      <CourseCard :course="course" :type="'full'"/>
+    </div>
+  </div><br/>
+  
+  <div class="skill__continue">
+     <h3>Продолжить обучение</h3>
+      <div class="skill__continue-block">
+       <div class="skill__continue-flex">
+         <div class="skill__continue-title">
+           {{ state.continueCourse.name }} • 2/7
+         </div>
+         <a-progress 
+           :trailColor="'#f4f5f5'"
+           :strokeColor="'lime'"
+           :percent="30" 
+           :show-info="false" 
+           status="exception" 
+           size="small" />
+       </div>
+       <div @click="$router.push({ name: 'SkillCoursePage', params: { id: state.continueCourse.id, course: JSON.stringify(state.continueCourse) } })" class="skill__continue-button">
+         <span class="material-icons-round">arrow_forward</span>
+       </div>
+     </div>
+  </div><br/>
  
   <div class="skill__headblock">
     <h3>Топ авторов</h3>
@@ -70,6 +80,16 @@
       <AccountBlock 
         :userName="user.name"
         :subText="'Курсов: ' + user.courses"       />
+    </div>
+  </div><br/>
+  
+  <div class="skill__headblock">
+    <h3>Популярные курсы</h3>
+    <a href="#">Смотреть все</a>
+  </div>
+  <div class="skill__caurosel">
+    <div v-for="course in allCourses" class="skill__caurosel-item">
+      <CourseCard :course="course" :type="'full'"/>
     </div>
   </div><br/>
   
@@ -86,16 +106,6 @@
   </div><br/>
   
   <div class="skill__headblock">
-    <h3>Популярные курсы</h3>
-    <a href="#">Смотреть все</a>
-  </div>
-  <div class="skill__caurosel">
-    <div v-for="course in allCourses" class="skill__caurosel-item">
-      <CourseCard :course="course" :type="'full'"/>
-    </div>
-  </div><br/>
-  
-  <div class="skill__headblock">
     <h3>Все курсы</h3>
     <a href="#">Смотреть все</a>
   </div>
@@ -109,14 +119,24 @@
 
 
 <script setup>
+import { useUserStore } from '@/stores/UserStore.js'
 import AccountBlock from "@/components/account/Avatar.vue"
 import { allCourses } from '@/server/fakedata/skill/Courses.js'
 import CourseCard from '@/components/skill/CourseCard.vue'
 import { reactive } from "vue";
 
+const userStore = useUserStore()
 const state = reactive({
   search: "",
+  startedCourses: [],
+  continueCourse: {}
 })
+
+if (userStore.user.startedCourses) {
+  state.startedCourses = userStore.user.startedCourses
+  
+  state.continueCourse = allCourses.find(x => x.id == state.startedCourses[0].id)
+}
 
 const tags = [
   {
@@ -207,7 +227,6 @@ const mainSliderItems = [
 .skill {
   padding: 50px 20px 40px 20px;
   &__continue {
-    margin-bottom: 20px;
     &-block {
       background-color: #3E68F8;
       padding: 10px 20px;

@@ -57,13 +57,13 @@
         </div>
       </div>
     </div> 
-  </div><br/>
+  </div>
   
-  <div class="course__content">
+  <div v-if="state.course.modules.length" class="course__content">
     <h3 class="course__content-title">Модули курса</h3>
      
      <div class="course__content-desc">
-       <a-steps progress-dot :current="-1">
+       <a-steps :current="-1" progress-dot>
         <a-step v-for="module in state.course.modules"
           @click="moduleClick(module)">
           <template #title>
@@ -78,7 +78,7 @@
         </a-step>
       </a-steps>
     </div>
-  </div><br/>
+  </div>
  
   <div class="course__content">
     <h3 class="course__content-title">Прогресс курса</h3>
@@ -86,26 +86,26 @@
       <div class="course__progress-left">
         <div class="course__progress-item">
           <div class="course__progress-badge">
-            0/10
-          </div>
-          <div class="course__progress-text">
-            Видео просмотрено
-          </div>
-        </div>
-        <div class="course__progress-item">
-          <div class="course__progress-badge course__progress-badge2">
-            2/8
+            {{ lessonsComplete }}/{{ lessonsCount }}
           </div>
           <div class="course__progress-text">
             Уроков пройдено
           </div>
         </div>
         <div class="course__progress-item">
-          <div class="course__progress-badge course__progress-badge3">
-            3/10
+          <div class="course__progress-badge course__progress-badge2">
+            {{ quizComplete }}/{{ quizCount }}
           </div>
           <div class="course__progress-text">
             Заданий выполнено
+          </div>
+        </div>
+        <div class="course__progress-item">
+          <div class="course__progress-badge course__progress-badge3">
+            {{ tasksComplete }}/{{ tasksCount }}
+          </div>
+          <div class="course__progress-text">
+            Вопросов пройдено
           </div>
         </div>
       </div>
@@ -113,24 +113,24 @@
         <div class="course__progress-centerText">⏳</div>
         <a-progress 
           class="course__progress-circle1" 
-          :percent="25" 
+          :percent="lessonsComplete / lessonsCount * 100 || 1" 
           type="circle"
           :size="130" />
         <a-progress 
           class="course__progress-circle2" 
-          :percent="50" 
+          :percent="quizComplete / quizCount * 100 || 1" 
           type="circle"
-          :stroke-color="'pink'"
+          :stroke-color="'pink'" he
           :size="108" />
         <a-progress 
           class="course__progress-circle3" 
-          :percent="75" 
+          :percent="tasksComplete / tasksCount * 100 || 1" 
           type="circle" 
           :stroke-color="'lime'"
           :size="88" />
       </div>
     </div>
-  </div><br/>
+  </div>
   
   <a-tabs v-model:activeKey="state.activeTabKey" class="course__tabs">
     <a-tab-pane 
@@ -146,16 +146,18 @@
     <div class="course__content-desc">
       {{ state.course.desc }}
     </div>
-  </div><br/>
+  </div>
     
-  <ActionsBar :course="state.course" /> 
+  <ActionsBar 
+   @moduleClick="moduleClick"
+   :course="state.course" /> 
   
   <FloatingPanel 
     v-if="state.isShowFloating"
     title="Выберите урок"
     @toggleFloating="toggleFloating"
     :isShowFloating="state.isShowFloating"> 
-    <a-steps progress-dot :current="-1">
+    <a-steps class="course__lessons" :current="-1">
       <a-step 
         @click="$router.push({ 
           name: 'SkillLessonPage', 
@@ -166,6 +168,17 @@
             module: JSON.stringify(state.currentModule),
           }})"
         v-for="lesson in state.currentModule?.lessons">
+        <template #icon>
+            <span v-if="lessonsState.find(x => x.id == lesson.id)?.progressStatus == 'complete'">
+              ✅
+            </span>
+            <span v-else-if="lessonsState.find(x => x.id == lesson.id)">
+              ⏳
+            </span>
+            <span v-else>
+              🏁
+            </span>
+          </template>
         <template #title>
           <span>{{ lesson.title }}</span>
         </template>
@@ -192,7 +205,9 @@ import Avatar from '@/components/account/Avatar.vue'
 import ActionsBar from '@/components/skill/ActionsBar.vue'
 import { allCourses } from '@/server/fakedata/skill/Courses.js'
 import FloatingPanel from '@/components/uikit/FloatingPanel.vue'
+import { useUserStore } from '@/stores/UserStore.js'
 
+const userStore = useUserStore()
 const route = useRoute()
 const state = reactive({
   id: null,
@@ -203,13 +218,46 @@ const state = reactive({
   activeTabKey: 1
 });
 
-state.course = allCourses[1]
+state.course = allCourses.find(x => x.id == route.params.id)
 state.id = state.course.id
 
 if (route.params?.course) {
   state.course = JSON.parse(route.params.course)
   state.id = route.params.id
 }
+
+let lessonsState = userStore.user.startedLessons
+let lessonsCount = 0
+let lessonsComplete = 0
+
+let quizCount = 0
+let quizComplete = 0
+
+let tasksCount = 0
+let tasksComplete = 0
+
+state.course?.modules.forEach(module => {
+  lessonsCount += module?.lessons?.length || 0
+  
+  if (module?.lessons) {
+    module?.lessons.forEach(lesson => {
+      if (lesson?.quiz?.tasks) {
+        quizCount++
+        if (lesson?.quiz?.progressStatus == 'complete') quizComplete++
+        lesson?.quiz?.tasks.forEach(task => {
+          tasksCount++
+          if (task?.userAnswerStatus == 'success') tasksComplete++
+        })
+      }
+    })
+  }
+})
+
+lessonsComplete = lessonsState.filter(lesson => lesson.progressStatus == 'complete').length || 0
+
+
+
+console.log(lessonsComplete)
 
 const tabs = [
   {
@@ -230,7 +278,7 @@ const tabs = [
   },
   {
     id: 5,
-    name: "Похожие"
+    name: "Обсуждение"
   },
 ]
 
@@ -431,6 +479,7 @@ if (route.params?.module) {
     padding: 20px;
     border-radius: 20px;
     background-color: white;
+    margin-bottom: 20px;
     &-tag {
       margin-right: 10px;
       display: inline-block;

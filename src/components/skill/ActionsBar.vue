@@ -1,12 +1,30 @@
 <template>
 <div class="actions">
   <div class="actions__buttons"> 
-    <a-button v-if="course.paid?.price_rub" type="primary" class="actions__buttons-item actions__buttons-full">
-      {{ (course.paid?.price_rub?.toLocaleString() + " ₽") }} 
+    <a-button 
+        v-if="startedCourse" 
+        type="primary" 
+        @click="$emit('moduleClick', state.course.modules[0])"
+        class="actions__buttons-item actions__buttons-full">
+      ⏳ Продолжить
     </a-button>
-    <a-button v-else type="primary" class="actions__buttons-item actions__buttons-full">
-      Начать бесплатно
+    <a-button v-else-if="state.course.paid?.price_rub" type="primary" class="actions__buttons-item actions__buttons-full">
+      {{ (state.course.paid?.price_rub?.toLocaleString() + " ₽") }}
     </a-button>
+    
+    <a-popconfirm v-else 
+      placement="top" 
+      ok-text="Да" 
+      cancel-text="Нет" 
+      @confirm="courseStart()">
+      <template #title>
+        <p>Вы уверены что хотите начать этот курс?</p>
+        <p>Курс будет добавлен в вашу библиотеку</p>
+      </template>
+      <a-button type="primary" class="actions__buttons-item actions__buttons-full">
+        🚀 Начать бесплатно
+      </a-button>
+    </a-popconfirm>
     
     <a-button class="actions__buttons-item">
       <span class="material-icons-round">chat</span>
@@ -20,10 +38,37 @@
 </template>
 
 
-<script setup lang="ts">
-defineProps({
+<script setup>
+import { reactive, computed } from "vue";
+import { message } from 'ant-design-vue';
+import { useUserStore } from '@/stores/UserStore.js'
+
+const userStore = useUserStore()
+const props = defineProps({
   course: Object
 })
+const state = reactive({
+  startedCourse: {},
+  course: {}
+})
+
+if (Object.keys(props.course).length !== 0) {
+  state.course = props.course 
+}
+
+if (userStore.user.startedCourses) {
+  state.startedCourse = userStore.user.startedCourses.find(x => x.id == state.course.id)
+}
+
+const startedCourse = computed(() => { 
+   return userStore.user.startedCourses.find(x => x.id == state.course.id)
+})
+
+const courseStart = () => {
+  userStore.user.startedCourses.push(state.course)
+  message.success('Курс ' + state.course.name + ' успешно начат')
+}
+
 </script>
 
 

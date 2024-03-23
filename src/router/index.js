@@ -5,6 +5,8 @@ import AccountRegister from "@/pages/auth/Register.vue";
 
 import AccountHome from "@/pages/account/Index.vue";
 
+import Chat from "@/pages/chat/Index.vue";
+
 import AutoMarketItem from "@/pages/services/auto/market/:id.vue";
 import AutoMarket from "@/pages/services/auto/market/Index.vue";
 import AutoSearchResult from "@/pages/services/auto/market/SearchResult.vue";
@@ -36,6 +38,11 @@ const routes = [
     path: "/post/:id",
     name: "ContentPostPage",
     component: ContentPostPage,
+  },
+  {
+    path: "/chat",
+    name: "Chat",
+    component: Chat,
   },
   {
     path: "/login",
@@ -114,9 +121,8 @@ const routes = [
   },
 ];
 
-
-const router = createRouter({
-  history: createWebHistory(),
+const router = createRouter({   
+  history: createWebHistory(),   
   routes,
   saveScrollPosition: false,
   scrollBehavior (to, from, savedPosition) {

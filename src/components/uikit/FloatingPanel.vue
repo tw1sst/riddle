@@ -1,12 +1,6 @@
 <template>
 <div @click="$emit('toggleFloating')" class="floating__bg"></div>
 <div v-if="isShowFloating" class="floating">
-  <div class="floating__header">
-    <h3>{{ title }}</h3>
-      <span 
-        @click="$emit('toggleFloating')"
-        class="material-icons-round">close</span>
-  </div>
   <div class="floating__separator">
     <span 
       @click="$emit('toggleFloating')"
@@ -14,6 +8,13 @@
     </span>
   </div>
   
+  <div class="floating__header">
+    <h3>{{ title }}</h3>
+    <span 
+      @click="$emit('toggleFloating')"
+      class="material-icons-round">close</span>
+  </div>
+      
   <div class="floating__content">
     <slot />
   </div>
@@ -47,7 +48,7 @@ defineProps({
     position: fixed;
     padding: 10px 20px;
     background-color: #fff;
-    z-index: 250;
+    z-index: 201;
     width: 100%;
     display: flex;
     justify-content: space-between;

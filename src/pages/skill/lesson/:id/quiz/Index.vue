@@ -66,8 +66,7 @@
       <div v-for="task in state.quiz.tasks" 
         :class="task.userAnswerStatus ==  'wrong' ? 'quiz__resultProgress-wrong' : '' ||
         task.userAnswerStatus ==  'success' ? 'quiz__resultProgress-success' : ''"
-        class="quiz__resultProgress-item">
-      
+        class="quiz__resultProgress-item"> 
       </div>
     </div>
   </div>
@@ -112,7 +111,7 @@
         v-if="state.currentTask.index > 1 && state.currentTask?.userAnswerStatus != 'wrong'"
         @click="goPreTask()"
         class="quiz__buttons-item">
-        Назад
+        ⬅️ Назад
       </a-button>
     
       <a-button 
@@ -120,14 +119,14 @@
         type="primary" 
         @click="goNextTask()"
         class="quiz__buttons-item">
-        Далее
+        ➡️ Далее
       </a-button>
       
       <a-button 
         v-else-if="state.currentTask?.userAnswerStatus == 'wrong'"
         @click="clearUserAnswer()"
         class="quiz__buttons-item">
-        Попробовать еще раз
+        🔄 Попробовать еще раз
       </a-button>
       
       <a-button 
@@ -135,7 +134,7 @@
         type="primary" 
         @click="answerTheQuest()"
         class="quiz__buttons-item">
-        Проверить
+        👀 Проверить
       </a-button>
       
       <a-button 
@@ -143,7 +142,7 @@
         type="primary" 
         @click="goNextTask()"
         class="quiz__buttons-item">
-        Далее
+        ➡️ Далее
       </a-button>
     </div>
   </div>
@@ -153,14 +152,14 @@
       <a-button 
         @click="goPreTask()"
         class="quiz__buttons-item">
-        Назад
+        ⬅️ Назад
       </a-button>
       <a-button
         :disabled="getPersProgress <= state.quiz.minPers"
         type="primary"
-        @click="goPreTask()"
+        @click="completeQuiz()"
         class="quiz__buttons-item">
-        Завершить
+        ✅ Завершить
       </a-button>
     </div>
   </div>
@@ -170,37 +169,58 @@
 
 <script setup>
 import { reactive, computed, ref, onMounted} from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { lessons } from '@/server/fakedata/skill/Lessons.js'
 import { message } from 'ant-design-vue';
+import { useUserStore } from '@/stores/UserStore.js'
 
 import SimpleQuest from '@/components/skill/tasks/SimpleQuest.vue'
 import SelectOrder from '@/components/skill/tasks/SelectOrder.vue'
 import SelectCorrect from '@/components/skill/tasks/SelectCorrect.vue'
 
+const userStore = useUserStore()
 const route = useRoute()
+const router = useRouter()
 const state = reactive({
-  id: null,
   quiz: {},
+  lesson: {},
   currentTask: {},
   userAnswer: "",
   isResult: false
 });
 
-state.quiz = lessons[1].quiz
-state.id = state.quiz.id
-
 if (route.params?.quiz) {
   state.quiz = JSON.parse(route.params.quiz)
-  state.id = route.params.id
 }
+
+if (route.params?.id) {
+  state.lesson = lessons.find(x => x.id == route.params.id)
+  state.quiz = state.lesson.quiz
+}
+
+let lessonsState = userStore.user.startedLessons
+if (!lessonsState.find(x => x.id == state.lesson.id)) {
+  lessonsState.push(state.lesson)
+}
+let lessonState = lessonsState.find(x => x.id == state.lesson.id)
 
 if (state.quiz.tasks) {
   state.currentTask = state.quiz.tasks[0]
 }
 
+const completeQuiz = () => {  
+  lessonState.quiz.progressStatus = "complete"
+  
+  router.push({ name: 'SkillLessonPage', 
+     params: {
+       id: state.lesson.id,
+       lesson: JSON.stringify(state.lesson)
+     }
+   })
+}
+
 const updateTask = (userAnswer) => {
-	state.userAnswer = userAnswer
+  state.userAnswer = userAnswer
 }
 
 const goNextTask = () => {
