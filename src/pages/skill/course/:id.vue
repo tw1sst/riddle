@@ -175,6 +175,10 @@
       {{ state.course.desc }}
     </div>
   </div>
+  
+  <div v-else-if="state.activeTabKey == 3" class="course__content">
+    <Rates :course="state.course"/>
+  </div>
     
   <ActionsBar 
    @moduleClick="moduleClick"
@@ -227,6 +231,7 @@ import ActionsBar from '@/components/skill/ActionsBar.vue'
 import { allCourses } from '@/server/fakedata/skill/Courses.js'
 import FloatingPanel from '@/components/uikit/FloatingPanel.vue'
 import { useUserStore } from '@/stores/UserStore.js'
+import Rates from '@/components/content/Rates.vue'
 
 const userStore = useUserStore()
 const route = useRoute()
@@ -316,9 +321,9 @@ state.baseInfoItems = [
     count: state.course.modules.length
   },
   {
-    title: "Уровень для старта",
-    icon: "outlined_flag",
-    count: state?.course.level
+    title: "Уроков в курсе",
+    icon: "menu_book",
+    count: lessonsCount
   },
   {
     title: "Рейтинг курса",
