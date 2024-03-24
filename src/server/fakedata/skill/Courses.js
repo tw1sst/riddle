@@ -17,7 +17,7 @@ const allCourses = [
       enable: true,
       price_rub: 1499.99
     },
-    modules: []
+    modules: [],
   },
   {
     id: 2,
@@ -34,6 +34,41 @@ const allCourses = [
     tags: ["Разработка", "TS", "TypeScript"],
     level: "Middle",
     paid: {},
+    reviews: [
+      {
+        id: 1,
+        rate: 5,
+        user: {
+          name: "Василий Иванов",
+        },
+        comment: "Хороший курс, мне понравился",
+        entity_id: 2,
+        type: "course_review",
+        date: "23.03.2024 12:10"
+      },
+      {
+        id: 2,
+        rate: 3,
+        user: {
+          name: "Иван Фролов",
+        },
+        comment: "Курс сплошная вода, ничего полезного, сплошное разочарование",
+        entity_id: 2,
+        type: "course_review",
+        date: "23.03.2024 18:16"
+      },
+      {
+        id: 3,
+        rate: 5,
+        user: {
+          name: "Григорий Власов",
+        },
+        comment: "Отличный курс для новичков",
+        entity_id: 2,
+        type: "course_review",
+        date: "23.03.2024 21:40"
+      }
+    ],
     modules: [
       {
         id: 1,

@@ -177,7 +177,11 @@
   </div>
   
   <div v-else-if="state.activeTabKey == 3" class="course__content">
-    <Rates :course="state.course"/>
+    <Rates 
+     v-if="state.course?.reviews"
+     :entity="state.course"
+     :reviews="state.course?.reviews"
+    />
   </div>
     
   <ActionsBar 
