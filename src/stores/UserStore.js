@@ -26,9 +26,8 @@ export const useUserStore = defineStore('userStore', {
           level: "Middle",
         }
       ],
-      startedLessons: [
-        
-      ]
+      startedLessons: [],
+      startedQuizes: [],
     }
   })
 })

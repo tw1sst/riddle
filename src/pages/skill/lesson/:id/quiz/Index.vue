@@ -193,7 +193,7 @@ if (route.params?.quiz) {
   state.quiz = JSON.parse(route.params.quiz)
 }
 
-if (route.params?.id) {
+if (route.params?.id) { 
   state.lesson = lessons.find(x => x.id == route.params.id)
   state.quiz = state.lesson.quiz
 }

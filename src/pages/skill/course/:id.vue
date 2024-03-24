@@ -35,6 +35,16 @@
   <div class="course__content">
     <h2 class="course__content-title">{{ state.course.name }}</h2>
     <span class="course__content-badge">Разработка</span>
+    
+    <div class="course__rate">
+      <a-rate disabled allow-half
+        :tooltips="state.course.rate"
+        v-model:value="state.course.rate.stars" />
+      <span>
+        {{ state.course.rate.stars }} 
+        ({{ state.course.rate.rates }})
+      </span>
+    </div>
    
     <div class="course__content-tags">
       <template v-for="tag in state.course.tags">
@@ -63,9 +73,17 @@
     <h3 class="course__content-title">Модули курса</h3>
      
      <div class="course__content-desc">
-       <a-steps :current="-1" progress-dot>
+       <a-steps :current="-1">
         <a-step v-for="module in state.course.modules"
           @click="moduleClick(module)">
+          <template #icon>
+            <span v-if="checkLessonsComplete(module)">
+              ✅
+            </span>
+            <span v-else>
+              📚
+            </span>
+          </template>
           <template #title>
             <span>{{ module.title }}</span>
           </template>
@@ -115,18 +133,28 @@
           class="course__progress-circle1" 
           :percent="lessonsComplete / lessonsCount * 100 || 1" 
           type="circle"
+          :stroke-color="{
+            '0%': 'violet',
+            '100%': 'violet',
+          }"
           :size="130" />
         <a-progress 
           class="course__progress-circle2" 
           :percent="quizComplete / quizCount * 100 || 1" 
           type="circle"
-          :stroke-color="'pink'" he
+          :stroke-color="{
+            '0%': 'pink',
+            '100%': 'pink',
+          }"
           :size="108" />
         <a-progress 
           class="course__progress-circle3" 
           :percent="tasksComplete / tasksCount * 100 || 1" 
           type="circle" 
-          :stroke-color="'lime'"
+          :stroke-color="{
+            '0%': 'lime',
+            '100%': 'lime',
+          }"
           :size="88" />
       </div>
     </div>
@@ -168,16 +196,10 @@
             module: JSON.stringify(state.currentModule),
           }})"
         v-for="lesson in state.currentModule?.lessons">
-        <template #icon>
-            <span v-if="lessonsState.find(x => x.id == lesson.id)?.progressStatus == 'complete'">
-              ✅
-            </span>
-            <span v-else-if="lessonsState.find(x => x.id == lesson.id)">
-              ⏳
-            </span>
-            <span v-else>
-              🏁
-            </span>
+          <template #icon>
+            <span v-if="lessonsState.find(x => x.id == lesson.id)?.progressStatus == 'complete'">✅</span>
+            <span v-else-if="lessonsState.find(x => x.id == lesson.id)">⏳</span>
+            <span v-else>🔥</span>
           </template>
         <template #title>
           <span>{{ lesson.title }}</span>
@@ -187,8 +209,7 @@
         </template>
         <template v-if="lesson.quiz" #subTitle>
           <div class="course__lessons-sub">
-            <span class="course__lessons-icon material-icons-round">quiz</span>
-            В уроке есть тест
+            📝 В уроке есть тест
           </div>
         </template>
       </a-step>
@@ -241,12 +262,17 @@ state.course?.modules.forEach(module => {
   
   if (module?.lessons) {
     module?.lessons.forEach(lesson => {
+      let lessonProgress = lessonsState.find(x => x.id == lesson.id)
+      
       if (lesson?.quiz?.tasks) {
         quizCount++
-        if (lesson?.quiz?.progressStatus == 'complete') quizComplete++
+        if (lessonProgress?.progressStatus == 'complete') quizComplete++
+        
         lesson?.quiz?.tasks.forEach(task => {
           tasksCount++
-          if (task?.userAnswerStatus == 'success') tasksComplete++
+          let taskProgress = lessonProgress?.quiz?.tasks.find(x => x.id == task.id)
+          
+          if (taskProgress?.userAnswerStatus == 'success') tasksComplete++
         })
       }
     })
@@ -254,10 +280,6 @@ state.course?.modules.forEach(module => {
 })
 
 lessonsComplete = lessonsState.filter(lesson => lesson.progressStatus == 'complete').length || 0
-
-
-
-console.log(lessonsComplete)
 
 const tabs = [
   {
@@ -305,6 +327,18 @@ state.baseInfoItems = [
   },
 ]
 
+const checkLessonsComplete = (module) => {
+  if (!module.lessons) return false
+  
+  let num = 0
+  module?.lessons.forEach(lesson => {
+    if (lessonsState.find(x => x.id == lesson.id)?.progressStatus == 'complete') {
+     num++
+    }
+  })
+  if (num == module.lessons.length) return true
+}
+
 const toggleFloating = () => {
   state.isShowFloating = !state.isShowFloating
 }
@@ -324,6 +358,17 @@ if (route.params?.module) {
 .course {
   margin-bottom: 40px;
   padding-bottom: 60px;
+  &__rate {
+    margin-bottom: 10px;
+    font-size: 12px;
+    & * {
+      font-size: 16px;
+    }
+    & span {
+      font-size: 14px;
+      margin-left: 5px;
+    }
+  }
   &__progress {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -339,7 +384,7 @@ if (route.params?.module) {
     &-badge {
       padding: 3px 5px;
       border-radius: 10px;
-      background-color: #3E68F8;;
+      background-color: violet;
       font-weight: 600;
       display: inline-block;
       color: white;
@@ -379,10 +424,6 @@ if (route.params?.module) {
     &-sub {
       display: flex;
       align-items: center;
-    }
-    &-icon {
-      font-size: 14px;
-      margin-right: 5px;
     }
   }
   &__head {

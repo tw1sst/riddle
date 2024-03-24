@@ -9,7 +9,7 @@
       ⏳ Продолжить
     </a-button>
     <a-button v-else-if="state.course.paid?.price_rub" type="primary" class="actions__buttons-item actions__buttons-full">
-      {{ (state.course.paid?.price_rub?.toLocaleString() + " ₽") }}
+      🛍  {{ (state.course.paid?.price_rub?.toLocaleString() + " ₽") }}
     </a-button>
     
     <a-popconfirm v-else 
@@ -27,11 +27,11 @@
     </a-popconfirm>
     
     <a-button class="actions__buttons-item">
-      <span class="material-icons-round">chat</span>
+      💬
     </a-button>
     
     <a-button class="actions__buttons-item">
-      <span class="material-icons-round">favorite_border</span>
+      💙
     </a-button>
   </div>
 </div>

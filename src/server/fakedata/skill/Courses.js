@@ -38,7 +38,7 @@ const allCourses = [
       {
         id: 1,
         title: '1. Основы',
-        description: "Изучите основы разработки",
+        description: "Изучите основы разработки"
       },
       {
         id: 2,

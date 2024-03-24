@@ -45,7 +45,7 @@
   </div>
   <div class="skill__caurosel">
     <div v-for="course in userStore.user.startedCourses" class="skill__caurosel-item">
-      <CourseCard :course="course" :type="'full'"/>
+      <CourseCard :course="course"/>
     </div>
   </div><br/>
   
