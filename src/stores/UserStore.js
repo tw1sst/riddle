@@ -7,7 +7,7 @@ export const useUserStore = defineStore('userStore', {
       name: "Zorin36",
       email: "likovdenis12@gmail.com",
       diamonds: 214,
-      riddleCoins: 0,
+      riddleCoins: 136.84,
       raiting: 418.00,
       startedCourses: [
         {

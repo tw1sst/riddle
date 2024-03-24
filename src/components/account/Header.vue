@@ -13,9 +13,11 @@
      </div>
      
      <div class="header__actions">
-       <div class="header__actions-alerts">
-         <span class="material-icons-round header__actions-alerts__icon">search</span>
-         <span class="material-icons-round header__actions-alerts__icon">notifications_none</span>
+       <div class="header__balance">
+          <div>
+            {{ userStore.user.riddleCoins }}
+          </div>
+          <span class="material-icons-round header__balance-icon">token</span>
        </div>
        <a-avatar size="middle" :src="userAvatar" shape="square">
         </a-avatar>
@@ -47,6 +49,20 @@
   padding: 0 20px;
   z-index: 10;
   background-color: white;
+  &__balance {
+    display: grid;
+    gap: 5px;
+    grid-template-columns: 1fr auto; 
+    border-radius: 5px;
+    padding: 3px 10px;
+    color: violet;
+    font-weight: 600;
+    margin-right: 5px;
+    transition: 0.3s;
+    &:hover {
+      background-color: #f4f5f5;
+    }
+  }
   &__account {
     display: flex;
     gap: 10px;
@@ -67,15 +83,6 @@
   &__actions {
     display: flex;
     align-items: center;
-    &-alerts {
-      display: grid;
-      gap: 10px;
-      grid-template-columns: auto auto;
-      margin-right: 10px;
-      &__icon {
-        font-size: 24px;
-      }
-    }
   }
 }
 </style>

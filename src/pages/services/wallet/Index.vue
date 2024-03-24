@@ -80,8 +80,10 @@
 
 
 <script setup>
-import {reactive } from "vue";
+import { reactive } from "vue";
+import { useUserStore } from '@/stores/UserStore.js'
 
+const userStore = useUserStore()
 const state = reactive({
   activeType: "1"
 });
@@ -98,7 +100,7 @@ const userTokens = [
     id: 2,
     name: "RiddleVerse Coin",
     code: "GOLD",
-    userBalance: 0.0025,
+    userBalance: userStore.user.riddleCoins,
     tokenPrice: 24.53,
   },
   {
