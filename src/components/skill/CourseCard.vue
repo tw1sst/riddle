@@ -26,34 +26,28 @@
         </template>
       </span>
     </div>
-    <div class="card__actions" :class="props.type != 'full' ? 'card__actions-one' : ''">
-      <template v-if="state.course.paid?.enable">
-        <a-button
-          @click="$router.push({ name: 'SkillCoursePage', params: { id: state.course.id, course: JSON.stringify(state.course) } })"
-          type="primary"
-          class="card__actions-item card__actions-fullbtn">
-          {{ state.course.paid.price_rub }} ₽
-        </a-button>
-      </template>
-      <template v-else-if="!state.course.paid?.enable">
-        <a-button
-          @click="$router.push({ name: 'SkillCoursePage', params: { id: state.course.id, course: JSON.stringify(state.course) } })"
-          type="primary"
-          class="card__actions-item card__actions-fullbtn">
-          <template v-if="isCourseStarted">
-            Продолжить
-          </template>
-          <template v-else>
-            Бесплатно
-          </template>
-        </a-button>
-      </template>
+    <div class="card__actions" @click="$router.push({ name: 'SkillCoursePage', params: { id: state.course.id, course: JSON.stringify(state.course) } })" :class="props.type != 'full' ? 'card__actions-one' : ''">
+      <div class="card__actions-pay" v-if="state.course.paid?.enable">
+        <span class="material-icons-round">token</span>
+        <div>{{ state.course.paid.price_tokens }}</div>
+      </div>
       
-      <a-button
+      <div v-else-if="!state.course.paid?.enable" class="card__actions-pay">
+        <template v-if="isCourseStarted">
+          <span class="material-icons-round">navigate_next</span>
+          Продолжить
+        </template>
+        <template v-else>
+          <span class="material-icons-round">money_off</span>
+          Бесплатно
+        </template>
+      </div>
+      
+      <div
         v-if="props.type == 'full' && !isCourseStarted"
         class="card__actions-item">
         <span class="material-icons-round">favorite_border</span>
-    </a-button>
+      </div>
     </div>
   </div>
 </div>
@@ -107,7 +101,7 @@ if (Object.keys(props.course).length !== 0) {
   &__info {
     display: flex;
     flex-direction: column;
-    padding: 10px 10px 20px 10px;
+    padding: 10px 10px 10px 10px;
   }
   &__title {
     font-weight: 600;
@@ -136,16 +130,29 @@ if (Object.keys(props.course).length !== 0) {
     }
   }
   &__actions {
-    margin-top: 10px;
-    display: grid;
-    grid-template-columns: 1fr auto;
+    margin-top: 5px;
+    display: flex;
     width: 100%;
+    justify-content: space-between;
     gap: 10px;
-    &-one {
-      grid-template-columns: 1fr;
+    &-pay {
+      display: grid;
+      gap: 5px;
+      grid-template-columns: 1fr auto; 
+      border-radius: 5px;
+      padding: 5px 0;
+      color: violet;
+      font-weight: 600;
     }
     &-item {
-      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 5px;
+      padding: 5px;
+      color: violet;
+      font-weight: 600;
+      
     }
   }
 }

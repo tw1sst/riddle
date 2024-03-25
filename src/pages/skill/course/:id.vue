@@ -80,6 +80,9 @@
             <span v-if="checkLessonsComplete(module)">
               ✅
             </span>
+            <span v-else-if="module?.paid?.enable == true">
+             💸
+            </span>
             <span v-else>
               📚
             </span>
@@ -88,7 +91,11 @@
             <span>{{ module.title }}</span>
           </template>
           <template #description>
-            <span>{{ module.description }}</span>
+            <p>{{ module.description }}</p>
+            <button v-if="module?.paid?.enable == true" class="course__buy-button">
+              <div>Купить модуль за {{ module.paid.price_tokens }}</div>
+              <span class="material-icons-round course__buy-icon">token</span>
+            </button>
           </template>
           <template v-if="module?.lessons?.length" #subTitle>
             <span>Уроков: {{ module?.lessons?.length }} </span>
@@ -128,7 +135,16 @@
         </div>
       </div>
       <div class="course__progress-right">
-        <div class="course__progress-centerText">⏳</div>
+        <div v-if="lessonsComplete == lessonsCount && 
+        quizComplete == quizCount && 
+        tasksComplete == tasksCount && 
+        lessonsComplete != 0" 
+        class="course__progress-centerText">
+          ✅
+        </div>
+         <div v-else class="course__progress-centerText">
+          ⏳
+        </div>
         <a-progress 
           class="course__progress-circle1" 
           :percent="lessonsComplete / lessonsCount * 100 || 1" 
@@ -168,9 +184,7 @@
       :tab="tab.name" />
   </a-tabs>
   <div v-if="state.activeTabKey == 1" class="course__content">
-    <h3 class="course__content-title">
-      Описание курса
-    </h3>
+    <h3 class="course__content-title">Описание</h3>
     <div class="course__content-desc">
       {{ state.course.desc }}
     </div>
@@ -366,7 +380,22 @@ if (route.params?.module) {
 <style lang="scss" scoped>  
 .course {
   margin-bottom: 40px;
-  padding-bottom: 60px;
+  padding-bottom: 80px;
+  &__buy {
+    margin-top: 10px;
+    &-button {
+      border: none;
+      background: none;
+      display: flex;
+      align-items: center;
+      color: violet;
+      font-weight: 600;
+      padding: 0;
+    }
+    &-icon {
+     margin-left: 5px;
+    }
+  }
   &__rate {
     margin-bottom: 10px;
     font-size: 12px;

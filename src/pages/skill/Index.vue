@@ -49,7 +49,7 @@
     </div>
   </div><br/>
   
-  <div class="skill__continue">
+  <div v-if="state.continueCourse" class="skill__continue">
      <h3>Продолжить обучение</h3>
       <div class="skill__continue-block">
        <div class="skill__continue-flex">
@@ -58,7 +58,7 @@
          </div>
          <a-progress 
            :trailColor="'#f4f5f5'"
-           :strokeColor="'lime'"
+           :strokeColor="'violet'"
            :percent="30" 
            :show-info="false" 
            status="exception" 
@@ -67,9 +67,9 @@
        <div @click="$router.push({ name: 'SkillCoursePage', params: { id: state.continueCourse.id, course: JSON.stringify(state.continueCourse) } })" class="skill__continue-button">
          <span class="material-icons-round">arrow_forward</span>
        </div>
-     </div>
-  </div><br/>
- 
+     </div><br/>
+  </div>
+  
   <div class="skill__headblock">
     <h3>Топ авторов</h3>
     <a href="#">Смотреть все</a>
@@ -228,10 +228,10 @@ const mainSliderItems = [
   padding: 50px 20px 40px 20px;
   &__continue {
     &-block {
-      background-color: #3E68F8;
+      background-color: white;
       padding: 10px 20px;
       border-radius: 10px;
-      color: white;
+      color: black;
       margin-top: 10px;
       display: flex;
       align-items: center;
@@ -245,12 +245,13 @@ const mainSliderItems = [
     }
     &-button {
       border-radius: 50%;
-      background-color: lime;
+      background-color: #f4f5f5;
       display: flex;
       align-items: center;
       justify-content: center;
       width: 38px;
       height: 38px;
+      color: violet;
     }
     &-title {
       font-weight: 600;

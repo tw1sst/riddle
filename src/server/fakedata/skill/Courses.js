@@ -15,7 +15,8 @@ const allCourses = [
     level: "June", // middle, senior, advanced, other
     paid: {
       enable: true,
-      price_rub: 1499.99
+      price_rub: 1499.99,
+      price_tokens: 0.025
     },
     modules: [],
   },
@@ -79,6 +80,10 @@ const allCourses = [
         id: 2,
         title: "Описание переменных",
         description: "текст урока 3",
+        paid: {
+          enable: true,
+          price_tokens: 0.005
+        },
         lessons: [
         {
           id: 1,

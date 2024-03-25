@@ -8,8 +8,9 @@
         class="actions__buttons-item actions__buttons-full">
       ⏳ Продолжить
     </a-button>
-    <a-button v-else-if="state.course.paid?.price_rub" type="primary" class="actions__buttons-item actions__buttons-full">
-      🛍  {{ (state.course.paid?.price_rub?.toLocaleString() + " ₽") }}
+    <a-button v-else-if="state.course.paid?.price_tokens" type="primary" class="actions__buttons-item actions__buttons-full">
+        Купить за {{ state.course.paid.price_tokens }}
+      <span class="material-icons-round">token</span>
     </a-button>
     
     <a-popconfirm v-else 
@@ -94,6 +95,9 @@ const courseStart = () => {
       justify-content: center;
       width: 100%;
       font-size: 16px;
+      & span {
+        margin-left: 5px;
+      }
     }
   }
 }
