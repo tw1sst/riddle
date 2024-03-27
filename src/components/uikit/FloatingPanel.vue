@@ -1,13 +1,7 @@
 <template>
 <div @click="$emit('toggleFloating')" class="floating__bg"></div>
-<div v-if="isShowFloating" class="floating">
-  <div class="floating__separator">
-    <span 
-      @click="$emit('toggleFloating')"
-      class="floating__separator-block">
-    </span>
-  </div>
-  
+
+<div v-if="isShowFloating" class="floating" :class="isShowFloating ? '' : 'floating__close'"> 
   <div class="floating__header">
     <h3>{{ title }}</h3>
     <span 
@@ -19,6 +13,7 @@
     <slot />
   </div>
 </div>
+
 </template>
 
 
@@ -31,6 +26,70 @@ defineProps({
 
 
 <style scoped lang="scss">
+.floating {
+  -webkit-animation-name: slideInTop;
+  animation-name: slideInTop;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  &__close {
+    -webkit-animation-name: slideInBottom;
+    animation-name: slideInBottom;
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+}
+@-webkit-keyframes slideInTop {
+  0% {
+	  -webkit-transform: translateY(100%);
+	  transform: translateY(100%);
+	  visibility: visible;
+  }
+  100% {
+	  -webkit-transform: translateY(0);
+	  transform: translateY(0);
+  }
+}
+@keyframes slideInTop {
+  0% {
+	  -webkit-transform: translateY(100%);
+	  transform: translateY(100%);
+	  visibility: visible;
+  }
+  100% {
+	  -webkit-transform: translateY(0);
+	  transform: translateY(0);
+  }
+} 
+
+@-webkit-keyframes slideInBottom {
+  0% {
+  	-webkit-transform: translateY(0);
+  	transform: translateY(0);
+  	visibility: visible;
+  }
+  100% {
+  	-webkit-transform: translateY(100%);
+  	transform: translateY(100%);
+  	display: none;
+  }
+}
+@keyframes slideInBottom {
+  0% {
+  	-webkit-transform: translateY(0);
+  	transform: translateY(0);
+  	visibility: visible;
+  }
+  100% {
+  	-webkit-transform: translateY(100%);
+  	transform: translateY(100%);
+  }
+} 
+
+
 .floating {
   width: 100%;
   height: auto;
@@ -46,6 +105,7 @@ defineProps({
   &__header {
     heigth: 10px;
     position: fixed;
+    top: 0;
     padding: 10px 20px;
     background-color: #fff;
     z-index: 201;

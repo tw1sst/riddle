@@ -8,7 +8,10 @@
         class="actions__buttons-item actions__buttons-full">
       ⏳ Продолжить
     </a-button>
-    <a-button v-else-if="state.course.paid?.price_tokens" type="primary" class="actions__buttons-item actions__buttons-full">
+    <a-button v-else-if="state.course.paid?.price_tokens" 
+      type="primary" 
+      @click="buyModalTrigger(state.course, 'course')"
+      class="actions__buttons-item actions__buttons-full">
         Купить за {{ state.course.paid.price_tokens }}
       <span class="material-icons-round">token</span>
     </a-button>
@@ -36,6 +39,12 @@
     </a-button>
   </div>
 </div>
+
+<BuyModal v-if="state.isShowBuyModal"
+  @buyModalTrigger="buyModalTrigger"
+  :model="state.course"
+  :type="'course'"
+  :isShowBuyModal="state.isShowBuyModal"/>
 </template>
 
 
@@ -43,6 +52,7 @@
 import { reactive, computed } from "vue";
 import { message } from 'ant-design-vue';
 import { useUserStore } from '@/stores/UserStore.js'
+import BuyModal from '@/components/pay/BuyModal.vue'
 
 const userStore = useUserStore()
 const props = defineProps({
@@ -50,7 +60,8 @@ const props = defineProps({
 })
 const state = reactive({
   startedCourse: {},
-  course: {}
+  course: {},
+  isShowBuyModal: false,
 })
 
 if (Object.keys(props.course).length !== 0) {
@@ -70,6 +81,9 @@ const courseStart = () => {
   message.success('Курс ' + state.course.name + ' успешно начат')
 }
 
+const buyModalTrigger = (modal, type) => {
+  state.isShowBuyModal = !state.isShowBuyModal
+}
 </script>
 
 

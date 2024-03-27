@@ -10,8 +10,9 @@
         :tooltips="state.ratesCount"
         v-model:value="state.totalRate" />
       <p>
-        {{ state.totalRate }} 
-        (оценок: {{ props.reviews.length }})
+        На основе {{ props.reviews.length }}
+        <br/>
+        оценок
       </p>
     </div>
     <div class="rates__head-right">
@@ -106,6 +107,7 @@ state.totalRate = (rate / props.reviews.length).toFixed(1)
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      text-align: center;
       & * {
         font-size: 14px;
       }

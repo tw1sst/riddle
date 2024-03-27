@@ -201,7 +201,7 @@
   <ActionsBar 
    @moduleClick="moduleClick"
    :course="state.course" /> 
-  
+ 
   <FloatingPanel 
     v-if="state.isShowFloating"
     title="Выберите урок"
