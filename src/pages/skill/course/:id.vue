@@ -183,14 +183,14 @@
       :key="tab.id" 
       :tab="tab.name" />
   </a-tabs>
-  <div v-if="state.activeTabKey == 1" class="course__content">
+  <div v-if="state.activeTabKey == 1" class="course__tabs-content">
     <h3 class="course__content-title">Описание</h3>
     <div class="course__content-desc">
       {{ state.course.desc }}
     </div>
   </div>
   
-  <div v-else-if="state.activeTabKey == 3" class="course__content">
+  <div v-else-if="state.activeTabKey == 3" class="course__tabs-content">
     <Rates 
      v-if="state.course?.reviews"
      :entity="state.course"
@@ -457,6 +457,10 @@ if (route.params?.module) {
     border-radius: 10px 10px 0 0;
     background-color: white;
     padding: 0 20px;
+    &-content {
+      padding: 20px;
+      background-color: white;
+    }
   }
   &__lessons {
     &-sub {

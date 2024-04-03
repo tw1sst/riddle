@@ -41,7 +41,6 @@
       </div>
     </a-carousel><br/>
     
-    
 <template v-for="category in categories">
   <template v-if="category?.apps">
     <div class="services__headblock">
@@ -77,7 +76,7 @@
     </div><br/>
   </template>
 </template>
-    
+
   </div>
 </div>
 
@@ -86,12 +85,10 @@
   :title="state.selectedExternalApp.title"
   @toggleFloating="toggleExternalApp"
   :isShowFloating="state.selectedExternalApp">    
-   
    <iframe 
      class="services__externalApp-iframe"
      :src="state.selectedExternalApp.link">
    </iframe>
-   
 </FloatingPanel>
 </template>
 

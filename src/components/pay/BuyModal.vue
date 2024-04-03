@@ -4,6 +4,7 @@
     :title="state.title"
     @toggleFloating="$emit('buyModalTrigger')"
     :isShowFloating="props.isShowBuyModal"> 
+    <a-spin :spinning="state.isLoading">
     <div class="product">
       <div class="product__head">
         <Avatar 
@@ -36,10 +37,17 @@
             <span class="product__actions-icon material-icons-round">token</span>
            </div>
         </div>
+        <div class="product__userinfo-item">
+          <div>Промокод: </div>
+          <div><a-input v-model:value="value" placeholder="Введите промокод" /></div>
+        </div>
       </div>
       
       <div class="product__actions">
-         <a-button class="product__actions-item" type="primary">
+         <a-button 
+           @click="buyBtn"
+           class="product__actions-item" 
+           type="primary">
            Купить за {{ state.product.price_tokens }}
            <span class="product__actions-icon material-icons-round">token</span>
         </a-button>
@@ -48,6 +56,7 @@
         </a-button>
       </div>
     </div> 
+    </a-spin>
 </FloatingPanel>
 </template>
 
@@ -66,7 +75,8 @@ const props = defineProps({
 })
 const state = reactive({
   title: '',
-  product: {}
+  product: {},
+  isLoading: false
 });
 
 if (props.type == 'course') {
@@ -77,6 +87,10 @@ if (props.type == 'course') {
     price_rub: props.model?.paid?.price_rub,
     price_tokens: props.model?.paid?.price_tokens,
   }
+}
+
+const buyBtn = () => {
+  state.isLoading = !state.isLoading
 }
 
 </script>
