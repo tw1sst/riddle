@@ -1,6 +1,5 @@
 <template>
 <FloatingPanel 
-    v-if="props.isShowBuyModal"
     :title="state.title"
     @toggleFloating="$emit('buyModalTrigger')"
     :isShowFloating="props.isShowBuyModal"> 

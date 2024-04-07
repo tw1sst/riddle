@@ -5,7 +5,9 @@
       <span @click="$router.push({ name: 'SkillLessonPage' })" class="material-icons-round">close</span>
     </div>
     <div class="quiz__header-progress">
-      <a-progress :percent="answeredTasksPers" :show-info="false" />
+      <a-progress 
+        :percent="answeredTasksPers" 
+        :show-info="false" />
     </div>
     <div class="quiz__header-actions">
       <div>

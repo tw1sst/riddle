@@ -41,7 +41,7 @@
   
   <div class="skill__headblock">
     <h3>Ваши курсы</h3>
-    <a href="#">Смотреть все</a>
+    <a @click="$router.push({ name: 'SkillUserCourses' })">Смотреть все</a>
   </div>
   <div class="skill__caurosel">
     <div v-for="course in userStore.user.startedCourses" class="skill__caurosel-item">

@@ -1,27 +1,53 @@
 <template>
-<div @click="$emit('toggleFloating')" class="floating__bg"></div>
-
-<div v-if="isShowFloating" class="floating" :class="isShowFloating ? '' : 'floating__close'"> 
-  <div class="floating__header">
-    <h3>{{ title }}</h3>
-    <span 
-      @click="$emit('toggleFloating')"
-      class="material-icons-round">close</span>
-  </div>
-      
-  <div class="floating__content">
-    <slot />
+<div>
+  <div @click="toggleFloating" 
+    v-if="props.isShowFloating"
+    class="floating__bg"></div>
+    
+  <div v-if="state.isShow"
+     class="floating" 
+     :class="props.isShowFloating ? '' : 'floating__close'"> 
+    
+    <div class="floating__header">
+      <div class="floating__separator">
+        <div class="floating__separator-block">
+        </div>
+      </div>
+      <h3>{{ title }}</h3>
+      <span 
+        @click="toggleFloating"
+        class="material-icons-round">close</span>
+    </div>
+    <div class="floating__content">
+      <slot />
+    </div>
   </div>
 </div>
-
 </template>
 
 
-<script setup lang="ts">
-defineProps({
+<script setup>
+import { reactive, watch } from "vue";
+const $emit = defineEmits()
+const props = defineProps({
   isShowFloating: Boolean,
   title: String
 })
+const state = reactive({
+  isShow: false,
+})
+
+watch(
+  () => props,
+  (props, prevState) => {
+    state.isShow = true
+  },
+  { deep: true }
+)
+
+const toggleFloating = () => {
+  $emit('toggleFloating')
+}
 </script>
 
 
@@ -40,19 +66,10 @@ defineProps({
     animation-duration: 0.3s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
+    background-color: red;
   }
 }
-@-webkit-keyframes slideInTop {
-  0% {
-	  -webkit-transform: translateY(100%);
-	  transform: translateY(100%);
-	  visibility: visible;
-  }
-  100% {
-	  -webkit-transform: translateY(0);
-	  transform: translateY(0);
-  }
-}
+
 @keyframes slideInTop {
   0% {
 	  -webkit-transform: translateY(100%);
@@ -65,18 +82,6 @@ defineProps({
   }
 } 
 
-@-webkit-keyframes slideInBottom {
-  0% {
-  	-webkit-transform: translateY(0);
-  	transform: translateY(0);
-  	visibility: visible;
-  }
-  100% {
-  	-webkit-transform: translateY(100%);
-  	transform: translateY(100%);
-  	display: none;
-  }
-}
 @keyframes slideInBottom {
   0% {
   	-webkit-transform: translateY(0);
@@ -113,6 +118,22 @@ defineProps({
     display: flex;
     justify-content: space-between;
     border-radius: 20px 20px 0 0;
+  }
+  &__separator {
+    z-index: 202;
+    position: absolute;
+    top: -15px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    &-block {
+      width: 50px;
+      height: 5px;
+      background-color: white;
+      border-radius: 10px;
+      opacity: 0.7;
+    }
   }
   &__content {
     padding: 60px 20px 20px 20px;

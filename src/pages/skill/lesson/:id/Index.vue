@@ -1,27 +1,13 @@
 <template>
 <div class="lesson">
-  <div class="lesson__header">
-    <div class="lesson__header-left">
-      <span @click="$router.push({ 
-          name: 'SkillCoursePage',
-          params: {
-            id: state.course?.id,
-            course: JSON.stringify(state.course),
-            module: JSON.stringify(state.module),
-          }
-        })" 
-        class="material-icons-round lesson__header-item">arrow_back_ios</span>
-    </div>
-    <div class="lesson__header-center">
-      <div class="lesson__header-text">
-        {{ state.lesson.title }}
-      </div>
-    </div>
-    <div class="lesson__header-right">
-      <span class="material-icons-round lesson__header-item">ios_share</span>
-       <span class="material-icons-round lesson__header-item">bookmark_border</span>
-    </div>
-  </div>
+  <HeaderFunc 
+    :centerText="state.lesson.title" 
+    :backRouteName="'SkillCourseUserPanel'" 
+    :routeParams="{
+      id: state.course?.id,
+      module: JSON.stringify(state.module),
+    }"
+  />
   
   <div class="lesson__content">  
     <div class="lesson__content-text">
@@ -91,6 +77,7 @@ import { useUserStore } from '@/stores/UserStore.js'
 import { lessons } from '@/server/fakedata/skill/Lessons.js'
 import { allCourses } from '@/server/fakedata/skill/Courses.js'
 import { message } from 'ant-design-vue';
+import HeaderFunc from '@/components/account/HeaderFunc.vue'
 
 const userStore = useUserStore()
 const route = useRoute()
@@ -145,41 +132,6 @@ const completeLesson = () => {
     &-item {
       width: 100%;
       height: 48px;
-    }
-  }
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    height: 50px;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    background-color: white;
-    z-index: 100;
-    & > div {
-      display: flex;
-      align-items: center;
-      text-align: center;
-    }
-    &-text {
-      font-weight: 600;
-      font-size: 12px;
-      overflow: hidden;
-      text-align: center;
-      height: auto;
-      text-overflow: ellipsis;
-      display: -moz-box;
-      -moz-box-orient: vertical;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      line-clamp: 1;
-      box-orient: vertical;
-      padding: 0 10px;
-    }
-    &-item:last-child {
-      margin: 0 20px;
-      height: 20px;
     }
   }
   &__content {

@@ -20,9 +20,11 @@ import Services from "@/pages/services/Index.vue";
 import ServiceNewsSwipe from "@/pages/services/news-swipes/Index.vue";
 
 import SkillHome from "@/pages/skill/Index.vue";
-import SkillCoursePage from "@/pages/skill/course/:id.vue";
+import SkillCoursePage from "@/pages/skill/course/:id/Index.vue";
+import SkillCourseUserPanel from "@/pages/skill/course/:id/UserPanel.vue";
 import SkillLessonPage from "@/pages/skill/lesson/:id/Index.vue";
 import SkillQuizPage from "@/pages/skill/lesson/:id/quiz/Index.vue";
+import SkillUserCourses from "@/pages/skill/UserCourses.vue";
 
 import ServiceWallet from "@/pages/services/wallet/Index.vue";
 import ServiceCastle from "@/pages/services/castle/Index.vue";
@@ -85,15 +87,26 @@ const routes = [
     name: "AutoMarketItem",
     component: AutoMarketItem,
   },
+  // riddle skill
   {
     path: "/skill",
     name: "SkillHome",
     component: SkillHome,
   },
   {
+    path: "/skill/user-courses",
+    name: "SkillUserCourses",
+    component: SkillUserCourses,
+  },
+  {
     path: "/skill/course/:id",
     name: "SkillCoursePage",
     component: SkillCoursePage,
+  },
+  {
+    path: "/skill/course/:id/panel",
+    name: "SkillCourseUserPanel",
+    component: SkillCourseUserPanel,
   },
   {
     path: "/skill/lesson/:id",
@@ -105,6 +118,7 @@ const routes = [
     name: "SkillQuizPage",
     component: SkillQuizPage,
   },
+  // services
   {
     path: "/wallet",
     name: "ServiceWallet",

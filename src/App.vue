@@ -3,7 +3,10 @@
     <Header 
       v-if="$route.name != 'MarketItem' &&
       $route.name != 'SkillQuizPage' &&
-      $route.name != 'Services'"
+      $route.name != 'Services' &&
+      $route.name != 'SkillCourseUserPanel' &&
+      $route.name != 'SkillUserCourses'"
+      
     />
       
     <router-view></router-view>

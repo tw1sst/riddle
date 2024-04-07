@@ -40,7 +40,7 @@
   </div>
 </div>
 
-<BuyModal v-if="state.isShowBuyModal"
+<BuyModal
   @buyModalTrigger="buyModalTrigger"
   :model="state.course"
   :type="'course'"
@@ -59,21 +59,20 @@ const props = defineProps({
   course: Object
 })
 const state = reactive({
-  startedCourse: {},
   course: {},
-  isShowBuyModal: false,
-})
+  isShowBuyModal: false
+});
 
-if (Object.keys(props.course).length !== 0) {
+if (Object.keys(props?.course).length !== 0) {
   state.course = props.course 
 }
 
-if (userStore.user.startedCourses) {
+if (userStore.user?.startedCourses) {
   state.startedCourse = userStore.user.startedCourses.find(x => x.id == state.course.id)
 }
 
 const startedCourse = computed(() => { 
-   return userStore.user.startedCourses.find(x => x.id == state.course.id)
+   return userStore.user?.startedCourses.find(x => x.id == state.course.id)
 })
 
 const courseStart = () => {

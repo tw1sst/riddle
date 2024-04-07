@@ -1,22 +1,6 @@
 <template>
 <div class="course">
-  <div class="course__header">
-    <div class="course__header-left">
-      <span @click="$router.push({ 
-          name: 'SkillHome' 
-        })" 
-        class="material-icons-round course__header-item">arrow_back_ios</span>
-    </div>
-    <div class="course__header-center">
-      <div class="course__header-text">
-        {{ state.course.name }}
-      </div>
-    </div>
-    <div class="course__header-right">
-      <span class="material-icons-round course__header-item">ios_share</span>
-       <span class="material-icons-round course__header-item">bookmark_border</span>
-    </div>
-  </div>
+  <HeaderFunc :centerText="state.course.name" :backRouteName="'SkillHome'" />
   
   <div class="course__head">
     <Avatar 
@@ -28,8 +12,8 @@
     </div>
   </div>
   
-  <div class="course__cover">
-    <img :src="state.course.cover">
+  <div class="course__cover" :style="'background-image: url(' + state.course.cover + ')'">
+    
   </div>
 
   <div class="course__content">
@@ -199,11 +183,11 @@
   </div>
     
   <ActionsBar 
-   @moduleClick="moduleClick"
-   :course="state.course" /> 
+    v-if="state.course?.id"
+    @moduleClick="moduleClick"
+    :course="state.course" /> 
  
   <FloatingPanel 
-    v-if="state.isShowFloating"
     title="Выберите урок"
     @toggleFloating="toggleFloating"
     :isShowFloating="state.isShowFloating"> 
@@ -246,6 +230,7 @@ import { reactive } from "vue";
 import { useRoute } from "vue-router";
 import Avatar from '@/components/account/Avatar.vue'
 import ActionsBar from '@/components/skill/ActionsBar.vue'
+import HeaderFunc from '@/components/account/HeaderFunc.vue'
 import { allCourses } from '@/server/fakedata/skill/Courses.js'
 import FloatingPanel from '@/components/uikit/FloatingPanel.vue'
 import { useUserStore } from '@/stores/UserStore.js'
@@ -381,6 +366,13 @@ if (route.params?.module) {
 .course {
   margin-bottom: 40px;
   padding-bottom: 80px;
+  &__cover {
+    height: 300px;
+    width: 100vw;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: -20px;
+  }
   &__buy {
     margin-top: 10px;
     &-button {
@@ -493,41 +485,6 @@ if (route.params?.module) {
       width: 34px;
     }
   }
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    height: 50px;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    background-color: white;
-    z-index: 100;
-    & > div {
-      display: flex;
-      align-items: center;
-      text-align: center;
-    }
-    &-text {
-      font-weight: 600;
-      font-size: 12px;
-      overflow: hidden;
-      text-align: center;
-      height: auto;
-      text-overflow: ellipsis;
-      display: -moz-box;
-      -moz-box-orient: vertical;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      line-clamp: 1;
-      box-orient: vertical;
-      padding: 0 10px;
-    }
-    &-item:last-child {
-      margin: 0 20px;
-      height: 20px;
-    }
-  }
   &__baseinfo {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -561,8 +518,9 @@ if (route.params?.module) {
   &__content {
     padding: 20px;
     border-radius: 20px;
-    background-color: white;
+    background: white;
     margin-bottom: 20px;
+    z-index: 2;
     &-tag {
       margin-right: 10px;
       display: inline-block;
