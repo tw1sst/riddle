@@ -93,6 +93,9 @@
       @updateTask="updateTask"
       :userAnswer="state.currentTask.userAnswer || state.userAnswer"
       :currentTask="state.currentTask"/>
+    <FlipCard 
+      v-else-if="state.currentTask.type == 'flipCard'"
+      :currentTask="state.currentTask"/>
       
     <br/>
 	<div class="quiz__alert">
@@ -179,6 +182,7 @@ import { useUserStore } from '@/stores/UserStore.js'
 import SimpleQuest from '@/components/skill/tasks/SimpleQuest.vue'
 import SelectOrder from '@/components/skill/tasks/SelectOrder.vue'
 import SelectCorrect from '@/components/skill/tasks/SelectCorrect.vue'
+import FlipCard from '@/components/skill/tasks/FlipCard.vue'
 
 const userStore = useUserStore()
 const route = useRoute()

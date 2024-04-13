@@ -82,10 +82,10 @@ const categories = [
       },
       {
         id: 6,
-        title: "Riddle Castle",
-        desc: "Карты, баттлы и сражения",
+        title: "Riddle Kingdom",
+        desc: "Зарабатывайте ☘️ и станьте самым умным в королевстве!",
         icon: "castle", // hive
-        routeName: "ServiceCastle",
+        routeName: "ServiceKingdom",
       },
       {
         id: 1,

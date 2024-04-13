@@ -5,6 +5,7 @@
       $route.name != 'SkillQuizPage' &&
       $route.name != 'Services' &&
       $route.name != 'SkillCourseUserPanel' &&
+      $route.name != 'ServiceKingdom' &&
       $route.name != 'SkillUserCourses'"
       
     />

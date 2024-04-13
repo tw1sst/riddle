@@ -150,14 +150,14 @@ const openSeeMore = (story) => {
     &-item {
       width: 72px;
       height: 72px;
-      border-radius: 10px;
+      border-radius: 50%;
       margin-right: 10px;
       background-color: black;
       position: relative;
     }
     &-status {
       border: 2px solid blue;
-      border-radius: 14px;
+      border-radius: 50%;
       width: 80px;
       height: 80px;
       position: absolute;

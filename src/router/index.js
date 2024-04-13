@@ -27,7 +27,7 @@ import SkillQuizPage from "@/pages/skill/lesson/:id/quiz/Index.vue";
 import SkillUserCourses from "@/pages/skill/UserCourses.vue";
 
 import ServiceWallet from "@/pages/services/wallet/Index.vue";
-import ServiceCastle from "@/pages/services/castle/Index.vue";
+import ServiceKingdom from "@/pages/services/kingdom/Index.vue";
 import ServiceBlooms from "@/pages/services/blooms/Index.vue";
 import ServiceFit from "@/pages/services/fit/Index.vue";
 
@@ -125,9 +125,9 @@ const routes = [
     component: ServiceWallet,
   },
   {
-    path: "/castle",
-    name: "ServiceCastle",
-    component: ServiceCastle,
+    path: "/kingdom",
+    name: "ServiceKingdom",
+    component: ServiceKingdom,
   },
   {
     path: "/blooms",

@@ -223,10 +223,10 @@ const getNews = () => {
       z-index: 110;
     }
     &-cover {
-      width: 72px;
-      height: 72px;
+      width: 62px;
+      height: 62px;
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: 50%;
     }
     &-title {
       font-size: 12px;
@@ -240,25 +240,20 @@ const getNews = () => {
       -webkit-box-orient: vertical;
       line-clamp: 2;
       box-orient: vertical;
-      margin-top: -30px;
-      padding: 0 5px;
-      color: white;
       font-weight: 600;
-      text-shadow: 1px 1px 1px black, 0 0 4px black;
+      margin-top: 5px;
+      text-align: center;
     }
     &-item {
-      width: 72px;
-      height: 72px;
-      border-radius: 10px;
-      margin-right: 10px;
-      background-color: black;
+      width: 62px;
+      margin-right: 20px;
       position: relative;
     }
     &-status {
-      border: 1px solid blue;
-      border-radius: 14px;
-      width: 80px;
-      height: 80px;
+      border: 2px solid violet;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
       position: absolute;
       top: -4px;
       left: -4px;
