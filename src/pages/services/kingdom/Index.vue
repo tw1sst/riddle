@@ -57,16 +57,16 @@
  
 </div>
 
-{{ tapBoosts }}
 {{ state.serviceStore.tapCount }}
+
 </template>
 
 
 <script setup>
-import { reactive, computed } from "vue";
+import { reactive, computed, watch } from "vue";
 import { useUserStore } from '@/stores/UserStore.js'
 import Shop from "@/components/services/kingdom/Shop.vue"
-import { categories } from '@/server/fakedata/services/kingdom/Boosts.js'
+import { categories, userBoosts } from '@/server/fakedata/services/kingdom/Boosts.js'
 
 const userStore = useUserStore()
 const state = reactive({
@@ -77,37 +77,70 @@ const state = reactive({
 
 state.serviceStore = userStore.user.services.find(x => x.name == 'kingdom')
 
-const tapBoosts = state.serviceStore.boosts.find(x => x.id == 'tapBoost').boosts
-
-const calcBoostFarm = (boost) => {
+// считаем фарм буста с учетом уровня
+const calcBoostFarm = (boost) => { 
+  if (!boost?.lvl || boost.lvl == 0) return boost.farm.toFixed(6)
+  return boost.farm * boost.lvl
+  // ниже алгоритм вычисления фарма по процентам
   let calc = 0
   let iterateFarm = 0
-  let pers = 25
-  
-  if (!boost?.lvl || boost.lvl == 0) return boost.farm.toFixed(6)
+  let pers = 300 
   
   iterateFarm = boost.farm
   for (let i = 0; i < boost.lvl; i++) { 
     calc = (iterateFarm / 100) * pers
     iterateFarm = calc + iterateFarm
   }
-  
   return iterateFarm
 }
 
-const tapCount = computed(() => { 
-  state.serviceStore.tapCount = 0
-  tapBoosts.forEach(boost => {
-    if (boost.lvl) {
+// объединяем бусты с теми, которые уже купил юзер
+categories.forEach(category => {
+  if (category.boosts) {
+    category.boosts.forEach(boost => {
+      let findBoost = userBoosts.find(x => x.boost_id == boost.id)
+      if (findBoost?.lvl) {
+        boost.lvl = findBoost.lvl
+      }
+    })
+  }
+})
+state.serviceStore.boosts = categories
+
+
+let timeout
+let timer_on = 0
+function timedCount() {
+  if (state.serviceStore.currentPower < state.serviceStore.maxPower) {
+     state.serviceStore.currentPower += state.serviceStore.powerSpeed
+  timeout = setTimeout(timedCount, 1000)
+   }
+}
+function startCount() {
+  if (!timer_on && state.serviceStore.currentPower < state.serviceStore.maxPower) {
+    timer_on = 1
+    state.serviceStore.currentPower += state.serviceStore.powerSpeed
+  timeout = setTimeout(timedCount, 1000)
+  }
+}
+function stopCount() {
+  clearTimeout(timeout)
+  timer_on = 0
+}
+
+const clickCoin = () => { 
+  startCount()
+  
+  state.serviceStore.tapCount = 0.000001
+  const tapBoosts = state.serviceStore.boosts.find(x => x.id == 'tapBoost') 
+  tapBoosts.boosts.forEach(boost => {
+    if (boost.lvl && boost.lvl != 1) {
       state.serviceStore.tapCount += calcBoostFarm(boost)
     }
   })
-  return state.serviceStore.tapCount
-  
-})
 
-const clickCoin = () => {
-  userStore.user.cleverCoins += tapCount
+  state.serviceStore.currentPower--
+  userStore.user.cleverCoins += state.serviceStore.tapCount
 }
 
 const powerStatePers = computed(() => { 
@@ -202,7 +235,7 @@ let actions = [
   &__balance {
     text-align: center;
     &-count {
-      font-size: 48px;
+      font-size: 44px;
       font-weight: 700;
     }
     &-bottom {

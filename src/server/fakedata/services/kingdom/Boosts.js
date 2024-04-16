@@ -21,8 +21,8 @@ const categories = [
         id: 3,
         title: "Поливка",
         icon: "💦",
-        farm: 0.000010,
-        startPrice: 0.000100
+        farm: 0.00009,
+        startPrice: 0.000150
       },
     ]
   },
@@ -42,6 +42,13 @@ const categories = [
   },
 ]
 
+const userBoosts = [
+  {
+    boost_id: 1,
+    lvl: 1,
+  },
+]
+
 export {
-  categories
+  categories, userBoosts
 }

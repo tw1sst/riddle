@@ -37,52 +37,10 @@ export const useUserStore = defineStore('userStore', {
           currentPower: 1000,
           powerSpeed: 1, // скорость энергии в секунду
           tokensSpeed: 0, // скорость токенов в секунду
-          tapCount: 1, // токенов за клик
+          tapCount: 0.000001, // токенов за клик
           boosts: [
-            {
-              id: "tapBoost",
-              name: "💪 Мощность",
-              boosts: [
-                {
-                  id: 1,
-                  title: "Удобрения",
-                  icon: "🦴",
-                  lvl: 10,
-                  farm: 0.000001,
-                  startPrice: 0.000010
-                },
-                {
-                  id: 2,
-                  title: "Опыление",
-                  icon: "🐝",
-                  farm: 0.000003,
-                  startPrice: 0.000050
-                },
-                {
-                  id: 3,
-                  title: "Поливка",
-                  icon: "💦",
-                  farm: 0.000010,
-                  startPrice: 0.000100
-                },
-              ]
-            },
-            {
-              id: "miningBoost",
-              name: "🚜 Добыча",
-              boosts: [
-                
-              ]
-            },
-            {
-              id: "energyBoost",
-              name: "⚡️ Энергия",
-              boosts: [
-                
-              ]
-            },
+          
           ]
-
         }
       ]
     }

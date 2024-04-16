@@ -67,7 +67,7 @@ state.serviceStore = userStore.user.services.find(x => x.name == "kingdom")
 const calcBoostPrice = (boost) => {
   let calc = 0
   let iteratePrice = 0
-  let pers = 25
+  let pers = 100
   
   if (boost.lvl == 0) return boost.startPrice.toFixed(6)
   
@@ -82,8 +82,13 @@ const calcBoostPrice = (boost) => {
 
 
 const buyBoost = (boost) => {
-  if (!boost.lvl) boost.lvl = 1
-  else boost.lvl++
+  let boostPrice = calcBoostPrice(boost)
+  if (userStore.user.cleverCoins >= boostPrice) {
+    if (!boost.lvl) boost.lvl = 1
+    else boost.lvl++
+    
+    userStore.user.cleverCoins -= boostPrice
+  } 
 }
 
 const toggleFloating = () => {
