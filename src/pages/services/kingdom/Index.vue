@@ -111,18 +111,18 @@ state.serviceStore.boosts = categories
 let timeout
 let timer_on = 0
 function timedCount() {
-  if (state.serviceStore.currentPower < state.serviceStore.maxPower) {
-     state.serviceStore.currentPower += state.serviceStore.powerSpeed
+  state.serviceStore.currentPower += state.serviceStore.powerSpeed
   timeout = setTimeout(timedCount, 1000)
-   }
 }
+
 function startCount() {
-  if (!timer_on && state.serviceStore.currentPower < state.serviceStore.maxPower) {
+  if (!timer_on) {
     timer_on = 1
     state.serviceStore.currentPower += state.serviceStore.powerSpeed
   timeout = setTimeout(timedCount, 1000)
   }
 }
+
 function stopCount() {
   clearTimeout(timeout)
   timer_on = 0
@@ -142,6 +142,15 @@ const clickCoin = () => {
   state.serviceStore.currentPower--
   userStore.user.cleverCoins += state.serviceStore.tapCount
 }
+
+watch(
+  () => state.serviceStore.currentPower,
+  (count, prevCount) => {
+    if (count > state.serviceStore.maxPower) {
+      state.serviceStore.currentPower = state.serviceStore.maxPower 
+    }
+  }
+)
 
 const powerStatePers = computed(() => { 
   return (state.serviceStore.currentPower * 100) / state.serviceStore.maxPower
