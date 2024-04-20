@@ -8,7 +8,7 @@ export const useUserStore = defineStore('userStore', {
       email: "likovdenis12@gmail.com",
       diamonds: 214,
       riddleCoins: 136.84,
-      cleverCoins: 0.000001,
+      cleverCoins: 100.000001,
       raiting: 418.00,
       startedCourses: [
         {
@@ -33,8 +33,8 @@ export const useUserStore = defineStore('userStore', {
         {
           id: 1,
           name: "kingdom",
-          maxPower: 1000,
-          currentPower: 1000,
+          maxPower: 500,
+          currentPower: 500,
           powerSpeed: 1, // скорость энергии в секунду
           tokensSpeed: 0, // скорость токенов в секунду
           tapCount: 0.000001, // токенов за клик

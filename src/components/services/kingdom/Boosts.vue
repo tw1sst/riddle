@@ -12,11 +12,27 @@
     <h4>{{ category.name }}</h4>
   </div>
   <div class="boosts__blocks">
-    <div v-for="chank in _.chunk(category.boosts, 3)" class="boosts__blocks-chank">
+    <div v-for="chank in _.chunk(category.boosts, 6)" class="boosts__blocks-chank">
       <div v-for="boost in chank" 
         @click="buyBoost(boost)"
         :class="!boost.lvl || boost.lvl == 0 ? 'boosts__blocks-disabled' : ''"
         class="boosts__blocks-item">
+        <template v-if="!isPreBoostBuy(boost)">
+        <div class="boosts__blocks-icon">🔒</div>
+          
+        <div class="boosts__blocks-info">
+          <div class="boosts__blocks-title">??????????</div>
+          <div 
+          class="boosts__blocks-price">
+            🍀 ??????????
+            <span class="boosts__blocks-lvl"> • 0 ур.</span>
+          </div>
+        </div>
+        <div class="boosts__blocks-arrow">
+          <span class="material-icons-round">arrow_forward_ios</span>
+        </div>
+        </template>
+        <template v-else>        
         
         <div class="boosts__blocks-icon">{{ boost.icon }}</div>
           
@@ -24,15 +40,18 @@
           <div class="boosts__blocks-title">
             {{ boost.title }}
           </div>
-          <div class="boosts__blocks-desc">
-            🍀 {{ calcBoostPrice(boost) }} • 
-            <span class="boosts__blocks-lvl">{{ boost?.lvl || 0 }} ур.</span>
+          <div 
+          class="boosts__blocks-price"
+          :class="userStore.user.cleverCoins >= calcBoostPrice(boost) ? 'boosts__blocks-canbuy' : ''">
+            🍀 {{ calcBoostPrice(boost) }} 
+            <span class="boosts__blocks-lvl"> • {{ boost?.lvl || 0 }} ур.</span>
           </div>
         </div>
         <div class="boosts__blocks-arrow">
           <span class="material-icons-round">arrow_forward_ios</span>
         </div>
-      </div>
+        </template>
+      </div> 
     </div>
     
   </div><br/>
@@ -50,6 +69,7 @@ import FloatingPanel from '@/components/uikit/FloatingPanel.vue'
 import _ from 'lodash';
 import { useUserStore } from '@/stores/UserStore.js'
 import { categories } from '@/server/fakedata/services/kingdom/Boosts.js'
+import { message } from 'ant-design-vue';
 
 const userStore = useUserStore()
 const $emit = defineEmits()
@@ -80,15 +100,43 @@ const calcBoostPrice = (boost) => {
   return iteratePrice.toFixed(6)
 }
 
+// если предыдущий буст куплен, то показываем текущий, иначе скрываем
+
+const tapBoosts = state.serviceStore.boosts.find(x => x.id == 'tapBoost')
+
+const isPreBoostBuy = (boost) => {
+  if (boost.id == 1) return boost
+  
+  let preBoost = {}
+  if (preBoost = tapBoosts.boosts.find(x => x.id == boost.id - 1)) { 
+    if (preBoost.lvl > 0) return boost
+  } 
+  return false
+}
 
 const buyBoost = (boost) => {
+  if (!isPreBoostBuy(boost)) {
+    message.error({
+      content: () => 'Предыдущий буст не куплен',
+    })
+    return
+  }
+  
   let boostPrice = calcBoostPrice(boost)
   if (userStore.user.cleverCoins >= boostPrice) {
     if (!boost.lvl) boost.lvl = 1
     else boost.lvl++
     
     userStore.user.cleverCoins -= boostPrice
-  } 
+    
+    message.success({
+      content: () => 'Буст ' + boost.title + ' куплен',
+    })
+  } else {
+    message.error({
+      content: () => 'Недостаточно средств',
+    })
+  }
 }
 
 const toggleFloating = () => {
@@ -115,6 +163,7 @@ const toggleFloating = () => {
     }
     &-lvl {
       font-size: 14px;
+      color: #C5C5C5;
     }
     &-chank {
       border-radius: 10px;
@@ -142,8 +191,9 @@ const toggleFloating = () => {
     }
     &-icon {
       font-size: 22px;
-      background-color: white;
-      padding: 5px;
+      background-color: #efeff3;
+      width: 42px;
+      height: 42px;
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -157,8 +207,8 @@ const toggleFloating = () => {
       font-weight: 600;
       margin-left: 10px;
     }
-    &-desc {
-      font-size: 12px;
+    &-price {
+      font-size: 14px;
       overflow: hidden;
       text-overflow: ellipsis;
       display: -moz-box;
@@ -169,8 +219,13 @@ const toggleFloating = () => {
       line-clamp: 2;
       box-orient: vertical;
       margin-left: 10px;
-      color: #C5C5C5;
+      color: #fe443a;
       line-height: 16px;
+      margin-top: 5px;
+      font-weight: 600;
+    }
+    &-canbuy {
+      color: #7bff99;
     }
   }
   &__headblock {

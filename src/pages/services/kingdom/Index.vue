@@ -27,28 +27,30 @@
       background: 'url('+ state.coinImage +') no-repeat center 100% / cover' 
     }">
   </div>
-  
-  <div class="kingdom__power">
-    <div class="kingdom__power-flex">
-      <div class="kingdom__power-count">
-        ⚡️{{ state.serviceStore.currentPower }} (+{{ state.serviceStore.powerSpeed }})
-        <span class="kingdom__power-text">/ {{ state.serviceStore.maxPower }}</span>
-      </div>
-      <div class="kingdom__power-speed">
-        + {{ state.serviceStore.tokensSpeed }}
-        <span class="kingdom__power-text">в секунду</span>
-      </div>
-    </div>
-    <a-progress :percent="powerStatePers" :show-info="false" />
-  </div>
    
   <div class="kingdom__actions">
-    <div v-for="item in actions" class="kingdom__actions-item" @click="toggleShop">
-      <span class="kingdom__actions-icon">{{ item.icon }}</span>
-      <div class="kingdom__actions-text">
-        {{ item.title }}
+    <div class="kingdom__power">
+      <div class="kingdom__power-flex">
+        <div class="kingdom__power-count">
+          ⚡️{{ state.serviceStore.currentPower }} (+{{ state.serviceStore.powerSpeed }})
+          <span class="kingdom__power-text">/ {{ state.serviceStore.maxPower }}</span>
+        </div>
+        <div class="kingdom__power-speed">
+          + {{ state.serviceStore.tokensSpeed }}
+          <span class="kingdom__power-text">в секунду</span>
+        </div>
       </div>
-    </div> 
+      <a-progress :percent="powerStatePers" :show-info="false" />
+    </div>
+  
+    <div class="kingdom__actions-grid">
+      <div v-for="item in actions" class="kingdom__actions-item" @click="toggleShop">
+        <span class="kingdom__actions-icon">{{ item.icon }}</span>
+        <div class="kingdom__actions-text">
+          {{ item.title }}
+        </div>
+      </div> 
+    </div>
   </div>
   
   <Shop 
@@ -56,9 +58,6 @@
     @toggleShow="toggleShop"/>
  
 </div>
-
-{{ state.serviceStore.tapCount }}
-
 </template>
 
 
@@ -189,12 +188,12 @@ let actions = [
 <style lang="scss" scoped>
 
 .kingdom {
-  padding: 20px 20px 80px 20px;
+  padding: 20px 20px 140px 20px;
   width: 100%;
   height: 100%;
   display: grid;
   place-items: center;
-  grid-template-rows: auto auto 1fr auto auto;
+  grid-template-rows: auto auto 1fr auto;
   position: absolute;
   gap: 0px;
   top: 0;
@@ -229,8 +228,8 @@ let actions = [
     }
   }
   &__coin {
-    height: 300px;
-    width: 300px;
+    height: 250px;
+    width: 250px;
     cursor: grab;
     border-radius: 50%;
     overflow: hidden;
@@ -267,11 +266,17 @@ let actions = [
     }
   }
   &__actions {
-    user-select: none;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    gap: 10px;
     width: 100%;
+    position: fixed;
+    bottom: 80px;
+    left: 0;
+    padding: 0 20px;
+    &-grid {
+      user-select: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 10px;
+    }
     &-item {
       background-color: white;
       border-radius: 10px;
