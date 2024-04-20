@@ -79,6 +79,18 @@
         <p class="quiz__task-subTitle">{{ state.currentTask.subTitle }}</p>
     </div>
     
+ 	<div class="quiz__alert">
+ 	  <a-alert v-if="state.currentTask.userAnswerStatus == 'success'"
+         :description="state.currentTask.correctAnswerDesc"
+ 		 message="Задание пройдено" 
+ 		 type="success" show-icon />
+ 	  <a-alert v-if="state.currentTask.userAnswerStatus == 'wrong'"
+ 	     :description="state.currentTask.inCorrectAnswerDesc"
+ 		 message="Задание не пройдено" 
+ 		 type="error" show-icon />
+     </div>
+    <br/>
+    
     <SimpleQuest 
       v-if="state.currentTask.type == 'simpleQuest'" 
       :userAnswerStatus="state.currentTask.userAnswerStatus"
@@ -96,18 +108,6 @@
     <FlipCard 
       v-else-if="state.currentTask.type == 'flipCard'"
       :currentTask="state.currentTask"/>
-      
-    <br/>
-	<div class="quiz__alert">
-	  <a-alert v-if="state.currentTask.userAnswerStatus == 'success'"
-        :description="state.currentTask.correctAnswerDesc"
-		 message="Задание пройдено" 
-		 type="success" show-icon />
-	  <a-alert v-if="state.currentTask.userAnswerStatus == 'wrong'"
-	     :description="state.currentTask.inCorrectAnswerDesc"
-		 message="Задание не пройдено" 
-		 type="error" show-icon />
-    </div>
   </div>
 
   <div v-if="!state.isResult" class="quiz__bottom">
