@@ -1,4 +1,13 @@
 <template>
+<a-tabs v-model:activeKey="activeCategotyp"
+  class="page__categories">
+  <a-tab-pane 
+    class="services__categories-item"
+    v-for="category in categories" 
+    :key="category.id" 
+    :tab="category.name" />
+</a-tabs>
+    
 <div class="page container">
   <div class="page__stories">
     <Stories 
@@ -27,37 +36,37 @@
       </template>
     </Stories>
 
+    <div class="page__stories-item">      
+      <Avatar 
+       :userName="userStore.user.name"
+       :type="'onlyAvatar'"
+       :size="'62'"
+       :border="'circle'"
+      />
+      <div class="page__stories-title">
+        Добавить историю
+      </div>
+    </div>
     <div 
       v-for="(story, key) in state.stories"
       @click="toggleStory(story, key)"
-      class="page__stories-item">      
-      <div 
-        v-if="!story.isView" 
-        class="page__stories-status">
-      </div>
-      <img :src="story.url" class="page__stories-cover">
+      class="page__stories-item"> 
+      
+      <ProgressSteps 
+        :steps="10"
+        :activeSteps="6" 
+        :size="70">
+        <img :src="story.url" class="page__stories-cover">
+      </ProgressSteps>
+    
       <div class="page__stories-title">
         {{ story.title }}
       </div>
     </div>
   </div>
- 
-  <div class="page__headblock">
-    <h3>Популярные теги</h3>
-    <a href="#">Смотреть все</a>
-  </div>
-  <div class="page__tags">
-    <a-button
-      v-for="tag in tags" 
-      @click="state.activeCategoty = tag.id"
-      :class="state.activeCategoty == tag.id ? 'page__tags-active' : ''"
-      class="page__tags-item">
-        {{ tag.name }}
-    </a-button>
-  </div><br/>
 
   <div class="page__headblock">
-    <h3>Ваша лента</h3>
+    <h3>Ваши ридлы</h3>
     <a href="#">Смотреть все</a>
   </div>
   <div class="page__posts">
@@ -79,7 +88,10 @@ import axios from "axios";
 import Post from "@/components/content/Post.vue"
 import Avatar from '@/components/account/Avatar.vue'
 import DefaultSlide from '@/components/content/stories/DefaultSlide.vue'
+import { useUserStore } from '@/stores/UserStore.js'
+import ProgressSteps from '@/components/uikit/ProgressSteps.vue'
 
+const userStore = useUserStore()
 const router = useRouter()
 const state = reactive({
   allNews: [],
@@ -143,7 +155,7 @@ const openSeeMore = (story) => {
   })
 } 
 
-const tags = [
+const categories = [
   {
     id: 0,
     name: "🔍 Все"
@@ -198,12 +210,22 @@ const getNews = () => {
   padding: 20px;
 }
 .page {
+  &__categories {
+    width: 100vw;
+    height: 46px;
+    margin: 0 -20px;
+    padding: 0 20px;
+    background-color: white;
+    position: fixed;
+    top: 30px;
+    z-index: 1;
+  }
   &__stories {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     gap: 5px;
     padding: 4px 20px;
-    margin: 0 -20px 20px -20px;
+    margin: 30px -20px 20px -20px;
     box-sizing: content-box;
     overflow-x: auto;
     &-opened {
@@ -223,10 +245,9 @@ const getNews = () => {
       z-index: 110;
     }
     &-cover {
-      width: 62px;
-      height: 62px;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border-radius: 50%;
     }
     &-title {
       font-size: 12px;
@@ -258,6 +279,15 @@ const getNews = () => {
       top: -4px;
       left: -4px;
     }
+    &-viewed {
+      border: 2px solid #C5C5C5;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      position: absolute;
+      top: -4px;
+      left: -4px;
+    }
   }
   &__headblock {
     display: flex;
@@ -265,25 +295,6 @@ const getNews = () => {
     justify-content: space-between;
     & a {
      font-size: 12px;
-    }
-  }
-  &__tags {
-    gap: 10px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-    box-sizing: content-box;
-    overflow-x: auto;
-    width: 100%;
-    padding: 0 20px;
-    margin: 10px -20px 0 -20px;
-    &-active {
-     border: 1px solid #3f95fe;
-     color: #3f95fe;
-    }
-    &-item {
-      width: 150px;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
   }
   &__slider {

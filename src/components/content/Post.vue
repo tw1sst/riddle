@@ -14,13 +14,26 @@
       @click="$router.push({ name: 'ContentPostPage', params: { id: state.post.id, post: JSON.stringify(state.post) } })">
       {{ state.post.title }}
     </div>
-    <div class="post__image">
-      <img :src="state.post.image">
-    </div>
-    <div class="post__content" 
-      :class="props.type == 'full' ? 'post__content-full' : ''">
-      {{ state.post.content }}
-    </div>  
+    
+    <template v-if="props.type == 'full'">
+      <div class="post__image">
+        <img :src="state.post.image">
+      </div>
+      <div class="post__content" 
+        :class="props.type == 'full' ? 'post__content-full' : ''">
+        {{ state.post.content }}
+      </div>  
+    </template>
+    <template v-else>
+      <div class="post__content" 
+        :class="props.type == 'full' ? 'post__content-full' : ''">
+        {{ state.post.content }}
+      </div>  
+      <div class="post__image">
+        <img :src="state.post.image">
+      </div>
+    </template>
+    
     <div class="post__actions">
       <div class="post__actions-left">
         <div class="post__actions-item">
@@ -286,7 +299,7 @@ const dateConvert = (date) => {
     &-right {
       display: grid;
       grid-template-columns: auto auto auto;
-      gap: 20px;
+      gap: 10px;
     }
     &-item {
       display: flex;

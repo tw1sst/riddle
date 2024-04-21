@@ -1,8 +1,14 @@
 <template>
 <div class="avatar">
   <img :src="getAvatar(props.userName)"
+    :style="{
+      'height': props.size + 'px',
+      'width': props.size + 'px',
+      'border-radius': props.border == 'circle' ? '50%' : ''
+    }"
     class="avatar__img">
-  <div class="avatar__info">
+    
+  <div v-if="props.type != 'onlyAvatar'" class="avatar__info">
     <div class="avatar__name">
       {{ props.userName }}
     </div>
@@ -18,11 +24,14 @@
 const props = defineProps({
   userName: Object,
   subText: String,
-  imageUrl: String
+  imageUrl: String,
+  type: String,
+  size: String,
+  border: String
 });
 
 const getAvatar = (name) => {
-  return "https://ui-avatars.com/api/?name=" + name + "&size=32&color=7F9CF5&background=EBF4FF"
+  return "https://ui-avatars.com/api/?name=" + name + "&size=64&color=7F9CF5&background=EBF4FF"
 }
 </script>
 

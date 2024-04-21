@@ -7,7 +7,7 @@
        </a-badge>
        <div class="header__account-info">
          <div class="header__account-msg">
-            RiddleVerse
+            Riddle Verse
            </div>
        </div>
      </div>
@@ -125,15 +125,19 @@ const logoImg = "https://ui-avatars.com/api/?name=Riddle&size=32&color=FFFFFF&ba
     }
   }
   &__balance {
-    display: grid;
+    display: flex;
     gap: 5px;
-    grid-template-columns: 1fr auto; 
+    align-items: center;
     border-radius: 5px;
-    padding: 3px 10px;
     color: violet;
     font-weight: 600;
-    margin-right: 5px;
+    margin-right: 10px;
     transition: 0.3s;
+    font-size: 14px;
+    &-icon {
+      font-size: 18px;
+      margin-left: 5px;
+    }
     &:hover {
       background-color: #f4f5f5;
     }

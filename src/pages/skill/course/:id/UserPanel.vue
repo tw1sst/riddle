@@ -7,83 +7,6 @@
   
   <div class="course__group">
     <div class="course__group-title">
-      Интервальное повторение
-    </div>
-    <div class="course__group-block">
-      <div v-for="item in itemsGroup1"
-          @click="$router.push({ 
-            name: item.routeName, 
-            params: item.routeParams 
-          })"
-          class="course__group-item">
-        <div class="course__group-icon">{{ item.icon }}</div>
-        <div class="course__group-info">
-          <div class="course__group-name">
-            {{ item.title }}
-          </div>
-          <div class="course__group-desc">
-           {{ item.description }}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="course__group">
-    <div class="course__group-title">
-      Модули курса
-    </div>
-    <div class="course__group-itemRow">
-      <a-collapse 
-        v-for="module in state.course.modules"
-        v-model:activeKey="state.activeModule"
-        ghost :bordered="false">
-        <template 
-          #expandIcon="{ isActive }">
-          <span 
-            class="course__steps-icon"
-            :class="isActive ? 'course__steps-iconRotate' : ''">🔷</span>
-        </template>
-        <a-collapse-panel 
-          :key="module.id"
-          style="border-bottom: 1px solid #efeff3; white-space: pre-wrap;" 
-          
-          :header="module.title + '\n' + module.description">
-          <a-steps 
-            class="course__steps" 
-            v-if="module.lessons" 
-            :current="-1" 
-            progress-dot 
-            :direction="'vertical'">
-            <a-step v-for="lesson in module.lessons" @click="$router.push({ 
-              name: 'SkillLessonPage', 
-              params: { 
-                id: lesson.id, 
-                lesson: JSON.stringify(lesson),
-                course: JSON.stringify(state.course),
-                module: JSON.stringify(module),
-              }})">
-              
-              <template #title>
-                <span>{{ lesson.title }}</span>
-              </template>
-              <template #description>
-                <p>{{ lesson.description }}</p>
-              </template>
-              <template v-if="lesson.quiz" #subTitle>
-                <div class="course__lessons-sub">
-                  📝 В уроке есть тест
-                </div>
-              </template>
-            </a-step>
-          </a-steps>
-        </a-collapse-panel>
-      </a-collapse>
-    </div>
-  </div>
-  
-  <div class="course__group">
-    <div class="course__group-title">
       Прогресс курса
     </div>
     <div class="course__group-block">
@@ -171,6 +94,103 @@
             class="course__trick-current">🔺</div>
         </div>
       </div>
+      
+      <div class="course__trick-blocks">
+        <div v-for="trick in trickItems" class="course__trick-block">
+          <div class="course__trick-title">
+            {{ trick.title }}
+          </div>
+          <div class="course__trick-mainText">
+            {{ trick.mainText }}
+          </div>
+          <div class="course__trick-subText">
+            {{ trick.subText }}
+          </div>
+        </div>
+      </div><br/>
+      
+      <ProgressSteps 
+        :steps="20" 
+        :activeSteps="2" 
+        :size="80">
+      </ProgressSteps>
+    </div>
+  </div>
+  
+  <div class="course__group">
+    <div class="course__group-title">
+      Интервальное повторение
+    </div>
+    <div class="course__group-block">
+      <div v-for="item in itemsGroup1"
+          @click="$router.push({ 
+            name: item.routeName, 
+            params: item.routeParams 
+          })"
+          class="course__group-item">
+        <div class="course__group-icon">{{ item.icon }}</div>
+        <div class="course__group-info">
+          <div class="course__group-name">
+            {{ item.title }}
+          </div>
+          <div class="course__group-desc">
+           {{ item.description }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="course__group">
+    <div class="course__group-title">
+      Модули курса
+    </div>
+    <div class="course__group-itemRow">
+      <a-collapse 
+        v-for="module in state.course.modules"
+        v-model:activeKey="state.activeModule"
+        ghost :bordered="false">
+        <template 
+          #expandIcon="{ isActive }">
+          <span 
+            class="course__steps-icon"
+            :class="isActive ? 'course__steps-iconRotate' : ''">🔷</span>
+        </template>
+        <a-collapse-panel 
+          :key="module.id"
+          style="border-bottom: 1px solid #efeff3; white-space: pre-wrap;" 
+          
+          :header="module.title + '\n' + module.description">
+          <a-steps 
+            class="course__steps" 
+            v-if="module.lessons" 
+            :current="-1" 
+            progress-dot 
+            :direction="'vertical'">
+            <a-step v-for="lesson in module.lessons" @click="$router.push({ 
+              name: 'SkillLessonPage', 
+              params: { 
+                id: lesson.id, 
+                lesson: JSON.stringify(lesson),
+                course: JSON.stringify(state.course),
+                module: JSON.stringify(module),
+              }})">
+              
+              <template #title>
+                <span>{{ lesson.title }}</span>
+              </template>
+              <template #description>
+                <p>{{ lesson.description }}</p>
+              </template>
+              <template v-if="lesson.quiz" #subTitle>
+                <div class="course__lessons-sub">
+                  📝 В уроке есть тест
+                </div>
+              </template>
+            </a-step>
+          </a-steps>
+        </a-collapse-panel>
+      </a-collapse>
     </div>
   </div>
 </div>
@@ -184,6 +204,7 @@ import Avatar from '@/components/account/Avatar.vue'
 import HeaderFunc from '@/components/account/HeaderFunc.vue'
 import { allCourses } from '@/server/fakedata/skill/Courses.js'
 import FloatingPanel from '@/components/uikit/FloatingPanel.vue'
+import ProgressSteps from '@/components/uikit/ProgressSteps.vue'
 import { useUserStore } from '@/stores/UserStore.js'
 
 const userStore = useUserStore()
@@ -302,6 +323,20 @@ const itemsGroup1 = [
   },
 ]
 
+const trickItems = [
+  {
+    title: "Вы учитесь",
+    mainText: "1",
+    subText: "день"
+  },
+  {
+    title: "Рекорд",
+    mainText: "3",
+    subText: "дня"
+  },
+  
+]
+
 </script>
 
 
@@ -312,6 +347,28 @@ const itemsGroup1 = [
     background-color: white;
     border-radius: 10px;
     padding: 10px 20px;
+    &-blocks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    &-block {
+      background-color: #efeff3;
+      border-radius: 10px;
+      padding: 5px 10px;
+    }
+    &-title {
+      
+    }
+    &-mainText {
+      font-weight: 600;
+      display: inline-block;
+    }
+    &-subText {
+      color: #999998;
+      display: inline-block;
+      margin-left: 10px;
+    }
     &-days {
       display: flex;
       justify-content: space-between;
