@@ -55,7 +55,7 @@
       <ProgressSteps 
         :steps="10"
         :activeSteps="6" 
-        :size="70">
+        :size="60">
         <img :src="story.url" class="page__stories-cover">
       </ProgressSteps>
     
@@ -266,7 +266,7 @@ const getNews = () => {
       text-align: center;
     }
     &-item {
-      width: 62px;
+      width: 56px;
       margin-right: 20px;
       position: relative;
     }

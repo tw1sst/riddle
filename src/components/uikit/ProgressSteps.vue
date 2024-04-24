@@ -84,7 +84,7 @@ const calcStepRotate = (step) => {
     display: flex;
     align-items: center;
     justify-contents: center;
-    padding: 7px;
+    padding: 6px;
     &-item {
       overflow: hidden;
       height: 100%;

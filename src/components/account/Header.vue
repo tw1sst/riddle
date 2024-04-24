@@ -96,7 +96,7 @@ const logoImg = "https://ui-avatars.com/api/?name=Riddle&size=32&color=FFFFFF&ba
   &__popup {
     width: 50%;
     border-radius: 10px;
-    height: 200px;
+    height: auto;
     background-color: white;
     position: absolute;
     top: 60px;
@@ -109,19 +109,23 @@ const logoImg = "https://ui-avatars.com/api/?name=Riddle&size=32&color=FFFFFF&ba
       padding: 10px;
       display: flex;
       justify-content: space-between;
+      font-size: 14px;
     }
     &-icon {
       color: #C5C5C5;
+      font-size: 18px;
     }
     &-item {
       display: flex;
       padding: 10px;
+      align-items: center;
       &:hover {
         background-color: #f4f5f5;
       }
     }
     &-text {
       margin-left: 10px;
+      font-size: 14px;
     }
   }
   &__balance {

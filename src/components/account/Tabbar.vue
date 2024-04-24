@@ -26,10 +26,10 @@ const menuItems = ref([
     icon: "home"
   },
   {
-    title: "Маркет",
-    routeName: "AutoMarket",
-    path: "/market",
-    icon: "shopping_bag"
+    title: "Обучение",
+    routeName: "SkillHome",
+    path: "/skill",
+    icon: "school"
   },
   {
     title: "Сервисы",

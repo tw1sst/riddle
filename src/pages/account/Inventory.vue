@@ -44,7 +44,6 @@
     </div>
 
 <FloatingPanel 
-  v-if="state.isShowItemModal"
   :title="state.selectedItem.name"
   @toggleFloating="toggleItemModal"
   :isShowFloating="state.isShowItemModal">
