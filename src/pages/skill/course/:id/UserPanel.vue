@@ -312,6 +312,17 @@ const itemsGroup1 = [
   },
   {
      id: 3,
+     title: "Перейти к школе",
+     description: "На главную страницу школы",
+     icon: "🎓",
+     routeName: "SkillSchoolPage",
+     routeParams: {
+       id: state.course.school_id,
+     },
+     actionName: ""
+  },
+  {
+     id: 4,
      title: "Страница на маркете",
      description: "Посмотрите на курс со страницы маркета",
      icon: "🛍",

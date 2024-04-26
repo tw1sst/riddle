@@ -20,6 +20,7 @@ import Services from "@/pages/services/Index.vue";
 import ServiceNewsSwipe from "@/pages/services/news-swipes/Index.vue";
 
 import SkillHome from "@/pages/skill/Index.vue";
+import SkillSchoolPage from "@/pages/skill/school/:id/Index.vue";
 import SkillCoursePage from "@/pages/skill/course/:id/Index.vue";
 import SkillCourseUserPanel from "@/pages/skill/course/:id/UserPanel.vue";
 import SkillLessonPage from "@/pages/skill/lesson/:id/Index.vue";
@@ -97,6 +98,11 @@ const routes = [
     path: "/skill/user-courses",
     name: "SkillUserCourses",
     component: SkillUserCourses,
+  },
+  {
+    path: "/skill/school/:id",
+    name: "SkillSchoolPage",
+    component: SkillSchoolPage,
   },
   {
     path: "/skill/course/:id",
