@@ -3,7 +3,10 @@
     <ul class="tabbar__menu">
        <li v-for="item of menuItems" 
          :class="$route.name == item?.routeName ? 'tabbar__item-active' : ''" 
-         @click="$router.push({ name: item?.routeName })"
+         @click="$router.push({ 
+           name: item?.routeName, 
+           params: item?.params
+         })"
          class="tabbar__item">
         <span class="material-icons-round tabbar__item-icon">
           {{ item?.icon }}
@@ -17,36 +20,36 @@
 
 <script setup>
 import { ref } from "vue";
+import { useUserStore } from '@/stores/UserStore.js'
+const userStore = useUserStore()
 
 const menuItems = ref([
   {
     title: "Главная",
     routeName: "ContentHome",
-    path: "/",
     icon: "home"
   },
   {
     title: "Обучение",
     routeName: "SkillHome",
-    path: "/skill",
     icon: "school"
   },
   {
     title: "Сервисы",
     routeName: "Services",
-    path: "/services",
     icon: "widgets"
   },
   {
     title: "Чат",
     routeName: "Chat",
-    path: "/chat",
     icon: "mail"
   },
   {
     title: "Профиль",
-    routeName: "Profile",
-    path: "/profile",
+    routeName: "AccountProfile",
+    params: {
+      id: userStore.user.nickName
+    },
     icon: "account_circle"
   }
 ])

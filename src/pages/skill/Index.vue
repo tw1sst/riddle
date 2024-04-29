@@ -1,4 +1,6 @@
 <template> 
+<Header />
+
 <div class="skill">
   <div class="skill__header">
     <a-input 
@@ -123,6 +125,7 @@ import { useUserStore } from '@/stores/UserStore.js'
 import AccountBlock from "@/components/account/Avatar.vue"
 import { allCourses } from '@/server/fakedata/skill/Courses.js'
 import CourseCard from '@/components/skill/CourseCard.vue'
+import Header from "@/components/account/Header.vue"
 import { reactive } from "vue";
 
 const userStore = useUserStore()

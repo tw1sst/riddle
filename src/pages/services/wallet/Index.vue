@@ -1,4 +1,6 @@
 <template>
+<Header />
+
 <div class="wallet">
   <div class="wallet__balanceCard">
     <div class="wallet__balanceCard-header">
@@ -82,6 +84,7 @@
 <script setup>
 import { reactive } from "vue";
 import { useUserStore } from '@/stores/UserStore.js'
+import Header from "@/components/account/Header.vue"
 
 const userStore = useUserStore()
 const state = reactive({

@@ -1,4 +1,6 @@
 <template>
+<Header />
+
 <a-tabs v-model:activeKey="activeCategotyp"
   class="page__categories">
   <a-tab-pane 
@@ -82,6 +84,7 @@
 import { ref, reactive } from "vue";
 import { useRouter } from 'vue-router'
 import { Stories } from "vue-insta-stories"
+import Header from "@/components/account/Header.vue"
 import { allPosts } from '@/server/fakedata/content/Posts.js'
 
 import axios from "axios";

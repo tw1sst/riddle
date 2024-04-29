@@ -31,7 +31,11 @@ const props = defineProps({
 });
 
 const getAvatar = (name) => {
-  return "https://ui-avatars.com/api/?name=" + name + "&size=64&color=7F9CF5&background=EBF4FF"
+  if (props.imageUrl) {
+    return props.imageUrl
+  } else {
+    return "https://ui-avatars.com/api/?name=" + name + "&size=64&color=7F9CF5&background=EBF4FF"
+  }
 }
 </script>
 

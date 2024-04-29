@@ -1,15 +1,5 @@
 <template>
-  <div class="account">
-    <Header 
-      v-if="$route.name != 'MarketItem' &&
-      $route.name != 'SkillQuizPage' &&
-      $route.name != 'Services' &&
-      $route.name != 'SkillCourseUserPanel' &&
-      $route.name != 'ServiceKingdom' &&
-      $route.name != 'SkillUserCourses'"
-      
-    />
-      
+  <div class="app"> 
     <router-view></router-view>
     
     <Tabbar 
@@ -25,8 +15,7 @@ import Tabbar from "@/components/account/Tabbar.vue"
 
 
 <style lang="scss" scoped>
-
-.account {
+.app {
   margin: 60px 0 60px 0;
   box-sizing: border-box;
   max-width: 1000px;

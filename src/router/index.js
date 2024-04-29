@@ -4,6 +4,7 @@ import AccountLogin from "@/pages/auth/Login.vue";
 import AccountRegister from "@/pages/auth/Register.vue";
 
 import AccountHome from "@/pages/account/Index.vue";
+import AccountProfile from "@/pages/account/:id.vue";
 import AccountInventory from "@/pages/account/Inventory.vue";
 
 import Chat from "@/pages/chat/Index.vue";
@@ -37,6 +38,11 @@ const routes = [
     path: "/",
     name: "ContentHome",
     component: ContentHome,
+  },
+  {
+    path: "/:id",
+    name: "AccountProfile",
+    component: AccountProfile,
   },
   {
     path: "/inventory",
