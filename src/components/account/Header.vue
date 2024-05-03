@@ -11,21 +11,28 @@
            </div>
        </div>
      </div>
-     
-     <div class="header__actions">
-       <div class="header__balance">
+    
+     <PopupFullSelect 
+      @togglePopup="togglePopup"
+      :isShowPopup="state.isShowPopup">
+     <div @click="togglePopup" class="header__actions">
+        <div class="header__balance">
           <div>
             {{ userStore.user.riddleCoins }}
           </div>
           <span class="material-icons-round header__balance-icon">token</span>
-       </div>
-       <a-avatar @click="state.isShowPopup = !state.isShowPopup" size="middle" :src="userAvatar" shape="square">
+        </div>
+        <a-avatar 
+          size="middle" 
+          :src="userAvatar" 
+          shape="square">
         </a-avatar>
      </div>
+     </PopupFullSelect>
   </div>
   
-  <div class="header__popup" v-if="state.isShowPopup">
-    <div class="header__popup-header">
+  <div class="header__popup" v-if="false">
+  <div class="header__popup-header">
       <Avatar 
        :userName="userStore.user.name"
        :subText="'Riddle Verse'"
@@ -43,6 +50,7 @@
       </div>
     </div>
   </div>
+  
 </template>
 
 
@@ -50,6 +58,7 @@
 import { reactive } from "vue";
 import { useUserStore } from '@/stores/UserStore.js'
 import Avatar from '@/components/account/Avatar.vue'
+import PopupFullSelect from '@/components/uikit/PopupFullSelect.vue'
 
 const userStore = useUserStore()
 const state = reactive({
@@ -76,6 +85,10 @@ const menuItems = [
 
 const userAvatar = "https://ui-avatars.com/api/?name=" + userStore.user.name + "&size=32&color=7F9CF5&background=EBF4FF"
 const logoImg = "https://ui-avatars.com/api/?name=Riddle&size=32&color=FFFFFF&background=EFABFF"
+
+const togglePopup = () => {
+  state.isShowPopup = !state.isShowPopup
+}
 </script>
 
 
@@ -141,9 +154,6 @@ const logoImg = "https://ui-avatars.com/api/?name=Riddle&size=32&color=FFFFFF&ba
     &-icon {
       font-size: 18px;
       margin-left: 5px;
-    }
-    &:hover {
-      background-color: #f4f5f5;
     }
   }
   &__account {
