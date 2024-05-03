@@ -1,14 +1,10 @@
 <template>
-<div class="profile">
-  <div class="profile__header">
-    <div class="profile__header-title">
-      Profile
-    </div>
-    <div class="profile__header-actions">
-      •••
-    </div>
-  </div>
-  
+<HeaderFunc 
+  :actions="headerActions"
+  :centerText="userStore.user.name" 
+  :backRouteName="'SkillHome'" />
+
+<div class="profile"> 
   <div class="profile__cover">
   
   </div>
@@ -17,7 +13,9 @@
     <Avatar 
      :userName="userStore.user.name"
      :type="'onlyAvatar'"
-     :size="80"
+     :size="100"
+     :storiesPadding="7"
+     :isShowStories="true"
      :imageUrl="'https://kartinki.pics/pics/uploads/posts/2022-09/1662642079_4-kartinkin-net-p-risunok-na-avatarku-dlya-muzhchin-instagra-4.jpg'"
      :border="'circle'"
     />
@@ -40,38 +38,35 @@
 import { reactive, ref } from 'vue';
 import { useUserStore } from '@/stores/UserStore.js'
 import Avatar from '@/components/account/Avatar.vue'
+import HeaderFunc from '@/components/account/HeaderFunc.vue'
+import { BeakerIcon, AcademicCapIcon } from '@heroicons/vue/24/outline'
 
 const userStore = useUserStore()
 const state = reactive({
   
 })
 
+const headerActions = [
+  {
+    icon: "QrCodeIcon",
+    actionName: "",
+    routeName: "",
+    params: {}
+  },
+  {
+    icon: "ShareIcon",
+    actionName: "",
+    routeName: "",
+    params: {}
+  },
+]
+
 </script>
 
 
 <style lang="scss" scoped>
 .profile {
-  padding: 0 20px;
-  
-  &__header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 46px;
-    width: 100%;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    &-title {
-      font-size: 18px;
-      font-weight: 600;
-    }
-    &-actions {
-      
-    }
-  }
+  padding: 20px;
   &__avatar {
     display: flex;
     justify-content: center;

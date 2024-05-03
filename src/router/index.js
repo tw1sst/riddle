@@ -13,7 +13,7 @@ import AutoMarketItem from "@/pages/services/auto/market/:id.vue";
 import AutoMarket from "@/pages/services/auto/market/Index.vue";
 import AutoSearchResult from "@/pages/services/auto/market/SearchResult.vue";
 
-import ContentHome from "@/pages/content/Index.vue";
+import UserSchools from "@/pages/account/schools/Index.vue";
 import ContentPostPage from "@/pages/content/:id.vue";
 
 
@@ -36,8 +36,8 @@ import ServiceFit from "@/pages/services/fit/Index.vue";
 const routes = [
   {
     path: "/",
-    name: "ContentHome",
-    component: ContentHome,
+    name: "UserSchools",
+    component: UserSchools,
   },
   {
     path: "/:id",

@@ -6,7 +6,7 @@
        :subText="dateConvert(state.post.pubdate)"
       />
       <div class="post__header-right">
-        <span class="material-icons-round">more_horiz</span>
+        <EllipsisHorizontalIcon style="height: 24px; width: 24px;" />
       </div>
     </div>
     <div class="post__title" 
@@ -37,9 +37,7 @@
     <div class="post__actions">
       <div class="post__actions-left">
         <div class="post__actions-item">
-          <span class="material-icons-round">
-            visibility
-          </span>
+          <EyeIcon style="height: 24px; width: 24px;" />
           <span class="post__actions-count">
             {{ state.post.viewsCount }}
           </span>
@@ -50,33 +48,26 @@
           <span class="post__actions-count">
             {{ state.post.opensCount }}
           </span>
-          <span class="material-icons-round">
-            open_in_new
-          </span>
+          <BookOpenIcon style="height: 24px; width: 24px;" />
         </div>
         <div class="post__actions-item">
           <span class="post__actions-count">
             {{ state.post.comments.length }}
           </span>
-          <span class="material-icons-round">
-            chat_bubble_outline
-         </span>
+         <ChatBubbleBottomCenterTextIcon style="height: 24px; width: 24px;" />
         </div>
         <div class="post__actions-item">
           <span class="post__actions-count"
             :class="state.post.isLiked ? 'post__actions-liked' : ''">
             {{ state.post.likesCount }}
           </span>
-          <span v-if="state.post.isLiked" 
+          <HeartIcon v-if="state.post.isLiked" 
             @click="postLikeTrigger()"
-            class="post__actions-liked material-icons-round">
-            favorite
-          </span>
-          <span v-else 
-            @click="postLikeTrigger()"
-            class="material-icons-round">
-            favorite_border
-          </span>
+            style="height: 24px; width: 24px;"
+            class="post__actions-liked" />
+          <HeartIcon v-else 
+            style="height: 24px; width: 24px;"
+            @click="postLikeTrigger()" />
         </div>
       </div>
     </div>
@@ -94,6 +85,8 @@
 import { reactive } from "vue";
 import Comments from '@/components/content/Comments.vue'
 import Avatar from '@/components/account/Avatar.vue'
+import { HeartIcon, ChatBubbleBottomCenterTextIcon, BookOpenIcon, EyeIcon, EllipsisHorizontalIcon } from '@heroicons/vue/24/outline'
+
 const props = defineProps({
   post: Object,
   type: String

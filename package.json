@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroicons/vue": "^2.1.3",
     "@phantasweng/vue-cryptocurrency-icons": "^0.1.1",
     "ant-design-vue": "^4.0.8",
     "axios": "^1.6.2",

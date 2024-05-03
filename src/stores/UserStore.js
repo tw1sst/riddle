@@ -11,6 +11,26 @@ export const useUserStore = defineStore('userStore', {
       riddleCoins: 136.84,
       cleverCoins: 100.000001,
       raiting: 418.00,
+      schools: [
+        {
+          id: 1,
+          alerts: 0,
+          fixed: false,
+          alertsDisabled: false,
+        },
+        {
+          id: 2,
+          alerts: 12,
+          fixed: true,
+          alertsDisabled: true,
+        },
+        {
+          id: 3,
+          alerts: 2,
+          fixed: false,
+          alertsDisabled: false,
+        },
+      ],
       startedCourses: [
         {
           id: 2,

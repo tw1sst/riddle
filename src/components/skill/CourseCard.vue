@@ -28,8 +28,7 @@
     </div>
     <div class="card__actions" @click="$router.push({ name: 'SkillCoursePage', params: { id: state.course.id, course: JSON.stringify(state.course) } })" :class="props.type != 'full' ? 'card__actions-one' : ''">
       <div class="card__actions-pay" v-if="state.course.paid?.enable">
-        <span class="material-icons-round">token</span>
-        <div>{{ state.course.paid.price_tokens }}</div>
+        <div>₽ {{ state.course.paid.price_rub }}</div>
       </div>
       
       <div v-else-if="!state.course.paid?.enable" class="card__actions-pay">
@@ -46,7 +45,7 @@
       <div
         v-if="props.type == 'full' && !isCourseStarted"
         class="card__actions-item">
-        <span class="material-icons-round">favorite_border</span>
+        <HeartIcon class="card__actions-icon" />
       </div>
     </div>
   </div>
@@ -57,6 +56,7 @@
 <script setup>
 import { reactive } from "vue";
 import { useUserStore } from '@/stores/UserStore.js'
+import { HeartIcon } from '@heroicons/vue/24/outline'
 
 const userStore = useUserStore()
 const props = defineProps({
@@ -135,6 +135,9 @@ if (Object.keys(props.course).length !== 0) {
     width: 100%;
     justify-content: space-between;
     gap: 10px;
+    &-icon {
+      height: 22px;
+    }
     &-pay {
       display: grid;
       gap: 5px;
@@ -142,7 +145,6 @@ if (Object.keys(props.course).length !== 0) {
       border-radius: 5px;
       padding: 5px 0;
       color: violet;
-      font-weight: 600;
     }
     &-item {
       display: flex;

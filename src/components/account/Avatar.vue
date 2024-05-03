@@ -1,13 +1,29 @@
 <template>
 <div class="avatar">
-  <img :src="getAvatar(props.userName)"
+  <ProgressSteps 
+    v-if="props.isShowStories"
+    :steps="10"
+    :activeSteps="6" 
+    :padding="props.storiesPadding"
+    :size="props.size || '32'">
+    <img :src="getAvatar(props.userName)"
     :style="{
       'height': props.size + 'px',
       'width': props.size + 'px',
       'border-radius': props.border == 'circle' ? '50%' : ''
     }"
     class="avatar__img">
-    
+  </ProgressSteps>
+  
+  <img :src="getAvatar(props.userName)"
+    v-else
+    :style="{
+      'height': props.size + 'px',
+      'width': props.size + 'px',
+      'border-radius': props.border == 'circle' ? '50%' : ''
+    }"
+    class="avatar__img">
+   
   <div v-if="props.type != 'onlyAvatar'" class="avatar__info">
     <div class="avatar__name">
       {{ props.userName }}
@@ -21,13 +37,16 @@
 
 
 <script setup>
+import ProgressSteps from '@/components/uikit/ProgressSteps.vue'
 const props = defineProps({
   userName: Object,
   subText: String,
   imageUrl: String,
   type: String,
   size: String,
-  border: String
+  border: String,
+  storiesPadding: Number,
+  isShowStories: Boolean
 });
 
 const getAvatar = (name) => {
@@ -42,8 +61,8 @@ const getAvatar = (name) => {
 
 <style scoped lang="scss">
 .avatar {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
   &__name {
     font-weight: 600;
     overflow: hidden;
@@ -64,9 +83,12 @@ const getAvatar = (name) => {
   }
   &__img {
     border-radius: 5px;
-    margin-right: 10px;
     height: 32px;
-    width: 32px;
+    widtg: 32px;
+    object-fit: cover;
+  }
+  &__info {
+    margin-left: 10px;
   }
 }
 </style>

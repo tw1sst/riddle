@@ -136,7 +136,7 @@ const completeLesson = () => {
   }
   &__content {
     padding: 20px 20px 100px 20px;
-    margin-top: -10px;
+    margin-top: -12px;
     &-text {
       white-space: pre-wrap;
       word-wrap: break-word;

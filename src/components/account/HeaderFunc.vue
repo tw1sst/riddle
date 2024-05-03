@@ -1,11 +1,12 @@
 <template>
-<div class="header">
+<div id="header" class="header" :class="state.scrollTop > 20 ? 'header__blur' : ''">
   <div class="header__left">
-    <span @click="$router.push({ 
+    <ChevronLeftIcon 
+      @click="$router.push({ 
         name: props.backRouteName,
         params: props.routeParams
       })" 
-      class="material-icons-round header__item">arrow_back_ios</span>
+      class="header__item"/>
   </div>
   <div class="header__center">
     <div class="header__text">
@@ -13,6 +14,12 @@
     </div>
   </div>
   <div class="header__right">
+    <template v-if="props.actions"
+    v-for="action in props.actions">
+      <QrCodeIcon v-if="action.icon == 'QrCodeIcon'" class="header__item" /> 
+      <ShareIcon v-if="action.icon == 'ShareIcon'" class="header__item" /> 
+      <BookmarkIcon v-if="action.icon == 'BookmarkIcon'" class="header__item" /> 
+    </template>
     
   </div>
 </div>
@@ -20,37 +27,50 @@
 
 
 <script setup>
+import { onMounted, reactive } from "vue";
+import { ChevronLeftIcon, BookmarkIcon, ShareIcon, QrCodeIcon } from '@heroicons/vue/24/outline'
 const props = defineProps({
   centerText: String,
   backRouteName: String,
-  routeParams: Object
+  routeParams: Object,
+  actions: Array
 });
+
+const state = reactive({
+  scrollTop: 0
+});
+
+onMounted(() => {
+  let body = document.querySelector('body');
+  body.addEventListener('scroll', () => {  
+    state.scrollTop = body.scrollTop
+  })
+})
 </script>
 
 
 <style scoped lang="scss">
 .header {
-  display: grid;
-  grid-template-columns: 50px 1fr 50px;
-  height: 45px;
+  display: flex;
+  justify-content: space-between;
+  height: 48px;
   position: fixed;
   width: 100%;
   top: 0;
-  left: 0;
   background-color: white;
   z-index: 100;
+  transition: 0.3s;
+  border-bottom: 1px solid white;
   & > div {
-    width: 100%;
     display: flex;
     align-items: center;
     text-align: center;
   }
   &__text {
     font-weight: 600;
-    font-size: 12px;
+    font-size: 14px;
     overflow: hidden;
     text-align: center;
-    height: auto;
     text-overflow: ellipsis;
     display: -moz-box;
     -moz-box-orient: vertical;
@@ -60,10 +80,26 @@ const props = defineProps({
     line-clamp: 1;
     box-orient: vertical;
     padding: 0 10px;
-    width: 100%;
   }
-  &__item:last-child {
-    margin: 0 20px;
+  &__left {
+    min-width: 80px;
+  }
+  &__right {
+    min-width: 80px;
+  }
+  &__item {
+    height: 22px;
+    color: blue;
+    &:last-child {
+      margin: 0 20px;
+    }
+  }
+  &__blur {
+    background: rgba(255, 255, 255, 0.2);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: inset 50px 50px 50px 50px rgba(255,255,255,0.6);
+    border-bottom: 1px solid #c8c7cb;
   }
 }
 </style>

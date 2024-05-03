@@ -40,9 +40,9 @@
     
     <div class="course__baseinfo"> 
       <div v-for="item in state.baseInfoItems" class="course__baseinfo-item">
-        <span class="material-icons-round course__baseinfo-icon">
-          {{ item.icon }}
-        </span>
+        <component 
+         class="course__baseinfo-icon"
+         :is="item.icon" />
         <div class="course__baseinfo-count">
           {{ item.count }}
         </div>
@@ -235,6 +235,7 @@ import { allCourses } from '@/server/fakedata/skill/Courses.js'
 import FloatingPanel from '@/components/uikit/FloatingPanel.vue'
 import { useUserStore } from '@/stores/UserStore.js'
 import Rates from '@/components/content/Rates.vue'
+import { ClockIcon, ChartPieIcon, StarIcon, ClipboardDocumentCheckIcon } from '@heroicons/vue/24/outline'
 
 const userStore = useUserStore()
 const route = useRoute()
@@ -315,22 +316,22 @@ const tabs = [
 state.baseInfoItems = [
   {
     title: "Время прохождения",
-    icon: "schedule",
+    icon: ClockIcon,
     count: state?.course.duration
   },
   {
     title: "Модулей в курсе",
-    icon: "calendar_view_month",
+    icon: ChartPieIcon,
     count: state.course.modules.length
   },
   {
     title: "Уроков в курсе",
-    icon: "menu_book",
+    icon: ClipboardDocumentCheckIcon,
     count: lessonsCount
   },
   {
     title: "Рейтинг курса",
-    icon: "star_border",
+    icon: StarIcon,
     count: state?.course.rate.stars
   },
 ]
@@ -466,7 +467,7 @@ if (route.params?.module) {
     align-items: center;
     padding: 10px 20px;
     background-color: white;
-    margin-top: -10px;
+    margin-top: -12px;
     &-left {
       display: flex;
       align-items: center;
@@ -503,6 +504,7 @@ if (route.params?.module) {
     }
     &-icon {
      color: #C5C5C5;
+     height: 24px;
     }
     &-item {
       margin: 10px 0;

@@ -14,7 +14,7 @@
     />
     
     <a-button @click="setNewComment()" type="primary" class="comments__new-send">
-      <span class="material-icons-round">send</span>
+      <PaperAirplaneIcon />
     </a-button>
   </div>
   
@@ -52,19 +52,16 @@
       
       <div class="comments__item-bottom">
         <div @click="state.repliedComment = comment" class="comments__item-reply">
-          <span class="material-icons-round">reply</span>
+          <ArrowUturnLeftIcon style="height: 18px; margin-right: 5px;"/>
           Ответить
         </div>
         <div class="comments__item-actions">
-          <span 
-            @click="userReaction(comment.id, 'down')" 
-           :class="comment.userReaction == 'down' ? 'comments__item-reaction' : ''"
-            class="material-icons-round">arrow_downward</span>
-          {{ comment.ups - comment.downs }}
-          <span 
-            @click="userReaction(comment.id, 'up')" 
-            :class="comment.userReaction == 'up' ? 'comments__item-reaction' : ''"
-            class="material-icons-round">arrow_upward</span>
+        <HandThumbDownIcon @click="userReaction(comment.id, 'down')" 
+           :class="comment.userReaction == 'down' ? 'comments__item-reaction' : 'comments__item-react'" />
+           {{ comment.ups - comment.downs }}
+        <HandThumbUpIcon @click="userReaction(comment.id, 'up')" 
+            :class="comment.userReaction == 'up' ? 'comments__item-reaction' : 'comments__item-react'" />
+            
         </div>
       </div>
     </div>
@@ -78,6 +75,7 @@ import { reactive } from "vue";
 import { message } from 'ant-design-vue';
 import Avatar from '@/components/account/Avatar.vue'
 import { useUserStore } from '@/stores/UserStore.js'
+import { HandThumbUpIcon, HandThumbDownIcon, ArrowUturnLeftIcon, EllipsisHorizontalIcon, PaperAirplaneIcon } from '@heroicons/vue/24/outline'
 
 const userStore = useUserStore()
 const props = defineProps({
@@ -227,7 +225,10 @@ const dateConvert = (date) => {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      & svg {
+        height: 30px;
+        width: 30px;
+      }
     }
     &-form {
       border-radius: 10px;
@@ -258,8 +259,15 @@ const dateConvert = (date) => {
     &-reply span {
       margin-right: 5px;
     }
+    &-react {
+      height: 22px;
+      color: #C5C5C5;
+      margin: 0 5px;
+    }
     &-reaction {
       color: red;
+      height: 22px;
+      margin: 0 5px;
     }
   }
   &__replied {

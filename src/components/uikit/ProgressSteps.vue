@@ -6,6 +6,7 @@
       :stroke-color="'#d8d7e1'"
       :trailColor="'none'"
       :percent="100"
+      :strokeWidth="4"
       :size="props.size"
       class="progress__step"
     /> 
@@ -20,6 +21,7 @@
       }"
       :trailColor="'none'"
       :percent="state.percents"
+      :strokeWidth="4"
       :size="props.size"
       class="progress__step"
     /> 
@@ -33,12 +35,14 @@
       :trailColor="'none'"
       :percent="state.percents"
       :size="props.size"
+      :strokeWidth="4"
       class="progress__step"
     /> 
   </template>
     
   <div class="progress__content" :style="{ 
         'height': props.size + 'px',
+        'padding': props.padding + 'px',
         'width': props.size + 'px'
       }">
     <div class="progress__content-item">
@@ -56,7 +60,8 @@ const $emit = defineEmits()
 const props = defineProps({
   steps: Number,
   activeSteps: Number,
-  size: Number
+  size: Number,
+  padding: Number
 })
 const state = reactive({
   percents: 0
@@ -84,7 +89,7 @@ const calcStepRotate = (step) => {
     display: flex;
     align-items: center;
     justify-contents: center;
-    padding: 6px;
+    padding: 5px;
     &-item {
       overflow: hidden;
       height: 100%;

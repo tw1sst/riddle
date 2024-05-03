@@ -8,9 +8,10 @@
            params: item?.params
          })"
          class="tabbar__item">
-        <span class="material-icons-round tabbar__item-icon">
-          {{ item?.icon }}
-        </span>
+         <component 
+           class="tabbar__item-icon"
+           :is="item.icon">
+          </component>
         <span class="tabbar__item-title">{{ item?.title }}</span>
      </li>
     </ul>
@@ -21,28 +22,30 @@
 <script setup>
 import { ref } from "vue";
 import { useUserStore } from '@/stores/UserStore.js'
+import { HomeIcon, AcademicCapIcon, ChatBubbleOvalLeftIcon, Squares2X2Icon, UserCircleIcon } from '@heroicons/vue/24/outline'
+
 const userStore = useUserStore()
 
 const menuItems = ref([
   {
     title: "Главная",
-    routeName: "ContentHome",
-    icon: "home"
+    routeName: "UserSchools",
+    icon: HomeIcon
   },
   {
     title: "Обучение",
     routeName: "SkillHome",
-    icon: "school"
+    icon: AcademicCapIcon
   },
   {
     title: "Сервисы",
     routeName: "Services",
-    icon: "widgets"
+    icon: Squares2X2Icon
   },
   {
-    title: "Чат",
+    title: "Общение",
     routeName: "Chat",
-    icon: "mail"
+    icon: ChatBubbleOvalLeftIcon
   },
   {
     title: "Профиль",
@@ -50,7 +53,7 @@ const menuItems = ref([
     params: {
       id: userStore.user.nickName
     },
-    icon: "account_circle"
+    icon: UserCircleIcon
   }
 ])
 </script>
@@ -64,7 +67,7 @@ const menuItems = ref([
     padding-bottom: 15px;
     width: 100%;
     border-top: 1px solid #f6f6f6;
-    padding-top: 10px;
+    padding: 10px 10px 20px 10px;
     z-index: 50;
     &__menu {
         list-style: none;
@@ -87,7 +90,8 @@ const menuItems = ref([
           font-size: 12px;
         }
         &-icon {
-          font-size: 26px;
+          height: 24px;
+          width: 24px;
         }
         &-active {
           color: #3E68F8;
