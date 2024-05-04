@@ -137,8 +137,14 @@ const state = reactive({
 
 if (userStore.user.startedCourses) {
   state.startedCourses = userStore.user.startedCourses
+  state.startedCourses.forEach(userCourse => {
+    let course = allCourses.find(x => x.id == userCourse.id)
+    if (course) {
+      userCourse = Object.assign(userCourse, course)
+    }
+  }) 
   
-  state.continueCourse = allCourses.find(x => x.id == state.startedCourses[0].id)
+  state.continueCourse = state.startedCourses[0]
 }
 
 const tags = [

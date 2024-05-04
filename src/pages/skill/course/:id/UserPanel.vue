@@ -157,39 +157,40 @@
             class="course__steps-icon"
             :class="isActive ? 'course__steps-iconRotate' : ''">🔷</span>
         </template>
+        
         <a-collapse-panel 
           :key="module.id"
           style="border-bottom: 1px solid #efeff3; white-space: pre-wrap;" 
           
           :header="module.title + '\n' + module.description">
-          <a-steps 
-            class="course__steps" 
-            v-if="module.lessons" 
-            :current="-1" 
-            progress-dot 
-            :direction="'vertical'">
-            <a-step v-for="lesson in module.lessons" @click="$router.push({ 
+          <a-timeline class="course__lessons" 
+            v-if="module.lessons"   
+            mode="left">
+            <a-timeline-item v-for="lesson in module.lessons" @click="$router.push({ 
               name: 'SkillLessonPage', 
               params: { 
                 id: lesson.id, 
                 lesson: JSON.stringify(lesson),
                 course: JSON.stringify(state.course),
                 module: JSON.stringify(module),
-              }})">
-              
-              <template #title>
-                <span>{{ lesson.title }}</span>
+              }})"
+              class="course__lessons-item">
+              <template #dot>
+                <CheckCircleIcon v-if="lesson.progressStatus == 'complete'" class="course__lessons-icon" />
+                <ClockIcon v-else-if="lesson.progressStatus == 'progress'" class="course__lessons-icon" />
+     
+                <FireIcon v-else class="course__lessons-icon" />
               </template>
-              <template #description>
-                <p>{{ lesson.description }}</p>
-              </template>
-              <template v-if="lesson.quiz" #subTitle>
+              <div class="course__lessons-title">{{ lesson.title }}</div>
+              <p class="course__lessons-desc">{{ lesson.description }}</p>
+              <template v-if="lesson.quiz">
                 <div class="course__lessons-sub">
-                  📝 В уроке есть тест
+                  <ClipboardDocumentCheckIcon class="course__lessons-icon" />
+                  В уроке есть тест
                 </div>
               </template>
-            </a-step>
-          </a-steps>
+            </a-timeline-item>
+          </a-timeline>
         </a-collapse-panel>
       </a-collapse>
     </div>
@@ -207,14 +208,15 @@ import { allCourses } from '@/server/fakedata/skill/Courses.js'
 import FloatingPanel from '@/components/uikit/FloatingPanel.vue'
 import ProgressSteps from '@/components/uikit/ProgressSteps.vue'
 import { useUserStore } from '@/stores/UserStore.js'
+import { CheckCircleIcon, XCircleIcon, ClockIcon, CreditCardIcon, FireIcon, ClipboardDocumentCheckIcon } from '@heroicons/vue/24/outline'
 
 const userStore = useUserStore()
 const route = useRoute()
 const state = reactive({
   id: null,
   course: {},
-  activeModule: null
-});
+  activeModule: null,
+})
 
 if (route.params?.id) {
   state.id = route.params.id
@@ -225,6 +227,21 @@ if (route.params?.module) {
   state.activeModule = JSON.parse(route.params.module).id
 }
 
+if (userStore.user.startedLessons) {
+  state.course?.modules.forEach(module => {
+    if (module.lessons) {
+      module.lessons.forEach(lesson => {
+        let userLesson = userStore.user.startedLessons.find(x => x.id == lesson.id)
+        if (userLesson) {
+          lesson = Object.assign(lesson, userLesson)
+          userLesson = lesson
+        }
+      })
+    }
+  })
+}
+
+// статистика
 let lessonsState = userStore.user.startedLessons
 let lessonsCount = 0
 let lessonsComplete = 0
@@ -369,9 +386,6 @@ const trickItems = [
       border-radius: 10px;
       padding: 5px 10px;
     }
-    &-title {
-      
-    }
     &-mainText {
       font-weight: 600;
       display: inline-block;
@@ -460,13 +474,33 @@ const trickItems = [
      margin-left: 5px;
     }
   }
-  &__steps {
+  &__lessons {
     margin-left: 5px;
-    &-icon {
-      transition: 0.2s;
+    width: 100%;
+    &-item {
+      vertical-align: top;
+      padding-top: 14px;
     }
-    &-iconRotate {
-      transform: rotate(90deg);
+    &-title {
+      margin-top: -12px;
+      font-weight: 500;
+    }
+    &-desc {
+      color: #98989d;
+      font-size: 14px;
+      margin: 5px 0;
+    }
+    &-sub {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      color: blue;
+      gap: 5px;
+      align-items: center;
+      opacity: 0.5;
+    }
+    &-icon {
+      height: 20px;
+      width: 20px;
     }
   }
   &__progress {

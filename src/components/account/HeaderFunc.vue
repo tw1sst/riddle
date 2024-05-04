@@ -1,5 +1,5 @@
 <template>
-<div id="header" class="header" :class="state.scrollTop > 20 ? 'header__blur' : ''">
+<div id="header" class="header" :class="state.scrollTop > 16 ? 'header__blur' : ''">
   <div class="header__left">
     <ChevronLeftIcon 
       @click="$router.push({ 
@@ -57,10 +57,9 @@ onMounted(() => {
   position: fixed;
   width: 100%;
   top: 0;
-  background-color: white;
+  background-color: #efeff3;
   z-index: 100;
   transition: 0.3s;
-  border-bottom: 1px solid white;
   & > div {
     display: flex;
     align-items: center;
@@ -95,11 +94,10 @@ onMounted(() => {
     }
   }
   &__blur {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.8);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    box-shadow: inset 50px 50px 50px 50px rgba(255,255,255,0.6);
-    border-bottom: 1px solid #c8c7cb;
+    box-shadow: 0 1px 0 0 #c8c7cb;
   }
 }
 </style>

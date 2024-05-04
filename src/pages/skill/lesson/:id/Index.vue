@@ -37,7 +37,7 @@
   <div class="actions">
     <div class="actions__buttons">
       <a-button 
-       v-if="!lessonState?.progressStatus"
+       v-if="lessonState.progressStatus == 'progress'"
        @click="completeLesson"
        class="actions__buttons-item">
        🏁 Завершить
@@ -96,6 +96,7 @@ if (route.params?.id) {
 
 let lessonsState = userStore.user.startedLessons
 if (!lessonsState.find(x => x.id == state.lesson.id)) {
+  state.lesson.progressStatus = 'progress'
   lessonsState.push(state.lesson)
 }
 let lessonState = lessonsState.find(x => x.id == state.lesson.id)

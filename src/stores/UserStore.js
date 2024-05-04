@@ -33,22 +33,12 @@ export const useUserStore = defineStore('userStore', {
       ],
       startedCourses: [
         {
-          id: 2,
-          name: "Курс по TypeScript",
-          desc: "Самый современный курс по TypeScript",
-          cover: "https://edwica.ru/uploads/images/course/17016/preview-course_cover.png",
-          school_id: 2,
-          duration: "8:30",
-          rate: {
-            stars: 4.3,
-            rates: 165
-          },
-          lang: "ru",
-          tags: ["Разработка", "TS", "TypeScript"],
-          level: "Middle",
+          id: 2
         }
       ],
-      startedLessons: [],
+      startedLessons: [
+        
+      ],
       startedQuizes: [],
       services: [
         {
