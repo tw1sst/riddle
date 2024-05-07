@@ -40,9 +40,6 @@ const userStore = useUserStore()
 <style lang="scss" scoped>
 .courses {
   padding: 20px;
-  &__list {
-    margin-top: 20px;
-  }
   &__item {
     display: flex;
     background-color: white;

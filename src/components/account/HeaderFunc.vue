@@ -6,10 +6,14 @@
         name: props.backRouteName,
         params: props.routeParams
       })" 
+      :class="state.scrollTop > 16 ? '' : 'header__item-bordered'"
       class="header__item"/>
   </div>
   <div class="header__center">
-    <div class="header__text">
+    <div v-if="props.hideText && state.scrollTop > 16" class="header__text">
+      {{ props.centerText }}
+    </div>
+    <div v-else-if="!props.hideText" class="header__text">
       {{ props.centerText }}
     </div>
   </div>
@@ -33,7 +37,8 @@ const props = defineProps({
   centerText: String,
   backRouteName: String,
   routeParams: Object,
-  actions: Array
+  actions: Array,
+  hideText: Boolean
 });
 
 const state = reactive({
@@ -57,7 +62,6 @@ onMounted(() => {
   position: fixed;
   width: 100%;
   top: 0;
-  background-color: #efeff3;
   z-index: 100;
   transition: 0.3s;
   & > div {
@@ -87,8 +91,14 @@ onMounted(() => {
     min-width: 80px;
   }
   &__item {
-    height: 22px;
+    height: 30px;
     color: blue;
+    padding: 5px;
+    &-bordered {
+      background-color: white;
+      border-radius: 50%;
+      opacity: 0.7;
+    }
     &:last-child {
       margin: 0 20px;
     }

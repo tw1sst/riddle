@@ -35,8 +35,5 @@ if (route.params?.post) {
 <style scoped lang="scss">
 .post {
   padding-bottom: 20px;
-  &__component {
-    margin-top: -12px;
-  }
 }
 </style>

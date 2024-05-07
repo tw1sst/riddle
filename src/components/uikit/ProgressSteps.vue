@@ -70,7 +70,7 @@ const state = reactive({
 state.percents = (100 / props.steps) - 4
 
 const calcStepRotate = (step) => {
-  let rotate = 0
+  let rotate = 5
   let rotateNum = 360 / props.steps
   for (let i = step; i < props.steps; i++) {
     rotate += rotateNum

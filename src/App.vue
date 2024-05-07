@@ -16,7 +16,7 @@ import Tabbar from "@/components/account/Tabbar.vue"
 
 <style lang="scss" scoped>
 .app {
-  margin: 60px 0 60px 0;
+  margin: 48px 0 60px 0;
   box-sizing: border-box;
   max-width: 1000px;
 }

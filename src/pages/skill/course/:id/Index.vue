@@ -467,7 +467,6 @@ if (route.params?.module) {
     align-items: center;
     padding: 10px 20px;
     background-color: white;
-    margin-top: -12px;
     &-left {
       display: flex;
       align-items: center;

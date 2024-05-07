@@ -1,5 +1,13 @@
 <template>
-<div class="school">
+<div 
+  class="school" 
+  @click="$router.push({ 
+    name: 'SkillSchoolPage', 
+    params: { 
+      id: props.school.id, 
+      school: JSON.stringify(props.school) 
+    } 
+  })">
   <div class="school__head">
     <div class="school__icon">
       <img :src="props.school.icon">
@@ -12,20 +20,8 @@
         {{ props.school.desc }}
       </div>
       <div class="school__info-status">
-        Ученик
+        Подписчик
       </div>
-    </div>
-  </div>
-  
-  <div class="school__progress">
-    <div class="school__progress-item">
-      Курсов: 0/5
-    </div>
-    <div class="school__progress-item">
-      Уроков: 0/20
-    </div>
-    <div class="school__progress-item">
-      Карточек: 0/25
     </div>
   </div>
   
@@ -37,7 +33,6 @@
 const props = defineProps({
   school: Object
 })
-
 </script>
 
 
@@ -52,7 +47,8 @@ const props = defineProps({
     background-color: #f4f4f5;
   }
   &__head {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
   }
   &__icon {
     margin-right: 10px;
@@ -71,25 +67,21 @@ const props = defineProps({
     &-desc {
       font-size: 14px;
       color: #C5C5C5;
+      word-break: break-all;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -moz-box;
+      -moz-box-orient: vertical;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      line-clamp: 2;
+      box-orient: vertical;
     }
     &-status {
       font-size: 14px;
       color: #C5C5C5;
       font-weight: 600;
-    }
-  }
-  &__progress {
-    margin-top: 5px;
-    display: grid;
-    grid-template-columns: auto auto auto;
-    gap: 10px;
-    width: 100%;
-    &-item {
-      border-radius: 5px;
-      background-color: #efeff3;
-      padding: 4px 10px;
-      font-size: 12px;
-      text-align: center;
     }
   }
 }

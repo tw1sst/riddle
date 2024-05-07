@@ -234,7 +234,7 @@ const mainSliderItems = [
 
 <style lang="scss" scoped>
 .skill {
-  padding: 50px 20px 40px 20px;
+  padding: 60px 20px 40px 20px;
   &__continue {
     &-block {
       background-color: white;
