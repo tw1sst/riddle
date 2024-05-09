@@ -252,10 +252,9 @@ const mainSliderItems = [
     }
   }
   &__categories {
-    width: 100vw;
+    width: 105vw;
     height: 46px;
-    margin: 0 -20px;
-    padding: 0 20px;
+    margin: 0 -30px;
   }
   &__slider {
     margin: 0 -20px;

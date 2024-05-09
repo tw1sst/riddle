@@ -206,6 +206,10 @@ const openSeeMore = (story) => {
 
 const categories = [
   {
+    id: null,
+    name: ""
+  },
+  {
     id: 0,
     name: "🔍 Все"
   },
@@ -232,6 +236,10 @@ const categories = [
   {
     id: 6,
     name: "💼 Бизнес"
+  },
+  {
+    id: null,
+    name: ""
   },
 ]
 
@@ -265,10 +273,9 @@ const getNews = () => {
     }
   }
   &__categories {
-    width: 100vw;
+    width: 105vw;
     height: 46px;
-    margin: 0 -20px;
-    padding: 0 20px;
+    margin: 0 -30px;
     background-color: white;
     transition: 0.5s;
     &-sticky {

@@ -2,16 +2,6 @@
 <div class="course">
   <HeaderFunc :centerText="state.course.name" :backRouteName="'SkillHome'" />
   
-  <div class="course__head">
-    <Avatar 
-     :userName="'Riddle School'"
-     :subText="'Новая форма обучения'"
-    />
-    <div class="course__header-right">
-      <span class="material-icons-round">more_horiz</span>
-    </div>
-  </div>
-  
   <div class="course__cover" :style="'background-image: url(' + state.course.cover + ')'">
     
   </div>
@@ -19,16 +9,6 @@
   <div class="course__content">
     <h2 class="course__content-title">{{ state.course.name }}</h2>
     <span class="course__content-badge">Разработка</span>
-    
-    <div class="course__rate">
-      <a-rate disabled allow-half
-        :tooltips="state.course.rate"
-        v-model:value="state.course.rate.stars" />
-      <span>
-        {{ state.course.rate.stars }} 
-        ({{ state.course.rate.rates }})
-      </span>
-    </div>
    
     <div class="course__content-tags">
       <template v-for="tag in state.course.tags">
@@ -51,6 +31,22 @@
         </div>
       </div>
     </div> 
+    
+    <div class="course__school">
+      <Avatar 
+       :userName="'Riddle School'"
+       :subText="'Новая форма обучения'"
+      />
+      <div class="course__school-rate">
+        <a-rate disabled allow-half
+          :tooltips="state.course.rate"
+          v-model:value="state.course.rate.stars" /><br/>
+        <span class="course__school-rateCount">
+          {{ state.course.rate.stars }} 
+          ({{ state.course.rate.rates }} оценок)
+        </span>
+      </div>
+    </div>
   </div>
   
   <div v-if="state.course.modules.length" class="course__content">
@@ -292,6 +288,10 @@ lessonsComplete = lessonsState.filter(lesson => lesson.progressStatus == 'comple
 
 const tabs = [
   {
+    id: null,
+    name: ""
+  },
+  {
     id: 1,
     name: "Описание"
   },
@@ -311,6 +311,10 @@ const tabs = [
     id: 5,
     name: "Обсуждение"
   },
+  {
+    id: null,
+    name: ""
+  }
 ]
 
 state.baseInfoItems = [
@@ -389,17 +393,6 @@ if (route.params?.module) {
      margin-left: 5px;
     }
   }
-  &__rate {
-    margin-bottom: 10px;
-    font-size: 12px;
-    & * {
-      font-size: 16px;
-    }
-    & span {
-      font-size: 14px;
-      margin-left: 5px;
-    }
-  }
   &__progress {
     display: grid;
     grid-template-columns: 1fr auto;
@@ -449,7 +442,7 @@ if (route.params?.module) {
   &__tabs {
     border-radius: 10px 10px 0 0;
     background-color: white;
-    padding: 0 20px;
+    margin: 0 -10px;
     &-content {
       padding: 20px;
       background-color: white;
@@ -461,36 +454,12 @@ if (route.params?.module) {
       align-items: center;
     }
   }
-  &__head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: white;
-    &-left {
-      display: flex;
-      align-items: center;
-    }
-    &-name {
-      font-weight: 600;
-    }
-    &-date {
-      font-size: 12px;
-      color: #C5C5C5;
-    }
-    &-avatar {
-      border-radius: 5px;
-      margin-right: 10px;
-      height: 34px;
-      width: 34px;
-    }
-  }
   &__baseinfo {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     text-align: center;
     background-color: #fff;
-    margin-top: 20px;
+    margin-top: 10px;
     border-radius: 10px;
     &-count {
      padding: 10px 0;
@@ -514,6 +483,26 @@ if (route.params?.module) {
       &:not(:last-child) {
         border-right: 1px solid #fff;
       }
+    }
+  }
+  &__school {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    &-rate {
+      margin-bottom: 10px;
+      font-size: 12px;
+      text-align: right;
+      & * {
+        font-size: 16px;
+      }
+      & span {
+        font-size: 14px;
+        margin-left: 5px;
+      }
+    }
+    &-rateCount {
+      color: #C5C5C5;
     }
   }
   &__content {

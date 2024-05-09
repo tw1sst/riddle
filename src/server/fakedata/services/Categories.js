@@ -1,5 +1,9 @@
 const categories = [
   {
+    id: null,
+    name: ""
+  },
+  {
     id: 0,
     name: "🔥 HOT",
     apps: [
@@ -165,6 +169,10 @@ const categories = [
   {
     id: 6,
     name: "Solana"
+  },
+  {
+    id: null,
+    name: ""
   },
 ]
 

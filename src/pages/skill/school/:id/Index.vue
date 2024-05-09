@@ -29,12 +29,27 @@
   
   <div class="school__info">
     <h3>{{ state.school.name }}</h3>
+    <div class="school__info-sub">
+      <a-button type="primary">
+        Подписаться
+      </a-button>
+      <a-button type="text">
+        1326 подписчиков 
+      </a-button>
+    </div>
     <p class="school__info-desc">
       {{ state.school.desc }} 
     </p>
   </div>
   
-  
+  <a-tabs v-model:activeKey="state.activeSchoolTab"
+    class="school__tabs">
+    <a-tab-pane 
+      class="school__tabs-item"
+      v-for="item in schoolTabs" 
+      :key="item.id" 
+      :tab="item.name" />
+  </a-tabs>
   
 </div>
 </template>
@@ -46,6 +61,7 @@ import { useRoute } from "vue-router";
 import { useUserStore } from '@/stores/UserStore.js'
 
 import { allSchools } from '@/server/fakedata/skill/Schools.js'
+import { allCourses } from '@/server/fakedata/skill/Courses.js'
 import Avatar from '@/components/account/Avatar.vue'
 import HeaderFunc from '@/components/account/HeaderFunc.vue'
 import { GlobeAltIcon, ChatBubbleLeftRightIcon, BuildingStorefrontIcon, BellIcon, HeartIcon } from '@heroicons/vue/24/outline'
@@ -55,6 +71,8 @@ const route = useRoute()
 const state = reactive({
   id: null,
   school: {},
+  activeSchoolTab: "courses",
+  schoolCourses: []
 });
 
 state.school = allSchools.find(x => x.id == route.params.id)
@@ -64,6 +82,41 @@ if (route.params?.school) {
   state.school = JSON.parse(route.params.school)
   state.id = route.params.id
 }
+
+state.schoolCourses = allCourses.filter(x => x.school_id == state.school)
+
+console.log(state.schoolCourses)
+
+const schoolTabs = [
+  {
+    id: "null",
+    name: ""
+  },
+  {
+    id: "courses",
+    name: "Курсы"
+  },
+  {
+    id: "content",
+    name: "Ридлы"
+  },
+  {
+    id: "market",
+    name: "Маркет"
+  },
+  {
+    id: "chat",
+    name: "Общение"
+  },
+  {
+    id: "reviews",
+    name: "Отзывы"
+  },
+  {
+    id: "null",
+    name: ""
+  },
+]
 </script>
 
 
@@ -71,6 +124,12 @@ if (route.params?.school) {
 .school {
   height: 1000px;
   margin-top: -48px;
+  &__tabs {
+    margin: 0 -10px;
+    &-item {
+      padding: 0 20px;
+    }
+  }
   &__cover {
     position: relative;
     display: inline-flex;
@@ -106,9 +165,6 @@ if (route.params?.school) {
       margin-right: 10px;
       overflow: hidden;
     }
-    &-img {
-      
-    }
     &-right {
       display: grid;
       grid-template-columns: auto auto auto auto 1fr;
@@ -132,6 +188,11 @@ if (route.params?.school) {
   }
   &__info {
     padding: 20px;
+    &-sub {
+      margin: 10px 0 20px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
     &-desc {
       color: #C5C5C5;
       margin-top: 10px;
