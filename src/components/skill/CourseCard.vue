@@ -3,7 +3,7 @@
   <div class="card__cover">
     <img class="card__cover-img" :src="state.course.cover">
     <div class="card__cover-text">
-      🎓 Riddle School
+      🎓 {{ state.courseSchool.name }}
     </div>
   </div>
   
@@ -57,23 +57,28 @@
 import { reactive } from "vue";
 import { useUserStore } from '@/stores/UserStore.js'
 import { HeartIcon } from '@heroicons/vue/24/outline'
+import { allSchools } from '@/server/fakedata/skill/Schools.js'
 
 const userStore = useUserStore()
 const props = defineProps({
   course: Object,
-  type: String
+  type: String,
 });
 
 let isCourseStarted = false
 if (userStore.user.startedCourses.find(x => x.id == props.course.id)) isCourseStarted = true
 
 const state = reactive({
-  course: {}
+  course: {},
+  courseSchool: {}
 });
 
 if (Object.keys(props.course).length !== 0) {
   state.course = props.course 
 }
+console.log(state.course.school_id)
+
+state.courseSchool = allSchools.find(x => x.id == state.course?.school_id)
 </script>
 
 

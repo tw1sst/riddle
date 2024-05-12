@@ -2,7 +2,7 @@
 <HeaderFunc 
   :centerText="state.school.name"
   :hideText="true"
-  :backRouteName="'ContentHome'" />
+  :backRouteName="'UserSchools'" />
 
 <div class="school">
   <div class="school__cover">
@@ -28,13 +28,16 @@
   </div>
   
   <div class="school__info">
-    <h3>{{ state.school.name }}</h3>
+    <div class="school__info-name">
+      <h3>{{ state.school.name }}</h3>
+      <span class="school__info-username">@{{ state.school.username }}</span>
+    </div>
     <div class="school__info-sub">
       <a-button type="primary">
         Подписаться
       </a-button>
       <a-button type="text">
-        1326 подписчиков 
+        1 326 подписчиков 
       </a-button>
     </div>
     <p class="school__info-desc">
@@ -51,6 +54,47 @@
       :tab="item.name" />
   </a-tabs>
   
+  <div class="school__content">
+    <div class="school__content-block" v-if="state.activeSchoolTab == 'courses'">
+      <a-input 
+        show-count 
+        :maxlength="50"
+        :bordered="false"
+        class="school__search" 
+        v-model:value="state.search" 
+        placeholder="Найдите нужный курс">
+        <template #prefix>
+          <MagnifyingGlassIcon class="school__search-icon" />
+        </template>
+      </a-input>
+      
+      <div class="school__courses">
+        <CourseCard v-for="course in state.schoolCourses" :course="course" />
+      </div>
+    </div>
+    
+    <div class="school__content-block" v-if="state.activeSchoolTab == 'content'">
+      <a-input 
+        show-count 
+        :maxlength="50"
+        :bordered="false"
+        class="school__search" 
+        v-model:value="state.search" 
+        placeholder="Найдите нужный ридл">
+        <template #prefix>
+          <MagnifyingGlassIcon class="school__search-icon" />
+        </template>
+      </a-input>
+      
+      <div class="school__posts">
+        <div v-for="post in state.schoolPosts" class="school__posts-item">
+          <Post :post="post" />
+        </div>
+      </div>
+    </div>
+ 
+  </div>
+  
 </div>
 </template>
 
@@ -62,9 +106,12 @@ import { useUserStore } from '@/stores/UserStore.js'
 
 import { allSchools } from '@/server/fakedata/skill/Schools.js'
 import { allCourses } from '@/server/fakedata/skill/Courses.js'
+import { allPosts } from '@/server/fakedata/content/Posts.js'
 import Avatar from '@/components/account/Avatar.vue'
+import CourseCard from '@/components/skill/CourseCard.vue'
 import HeaderFunc from '@/components/account/HeaderFunc.vue'
-import { GlobeAltIcon, ChatBubbleLeftRightIcon, BuildingStorefrontIcon, BellIcon, HeartIcon } from '@heroicons/vue/24/outline'
+import Post from "@/components/content/Post.vue"
+import { GlobeAltIcon, ChatBubbleLeftRightIcon, BuildingStorefrontIcon, BellIcon, HeartIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
 
 const userStore = useUserStore()
 const route = useRoute()
@@ -72,7 +119,8 @@ const state = reactive({
   id: null,
   school: {},
   activeSchoolTab: "courses",
-  schoolCourses: []
+  schoolCourses: [],
+  schoolPosts: []
 });
 
 state.school = allSchools.find(x => x.id == route.params.id)
@@ -83,9 +131,9 @@ if (route.params?.school) {
   state.id = route.params.id
 }
 
-state.schoolCourses = allCourses.filter(x => x.school_id == state.school)
+state.schoolCourses = allCourses.filter(x => x.school_id == state.school.id)
 
-console.log(state.schoolCourses)
+state.schoolPosts = allPosts.filter(x => x.school_id == state.school.id)
 
 const schoolTabs = [
   {
@@ -122,13 +170,39 @@ const schoolTabs = [
 
 <style lang="scss" scoped>
 .school {
-  height: 1000px;
   margin-top: -48px;
+  padding-bottom: 20px;
+  &__search {
+    background-color: white;
+    &-icon {
+      height: 20px;
+      margin-right: 5px;
+    }
+  }
   &__tabs {
     margin: 0 -10px;
     &-item {
       padding: 0 20px;
     }
+  }
+  &__content {
+    margin-top: -16px;
+    &-block {
+      padding: 20px;
+    }
+  }
+  &__courses {
+    display: grid;
+    gap: 10px;
+    margin: 20px -10px;
+    grid-template-columns: 1fr 1fr;
+    border-radius: 0 0 10px 10px;
+  }
+  &__posts {
+    margin: 20px -10px;
+    display: grid;
+    grid-direction: rows;
+    gap: 10px;
   }
   &__cover {
     position: relative;
@@ -188,6 +262,15 @@ const schoolTabs = [
   }
   &__info {
     padding: 20px;
+    &-name {
+      display: flex;
+      align-items: center;
+    }
+    &-username {
+      font-size: 14px;
+      margin-left: 10px;
+      color: #C5C5C5;
+    }
     &-sub {
       margin: 10px 0 20px 0;
       display: grid;

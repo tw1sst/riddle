@@ -2,6 +2,7 @@
 <div class="services">
   <div class="services__header">
     <a-input 
+      :bordered="false"
       class="services__search" 
       v-model:value="state.search" 
       placeholder="Найдите DApp или введите ссылку">
@@ -154,6 +155,9 @@ const mainSliderItems = [
 <style lang="scss" scoped>
 .services {
   padding: 10px 20px;
+  &__search {
+    background-color: #efeff3;
+  }
   &__externalApp {
     &-iframe {
       height: 500px;
@@ -248,7 +252,7 @@ const mainSliderItems = [
     left: 0;
     padding: 10px 20px 0 20px;
     &-searchIcon {
-      color: #e6e6e6;
+      color: #C5C5C5;
     }
   }
   &__categories {

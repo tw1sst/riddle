@@ -1,7 +1,14 @@
 <template>
   <div class="post" :class="type == 'swipes' ? 'post__swipe' : ''">
     <div class="post__header">
-      <Avatar 
+      <Avatar
+       @click="$router.push({ 
+         name: 'SkillSchoolPage', 
+         params: { 
+           id: state.postSchool.id, 
+           school: JSON.stringify(state.postSchool) 
+         } 
+       })"
        :userName="state.post.provider"
        :subText="dateConvert(state.post.pubdate)"
       />
@@ -85,6 +92,7 @@
 import { reactive } from "vue";
 import Comments from '@/components/content/Comments.vue'
 import Avatar from '@/components/account/Avatar.vue'
+import { allSchools } from '@/server/fakedata/skill/Schools.js'
 import { HeartIcon, ChatBubbleBottomCenterTextIcon, BookOpenIcon, EyeIcon, EllipsisHorizontalIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
@@ -93,7 +101,8 @@ const props = defineProps({
 });
 
 const state = reactive({
-  post: {}
+  post: {},
+  postSchool: {}
 });
 
 if (Object.keys(props.post).length !== 0) {
@@ -159,6 +168,11 @@ if (Object.keys(props.post).length !== 0) {
       userReaction: ""
     },
   ]
+}
+
+if (state.post.school_id) {
+  state.postSchool = allSchools.find(x => x.id == state.post.school_id)
+  state.post.provider = state.postSchool.name
 }
 
 const getAvatar = (name) => {

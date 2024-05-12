@@ -291,7 +291,7 @@ const allCourses = [
     name: "Курс по Vue 3",
     desc: "Самый современный курс по Vue 3",
     cover: "https://blog.logrocket.com/wp-content/uploads/2023/10/Exploring-advanced-design-patterns-Vue-js.png",
-    schol_id: 2,
+    school_id: 2,
     duration: "6:10",
     rate: {
       stars: 3.8,
