@@ -8,9 +8,9 @@
     :size="props.size || '32'">
     <img :src="getAvatar(props.userName)"
     :style="{
-      'height': props.size + 'px',
-      'width': props.size + 'px',
-      'border-radius': props.border == 'circle' ? '50%' : ''
+      'height': props.size - props.storiesPadding + 'px',
+      'width': props.size - props.storiesPadding + 'px',
+      'border-radius': props.border == 'circle' ? '' : '',
     }"
     class="avatar__img">
   </ProgressSteps>
@@ -18,9 +18,9 @@
   <img :src="getAvatar(props.userName)"
     v-else
     :style="{
-      'height': props.size + 'px',
-      'width': props.size + 'px',
-      'border-radius': props.border == 'circle' ? '50%' : ''
+      'height': props.size - props.storiesPadding + 'px',
+      'width': props.size - props.storiesPadding + 'px',
+      'border-radius': props.border == 'circle' ? '' : '',
     }"
     class="avatar__img">
    
@@ -84,8 +84,10 @@ const getAvatar = (name) => {
   &__img {
     border-radius: 5px;
     height: 32px;
-    widtg: 32px;
+    width: 32px;
     object-fit: cover;
+    overflow: hidden;
+    background-position: center;
   }
   &__info {
     margin-left: 10px;

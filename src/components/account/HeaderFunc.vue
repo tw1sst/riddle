@@ -9,7 +9,10 @@
       :class="state.scrollTop > 16 ? '' : 'header__item-bordered'"
       class="header__item"/>
   </div>
-  <div class="header__center">
+  
+  <slot />
+  
+    <div v-if="props.centerText" class="header__center"> 
     <div v-if="props.hideText && state.scrollTop > 16" class="header__text">
       {{ props.centerText }}
     </div>

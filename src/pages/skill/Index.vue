@@ -3,15 +3,16 @@
 
 <div class="skill">
   <div class="skill__header">
-    <a-input 
-      class="services__search" 
+    <a-input
+      :bordered="false"
+      class="skill__search" 
       v-model:value="state.search" 
       placeholder="Найдите курс, школу или программу тренировок">
       <template #prefix>
         <span class="services__header-searchIcon material-icons-round">search</span>
       </template>
     </a-input>
-    <a-button>
+    <a-button type="text">
       <span class="material-icons-round">tune</span>
     </a-button>
   </div>
@@ -235,6 +236,9 @@ const mainSliderItems = [
 <style lang="scss" scoped>
 .skill {
   padding: 60px 20px 40px 20px;
+  &__search {
+    background-color: #efeff3;
+  }
   &__continue {
     &-block {
       background-color: white;
@@ -275,8 +279,7 @@ const mainSliderItems = [
     padding: 0 20px 10px 20px;
     z-index: 5;
     display: grid;
-    gap: 10px;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr 45px;
     &-filters {
      
     }

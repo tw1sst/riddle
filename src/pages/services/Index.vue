@@ -11,7 +11,7 @@
       </template>
     </a-input><br/>
     
-    <a-tabs v-model:activeKey="activeKey"
+    <a-tabs v-model:activeKey="state.activeType"
       class="services__categories">
       <a-tab-pane 
         class="services__categories-item"
@@ -101,7 +101,7 @@ import { reactive } from "vue";
 import _ from 'lodash';
 
 const state = reactive({
-  activeType: "1",
+  activeType: 0,
   search: "",
   isShowExternalApp: false,
   selectedExternalApp: {}

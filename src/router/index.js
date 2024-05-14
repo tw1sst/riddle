@@ -8,6 +8,7 @@ import AccountProfile from "@/pages/account/:id.vue";
 import AccountInventory from "@/pages/account/Inventory.vue";
 
 import Chat from "@/pages/chat/Index.vue";
+import ChatRoom from "@/pages/chat/:id/Index.vue";
 
 import AutoMarketItem from "@/pages/services/auto/market/:id.vue";
 import AutoMarket from "@/pages/services/auto/market/Index.vue";
@@ -58,6 +59,11 @@ const routes = [
     path: "/chat",
     name: "Chat",
     component: Chat,
+  },
+  {
+    path: "/chat/:id",
+    name: "ChatRoom",
+    component: ChatRoom,
   },
   {
     path: "/login",
