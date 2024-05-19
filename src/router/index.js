@@ -10,13 +10,8 @@ import AccountInventory from "@/pages/account/Inventory.vue";
 import Chat from "@/pages/chat/Index.vue";
 import ChatRoom from "@/pages/chat/:id/Index.vue";
 
-import AutoMarketItem from "@/pages/services/auto/market/:id.vue";
-import AutoMarket from "@/pages/services/auto/market/Index.vue";
-import AutoSearchResult from "@/pages/services/auto/market/SearchResult.vue";
-
 import UserSchools from "@/pages/account/schools/Index.vue";
 import ContentPostPage from "@/pages/content/:id.vue";
-
 
 import Services from "@/pages/services/Index.vue";
 import ServiceNewsSwipe from "@/pages/services/news-swipes/Index.vue";
@@ -31,8 +26,6 @@ import SkillUserCourses from "@/pages/skill/UserCourses.vue";
 
 import ServiceWallet from "@/pages/services/wallet/Index.vue";
 import ServiceKingdom from "@/pages/services/kingdom/Index.vue";
-import ServiceBlooms from "@/pages/services/blooms/Index.vue";
-import ServiceFit from "@/pages/services/fit/Index.vue";
 
 const routes = [
   {
@@ -85,21 +78,6 @@ const routes = [
     name: "ServiceNewsSwipe",
     component: ServiceNewsSwipe,
   },
-  {
-    path: "/auto-market",
-    name: "AutoMarket",
-    component: AutoMarket,
-  },
-  {
-    path: "/auto-market/results",
-    name: "AutoSearchResult",
-    component: AutoSearchResult,
-  },
-  {
-    path: "/auto-market/:id",
-    name: "AutoMarketItem",
-    component: AutoMarketItem,
-  },
   // riddle skill
   {
     path: "/skill",
@@ -146,17 +124,7 @@ const routes = [
     path: "/kingdom",
     name: "ServiceKingdom",
     component: ServiceKingdom,
-  },
-  {
-    path: "/blooms",
-    name: "ServiceBlooms",
-    component: ServiceBlooms,
-  },
-  {
-    path: "/fit",
-    name: "ServiceFit",
-    component: ServiceFit,
-  },
+  }
 ];
 
 const router = createRouter({   

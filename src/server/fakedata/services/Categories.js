@@ -71,20 +71,6 @@ const categories = [
     name: "🚀 Riddle Verse",
     apps: [
       {
-        id: 8,
-        title: "Riddle Fit",
-        desc: "Тренировки и спорт как смысл жизни",
-        icon: "fitness_center",
-        routeName: "ServiceFit",
-      },
-      {
-        id: 7,
-        title: "Riddle Blooms",
-        desc: "Маркетплейс поларков на любой вкус. Цветы, соадости, мягкие игрушки и авторские букеты",
-        icon: "local_florist",
-        routeName: "ServiceBlooms",
-      },
-      {
         id: 6,
         title: "Riddle Kingdom",
         desc: "Зарабатывайте ☘️ и станьте самым умным в королевстве!",
@@ -104,13 +90,6 @@ const categories = [
         desc: "Читайте новости и публикации в удобном формате",
         icon: "swipe",
         routeName: "ServiceNewsSwipe",
-      },
-      {
-        id: 3,
-        title: "Riddle Motors",
-        desc: "Автомобильный маркетплейс",
-        icon: "directions_car",
-        routeName: "AutoMarket",
       },
       {
         id: 4,
