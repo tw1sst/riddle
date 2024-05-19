@@ -10,12 +10,9 @@
   })">
   <div class="chat__head">
     <div class="chat__icon">
-      <img 
-        v-if="props.chat.type == 'bot'" 
-        :src="props.chat.bot.avatar">
       <Avatar 
-         v-else-if="props.chat.type == 'user'"
          :userName="props.chat.user.name"
+         :imageUrl="props.chat.user.avatar"
          :type="'onlyAvatar'"
          :size="58"
          :storiesPadding="4"
@@ -24,10 +21,7 @@
       />
     </div>
     <div class="chat__info">
-      <div v-if="props.chat.type == 'bot'" class="chat__info-name">
-        {{ props.chat.bot.name }}
-      </div>
-      <div v-else-if="props.chat.type == 'user'" class="chat__info-name">
+      <div class="chat__info-name">
         {{ props.chat.user.name }}
       </div>
       
@@ -35,7 +29,7 @@
         
       </div>
       <div class="chat__info-status">
-        {{ props.chat.messages[0].text }}
+        {{ props.chat.messages[0]?.text }}
       </div>
     </div>
   </div>

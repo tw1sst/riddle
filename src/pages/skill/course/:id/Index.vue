@@ -36,6 +36,7 @@
       <Avatar 
        :userName="'Riddle School'"
        :subText="'Новая форма обучения'"
+       :size="38"
       />
       <div class="course__school-rate">
         <a-rate disabled allow-half

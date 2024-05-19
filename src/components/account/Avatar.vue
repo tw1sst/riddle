@@ -1,28 +1,13 @@
 <template>
 <div class="avatar">
   <ProgressSteps 
-    v-if="props.isShowStories"
-    :steps="10"
-    :activeSteps="6" 
-    :padding="props.storiesPadding"
+    :steps="steps"
+    :activeSteps="activeSteps" 
+    :padding="props.storiesPadding || '4'"
     :size="props.size || '32'">
     <img :src="getAvatar(props.userName)"
-    :style="{
-      'height': props.size - props.storiesPadding + 'px',
-      'width': props.size - props.storiesPadding + 'px',
-      'border-radius': props.border == 'circle' ? '' : '',
-    }"
     class="avatar__img">
   </ProgressSteps>
-  
-  <img :src="getAvatar(props.userName)"
-    v-else
-    :style="{
-      'height': props.size - props.storiesPadding + 'px',
-      'width': props.size - props.storiesPadding + 'px',
-      'border-radius': props.border == 'circle' ? '' : '',
-    }"
-    class="avatar__img">
    
   <div v-if="props.type != 'onlyAvatar'" class="avatar__info">
     <div class="avatar__name">
@@ -38,24 +23,26 @@
 
 <script setup>
 import ProgressSteps from '@/components/uikit/ProgressSteps.vue'
+
 const props = defineProps({
   userName: Object,
   subText: String,
   imageUrl: String,
   type: String,
   size: String,
-  border: String,
   storiesPadding: Number,
-  isShowStories: Boolean
+  disabledStories: Boolean
 });
 
-const getAvatar = (name) => {
-  if (props.imageUrl) {
-    return props.imageUrl
-  } else {
-    return "https://ui-avatars.com/api/?name=" + name + "&size=64&color=7F9CF5&background=EBF4FF"
-  }
+const getAvatar = (name) => props.imageUrl ? props.imageUrl : `https://ui-avatars.com/api/?name=${name}&size=64&color=7F9CF5&background=EBF4FF`;
+
+let steps = 1
+let activeSteps = 1
+if (props.disabledStories) {
+  steps = 0
+  activeSteps = 0
 }
+
 </script>
 
 
@@ -83,8 +70,8 @@ const getAvatar = (name) => {
   }
   &__img {
     border-radius: 5px;
-    height: 32px;
-    width: 32px;
+    height: 100%;
+    width: 100%;
     object-fit: cover;
     overflow: hidden;
     background-position: center;

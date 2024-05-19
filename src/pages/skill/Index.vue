@@ -82,7 +82,9 @@
       v-for="user in topAuthors">
       <AccountBlock 
         :userName="user.name"
-        :subText="'Курсов: ' + user.courses"       />
+        :subText="'Курсов: ' + user.courses"
+        :size="38"
+        />
     </div>
   </div><br/>
   

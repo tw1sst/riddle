@@ -42,6 +42,7 @@ import Chat from '@/components/account/chats/Chat.vue'
 
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/UserStore.js'
+import { users } from '@/server/Users.js'
 
 const userStore = useUserStore()
 const router = useRouter()
@@ -51,6 +52,9 @@ const state = reactive({
   search: ""
 })
 
+userStore.user.chats.forEach(chat => {
+  chat.user = users.find(x => x.id == chat.user_id)
+})
 
 const categories = [
   {

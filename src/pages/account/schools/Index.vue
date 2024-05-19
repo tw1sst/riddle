@@ -29,18 +29,12 @@
   </Stories>
 
   <div class="page__stories-item">      
-    <ProgressSteps 
-      :steps="0"
-      :activeSteps="0" 
-      :size="60">
-      <Avatar 
-       :userName="userStore.user.name"
-       :type="'onlyAvatar'"
-       :size="'52'"
-       :border="'circle'"
-      />
-    </ProgressSteps>
-    
+    <Avatar 
+     :userName="userStore.user.name"
+     :type="'onlyAvatar'"
+     :size="56"
+     :disabledStories="true"
+    />
     <div class="page__stories-title">
       Добавить историю
     </div>
@@ -50,12 +44,14 @@
     @click="toggleStory(story, key)"
     class="page__stories-item"> 
     
-    <ProgressSteps 
-      :steps="10"
-      :activeSteps="6" 
-      :size="60">
-      <img :src="story.url" class="page__stories-cover">
-    </ProgressSteps>
+    <div class="page__stories-cover">
+      <Avatar 
+       :userName="userStore.user.name"
+       :type="'onlyAvatar'"
+       :imageUrl="story.url"
+       :size="56"
+      />
+    </div>
   
     <div class="page__stories-title">
       {{ story.title }}
@@ -109,7 +105,6 @@ import Post from "@/components/content/Post.vue"
 import Avatar from '@/components/account/Avatar.vue'
 import DefaultSlide from '@/components/content/stories/DefaultSlide.vue'
 import { useUserStore } from '@/stores/UserStore.js'
-import ProgressSteps from '@/components/uikit/ProgressSteps.vue'
 
 const userStore = useUserStore()
 const router = useRouter()

@@ -2,7 +2,10 @@
   <div class="header">
      <div class="header__account">
        <a-badge>
-        <a-avatar size="middle" :src="logoImg" shape="square">
+        <a-avatar 
+          size="middle" 
+          :src="logoImg" 
+          shape="square">
         </a-avatar>
        </a-badge>
        <div class="header__account-info">
@@ -84,7 +87,9 @@ const menuItems = [
 ]
 
 const userAvatar = "https://ui-avatars.com/api/?name=" + userStore.user.name + "&size=32&color=7F9CF5&background=EBF4FF"
-const logoImg = "https://ui-avatars.com/api/?name=Riddle&size=32&color=FFFFFF&background=EFABFF"
+let logoImg = "https://ui-avatars.com/api/?name=Riddle&size=32&color=FFFFFF&background=EFABFF"
+
+logoImg = "https://i.ibb.co/BTTzpLt/F874-E38-B-2620-4-E93-9750-FB0-A25-A36-BA0.jpg"
 
 const togglePopup = () => {
   state.isShowPopup = !state.isShowPopup

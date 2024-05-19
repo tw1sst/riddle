@@ -9,6 +9,7 @@
            school: JSON.stringify(state.postSchool) 
          } 
        })"
+       :size="38"
        :userName="state.post.provider"
        :subText="dateConvert(state.post.pubdate)"
       />

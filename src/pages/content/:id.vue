@@ -1,34 +1,35 @@
 <template>
 <div v-if="state.post?.title" class="post">
-  <HeaderFunc :centerText="state.post.title" :backRouteName="'ContentHome'" />
+  <HeaderFunc 
+    :centerText="state.post.title" 
+    :backRouteName="'ContentHome'" 
+  />
   
   <div class="post__component">
-    <Post :post="state.post" 
-    :type="'full'"/>
+    <Post 
+      :post="state.post" 
+      :type="'full'"/>
   </div>
 </div>
 </template>
 
 
 <script setup>
-import { ChevronLeftIcon, BookmarkIcon, ShareIcon } from '@heroicons/vue/24/outline'
 import HeaderFunc from '@/components/account/HeaderFunc.vue'
 import { reactive } from "vue";
 import { useRoute } from "vue-router";
-import axios from "axios";
+import { allPosts } from '@/server/fakedata/content/Posts.js'
 import Post from "@/components/content/Post.vue"
-import ActionsBar from "@/components/content/ActionsBar.vue"
 
 const route = useRoute()
 const state = reactive({
-  id: null,
-  post: {},
-});
+  post: {}
+})
 
-if (route.params?.post) {
-  state.post = JSON.parse(route.params.post)
-  state.id   = route.params.id
-}
+state.post = route.params?.post
+  ? JSON.parse(route.params.post)
+  : allPosts.find(x => x.id == route.params.id)
+
 </script>
 
 

@@ -14,37 +14,60 @@ export const useUserStore = defineStore('userStore', {
       chats: [
         {
           id: 1,
-          type: "bot",
-          bot: {
-            name: "RiddleMind Bot",
-            avatar: "https://i.ibb.co/88xT2n5/AB12504-B-22-E4-4-ABC-A62-C-C57-B6-F6-C8-B8-A.jpg"
-          },
+          type: "ls", // group
+          user_id: 2,
+          school_id: null,
           messages: [
             {
               id: 1,
-              from: "user",
+              chat_id: 1,
+              from_user_id: 1,
               replied_msg: null,
               text: "Привет, как дела",
+              date: "18.05.2024 18:30"
+            },
+            {
+              id: 2,
+              chat_id: 1,
+              from_user_id: 2,
+              replied_msg: null,
+              text: "У меня все отлично",
+              date: "18.05.2024 18:35"
+            },
+            {
+              id: 2,
+              chat_id: 1,
+              from_user_id: 2,
+              replied_msg: null,
+              text: "У меня все отлично difjfbfufj fifur irjrnruf y y yyu h r r rtturiejehh uubi hg yggdudubxbccuyh gggyhdbduxuxhdbdhdudhx",
+              date: "18.05.2024 18:36"
+            },
+            {
+              id: 2,
+              chat_id: 1,
+              from_user_id: 1,
+              replied_msg: null,
+              text: "У меня все отлично difjfbfufj fifur irjrnruf y y yyu h r r rtturiejehh uubi hg yggdudubxbccuyh gggyhdbduxuxhdbdhdudhx",
+              date: "18.05.2024 18:38"
             }
           ]
         },
         {
           id: 2,
-          type: "user",
-          user: {
-            id: 1,
-            name: "Денис зорин"
-          },
+          type: "ls", // group
+          user_id: 1,
+          school_id: null,
           messages: [
             {
-              id: 1,
+              id: 2,
+              chat_id: 1,
               from_user_id: 1,
               replied_msg: null,
-              text: "Привет, новый чат",
-              
+              text: "У меня все отлично difjfbfufj fifur irjrnruf y y yyu h r r rtturiejehh uubi hg yggdudubxbccuyh gggyhdbduxuxhdbdhdudhx",
+              date: "18.05.2024 18:38"
             }
           ]
-        }
+        },
       ],
       schools: [
         {

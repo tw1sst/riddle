@@ -1,15 +1,16 @@
 <template>
 <div class="progress">
   <a-progress
-      v-if="props.steps > 20"
-      type="circle"
-      :stroke-color="'#d8d7e1'"
-      :trailColor="'none'"
-      :percent="100"
-      :strokeWidth="4"
-      :size="props.size"
-      class="progress__step"
-    /> 
+    v-if="(props.steps > 20) ||
+    props.steps == 1"
+    type="circle"
+    :stroke-color="'#3ca8e3'"
+    :trailColor="'none'"
+    :percent="100"
+    :strokeWidth="4"
+    :size="props.size"
+    class="progress__step"
+  /> 
     
   <template v-else v-for="step in props.steps">
     <a-progress
@@ -89,7 +90,6 @@ const calcStepRotate = (step) => {
     display: flex;
     align-items: center;
     justify-contents: center;
-    padding: 5px;
     &-item {
       overflow: hidden;
       height: 100%;
