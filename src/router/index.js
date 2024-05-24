@@ -27,6 +27,9 @@ import SkillUserCourses from "@/pages/skill/UserCourses.vue";
 import ServiceWallet from "@/pages/services/wallet/Index.vue";
 import ServiceKingdom from "@/pages/services/kingdom/Index.vue";
 
+import ServiceGallery from "@/pages/services/gallery/Index.vue";
+import ServiceGalleryFolder from "@/pages/services/gallery/:id.vue";
+
 const routes = [
   {
     path: "/",
@@ -77,6 +80,16 @@ const routes = [
     path: "/service/news-swipes",
     name: "ServiceNewsSwipe",
     component: ServiceNewsSwipe,
+  },
+  {
+    path: "/gallery",
+    name: "ServiceGallery",
+    component: ServiceGallery,
+  },
+  {
+    path: "/gallery/:id",
+    name: "ServiceGalleryFolder",
+    component: ServiceGalleryFolder,
   },
   // riddle skill
   {

@@ -1,5 +1,19 @@
 const allPosts = [
   {
+    "id": 4,
+    "school_id": 2,
+    "title": "",
+    "content": "",
+    "tags": "[Finance, News]",
+    "image": "https://static.news.bitcoin.com/wp-content/uploads/2022/01/shutterstock_784244164.jpg",
+    "link": "https://news.bitcoin.com/spain-reduces-atms-numbers-to-2002-levels-as-country-moves-to-digital-payments/",
+    "provider": "News.bitcoin.com",
+    "pubdate": "2022-01-04 14:30",
+    "created_at": "2022-01-04T23:20:36.000000Z",
+    "updated_at": "2022-01-04T23:20:36.000000Z"
+  },
+  
+  {
     "id": 1,
     "school_id": 2,
     "title": "Estonia Clarifies Upcoming Regulations, Will Not Ban Crypto Holding or Trading",

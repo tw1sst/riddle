@@ -57,8 +57,8 @@
           <img :src="item.iconImg" 
             v-if="item.type == 'external'"
             class="services__blocks-img">
-          <div v-else class="services__blocks-icon"><span class="material-icons-round">{{ item.icon }}</span>
-          </div>
+   
+          <component v-else class="services__blocks-icon" :is="item.icon" />
             
           <div class="services__blocks-info">
             <div class="services__blocks-title">
@@ -203,8 +203,7 @@ const mainSliderItems = [
       object-fit: cover;
     }
     &-icon {
-      font-size: 16px;
-      background-color: white;
+      background-color: #efeff3;
       padding: 12px;
       border-radius: 10px;
       display: flex;
@@ -212,6 +211,8 @@ const mainSliderItems = [
       justify-content: center;
       text-align: center;
       color: #EFABFF;
+      width: 50px;
+      height: 50px;
     }
     &-title {
       font-size: 12px;

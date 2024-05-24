@@ -9,18 +9,21 @@
            school: JSON.stringify(state.postSchool) 
          } 
        })"
+       :imageUrl="state.postSchool.icon"
        :size="38"
        :userName="state.post.provider"
-       :subText="dateConvert(state.post.pubdate)"
+       :subText="state.post.pubdate"
       />
+      
       <div class="post__header-right">
         <EllipsisHorizontalIcon style="height: 24px; width: 24px;" />
       </div>
     </div>
     <div class="post__title" 
+      v-if="state.post.title"
       :class="props.type == 'full' ? 'post__content-full' : ''"
       @click="$router.push({ name: 'ContentPostPage', params: { id: state.post.id, post: JSON.stringify(state.post) } })">
-      {{ state.post.title }}
+      {{ state.post?.title }}
     </div>
     
     <template v-if="props.type == 'full'">
@@ -28,14 +31,16 @@
         <img :src="state.post.image">
       </div>
       <div class="post__content" 
+        v-if="state.post.content"
         :class="props.type == 'full' ? 'post__content-full' : ''">
-        {{ state.post.content }}
+        {{ state.post?.content }}
       </div>  
     </template>
     <template v-else>
       <div class="post__content" 
+        v-if="state.post.content"
         :class="props.type == 'full' ? 'post__content-full' : ''">
-        {{ state.post.content }}
+        {{ state.post?.content }}
       </div>  
       <div class="post__image">
         <img :src="state.post.image">
@@ -187,46 +192,6 @@ const postLikeTrigger = () => {
     state.post.likes++
   } else {
     state.post.likes--
-  }
-}
-
-const dateConvert = (date) => {
-  let dates = new Date() 
-  let sDt = dates.getDate()
-  let sDm = dates.getMonth() + 1
-  let sDy = dates.getFullYear()
-
-  let cDate     = date.split(' ')[0]
-  let jDate     = cDate.split('-')[2]
-  let jMonth    = cDate.split('-')[1]
-  let jTime     = date.split(' ')[1]
-  let jTimeThis = Number(sDt) - Number(1)
-  let jYear     = cDate.split('-')[0]
-  let jMont     = ""
-  
-  if(jMonth == '01'){jMont = 'Января'}  
-  if(jMonth == '02'){jMont = 'Февраля'}  
-  if(jMonth == '03'){jMont = 'Марта'}  
-  if(jMonth == '04'){jMont = 'Апреля'}  
-  if(jMonth == '05'){jMont = 'Мая'}  
-  if(jMonth == '06'){jMont = 'Июня'}  
-  if(jMonth == '07'){jMont = 'Июля'}  
-  if(jMonth == '08'){jMont = 'Августа'}  
-  if(jMonth == '09'){jMont = 'Сентября'}  
-  if(jMonth == '10'){jMont = 'Октября'}  
-  if(jMonth == '11'){jMont = 'Ноября'}  
-  if(jMonth == '12'){jMont = 'Декабря'} 
-    
-  if (jYear == sDy) {  
-    if (jDate == sDt) { 
-      return 'Сегодня в ' +jTime
-    } else if (jTimeThis == jDate) {  
-      return 'Вчера в ' +jTime
-    } else { 
-      return jDate+ ' ' +jMont+ ' в ' +jTime
-    }
-  } else { 
-    return jDate+ ' ' +jMont+ ' ' +jYear
   }
 }
 </script>

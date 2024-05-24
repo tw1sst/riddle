@@ -22,7 +22,6 @@ const shouldShowTabbar = computed(() => {
   ]
   return !excludedRoutes.includes(route.name)
 })
-
 </script>
 
 
@@ -30,6 +29,5 @@ const shouldShowTabbar = computed(() => {
 .app {
   margin: 48px 0 60px 0;
   box-sizing: border-box;
-  max-width: 1000px;
 }
 </style>

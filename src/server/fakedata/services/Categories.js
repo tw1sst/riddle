@@ -1,3 +1,5 @@
+import { PhotoIcon, CircleStackIcon, AcademicCapIcon, CursorArrowRippleIcon, BookOpenIcon, WalletIcon } from '@heroicons/vue/24/outline'
+
 const categories = [
   {
     id: null,
@@ -11,7 +13,7 @@ const categories = [
         id: 2,
         title: "Posts Swipe",
         desc: "Читайте новости и публикации в удобном формате",
-        icon: "swipe",
+        icon: CursorArrowRippleIcon,
         routeName: "ServiceNewsSwipe"
       },
       {
@@ -34,14 +36,14 @@ const categories = [
         id: 4,
         title: "Riddle Skill",
         desc: "Обучайтесь новому, совершенствуйте свои навыки, тренируйтесь",
-        icon: "school",
+        icon: AcademicCapIcon,
         routeName: "SkillHome"
       },
       {
         id: 5,
         title: "Wallet",
         desc: "Современный и удобный кошелек для хранения RiddleCoin",
-        icon: "wallet",
+        icon: WalletIcon,
         routeName: "ServiceWallet"
       }
     ]
@@ -54,14 +56,14 @@ const categories = [
         id: 4,
         title: "Riddle Skill",
         desc: "Обучайтесь новому, совершенствуйте свои навыки, тренируйтесь",
-        icon: "school",
+        icon: AcademicCapIcon,
         routeName: "SkillHome",
       },
       {
         id: 5,
         title: "Wallet",
         desc: "Современный и удобный кошелек для хранения RiddleCoin",
-        icon: "wallet",
+        icon: WalletIcon,
         routeName: "ServiceWallet",
       },
     ]
@@ -71,38 +73,45 @@ const categories = [
     name: "🚀 Riddle Verse",
     apps: [
       {
+        id: 7,
+        title: "Riddle Gallery",
+        desc: "Личные проекты и работы AI в одном месте",
+        icon: PhotoIcon,
+        routeName: "ServiceGallery",
+      },
+      {
         id: 6,
         title: "Riddle Kingdom",
         desc: "Зарабатывайте ☘️ и станьте самым умным в королевстве!",
-        icon: "castle", // hive
+        icon: CircleStackIcon,
         routeName: "ServiceKingdom",
       },
       {
         id: 1,
         title: "Ваша Лента",
         desc: "Ваша персональная лента публикаций",
-        icon: "feed",
+        icon: BookOpenIcon,
         routeName: "ContentHome",
       },
       {
         id: 2,
         title: "Posts Swipe",
         desc: "Читайте новости и публикации в удобном формате",
-        icon: "swipe",
+        icon: CursorArrowRippleIcon,
         routeName: "ServiceNewsSwipe",
       },
       {
         id: 4,
         title: "Riddle Skill",
         desc: "Обучайтесь новому, совершенствуйте свои навыки, тренируйтесь",
-        icon: "school",
+        icon: AcademicCapIcon,
         routeName: "SkillHome",
       },
       {
         id: 5,
         title: "Wallet",
         desc: "Современный и удобный кошелек для хранения RiddleCoin",
-        icon: "wallet",
+        icon: WalletIcon,
         routeName: "ServiceWallet",
       },
     ]

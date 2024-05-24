@@ -76,7 +76,6 @@ const state = reactive({
 if (Object.keys(props.course).length !== 0) {
   state.course = props.course 
 }
-console.log(state.course.school_id)
 
 state.courseSchool = allSchools.find(x => x.id == state.course?.school_id)
 </script>

@@ -39,7 +39,7 @@ import { reactive, ref } from 'vue';
 import { useUserStore } from '@/stores/UserStore.js'
 import Avatar from '@/components/account/Avatar.vue'
 import HeaderFunc from '@/components/account/HeaderFunc.vue'
-import { BeakerIcon, AcademicCapIcon } from '@heroicons/vue/24/outline'
+import { ShareIcon, QrCodeIcon, BeakerIcon, AcademicCapIcon } from '@heroicons/vue/24/outline'
 
 const userStore = useUserStore()
 const state = reactive({
@@ -48,13 +48,13 @@ const state = reactive({
 
 const headerActions = [
   {
-    icon: "QrCodeIcon",
+    icon: QrCodeIcon,
     actionName: "",
     routeName: "",
     params: {}
   },
   {
-    icon: "ShareIcon",
+    icon: ShareIcon,
     actionName: "",
     routeName: "",
     params: {}

@@ -81,7 +81,8 @@ state.chat.user = users.find(x => x.id == state.chat.user_id)
     }
     &-item {
       padding: 5px;
-      display: flex;
+      display: inline-block;
+      width: auto;
       max-width: 80%;
       align-items: end;
       juatify-content: end;

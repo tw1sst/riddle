@@ -253,40 +253,6 @@ const getNews = () => {
 }
 // getNews()
 
-
-
-// test api coze
-
-var postData = {
-  "conversation_id": "123",
-  "bot_id": "7367094265379536901",
-  "user": "29032201862555",
-  "query": "нарисуй обложку курса по JS",
-  "stream": false
-};
-
-const headers = {
-  'Content-Type': 'application/json',
-  'Authorization': 'Authorization: Bearer pat_SsDrICaJa3HR1XHMoQ7DrrHOvoAigfZVBuGnz6mAes67tygNu6g20qNNJGuZnDEA',
-  'Accept': '*/*',
-  'Host': 'api.coze.com',
-  'Connection': 'keep-alive',
-}
-
-const getMessage = () => {
-axios.post("https://api.coze.com/open_api/v2/chat", postData, {
-    headers: headers
-  })
-  .then((res) => {
-    console.log(res.data)
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-}
-
-// getMessage()
-
 </script> 
 
 
@@ -307,6 +273,7 @@ axios.post("https://api.coze.com/open_api/v2/chat", postData, {
     margin: 0 -30px;
     background-color: white;
     transition: 0.5s;
+    z-index: 5;
     &-sticky {
       position: fixed;
       top: 35px; 

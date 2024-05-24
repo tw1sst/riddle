@@ -43,6 +43,7 @@
         <Avatar 
           :userName="comment.user.name"
           :subText="dateConvert(comment.date)"
+          :size="32"
         />
         <span class="material-icons-round">more_horiz</span>
       </div>

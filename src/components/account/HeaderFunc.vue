@@ -1,12 +1,12 @@
 <template>
 <div id="header" class="header" :class="state.scrollTop > 16 ? 'header__blur' : ''">
   <div class="header__left">
-    <ChevronLeftIcon 
+    <ArrowLeftIcon 
       @click="$router.push({ 
         name: props.backRouteName,
         params: props.routeParams
       })" 
-      :class="state.scrollTop > 16 ? '' : 'header__item-bordered'"
+      :class="state.scrollTop > 16 ? '' : 'header__item-bordered2'"
       class="header__item"/>
   </div>
   
@@ -21,13 +21,9 @@
     </div>
   </div>
   <div class="header__right">
-    <template v-if="props.actions"
-    v-for="action in props.actions">
-      <QrCodeIcon v-if="action.icon == 'QrCodeIcon'" class="header__item" /> 
-      <ShareIcon v-if="action.icon == 'ShareIcon'" class="header__item" /> 
-      <BookmarkIcon v-if="action.icon == 'BookmarkIcon'" class="header__item" /> 
-    </template>
-    
+    <component v-for="action in props.actions" 
+      class="header__item"
+      :is="action.icon" />
   </div>
 </div>
 </template>
@@ -35,7 +31,7 @@
 
 <script setup>
 import { onMounted, reactive } from "vue";
-import { ChevronLeftIcon, BookmarkIcon, ShareIcon, QrCodeIcon } from '@heroicons/vue/24/outline'
+import { ArrowLeftIcon, ChevronLeftIcon, BookmarkIcon, ShareIcon, QrCodeIcon } from '@heroicons/vue/24/outline'
 const props = defineProps({
   centerText: String,
   backRouteName: String,
@@ -88,22 +84,24 @@ onMounted(() => {
     padding: 0 10px;
   }
   &__left {
-    min-width: 80px;
+    min-width: 60px;
+    display: flex;
+    justify-content: flex-start;
   }
   &__right {
-    min-width: 80px;
+    min-width: 60px;
+    display: flex;
+    justify-content: flex-end;
   }
   &__item {
     height: 30px;
     color: blue;
+    margin: 0 10px;
     padding: 5px;
     &-bordered {
       background-color: white;
       border-radius: 50%;
       opacity: 0.7;
-    }
-    &:last-child {
-      margin: 0 20px;
     }
   }
   &__blur {
