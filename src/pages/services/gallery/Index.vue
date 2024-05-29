@@ -18,8 +18,8 @@
       class="gallery__item" 
       :folder="folder"/>
   </div>
-  
 </div>
+
 </template>
 
 
@@ -53,7 +53,6 @@ const headerActions = [
 
 <style lang="scss" scoped>
 .gallery {
-  min-height: 2000px;
   padding: 10px;
   &__header {
     padding: 10px;

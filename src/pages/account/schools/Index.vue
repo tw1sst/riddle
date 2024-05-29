@@ -75,18 +75,6 @@
       <SchoolItem :school="school" />
     </div>
   </div>
-  
-  <br/>
-   
-  <div class="page__headblock">
-    <h3>Ваши ридлы</h3>
-    <a href="#">Смотреть все</a>
-  </div>
-  <div class="page__posts">
-    <div v-for="post in state.allNews" class="page__posts-item">
-      <Post :post="post" />
-    </div>
-  </div>
 </div>
 </template>
 
@@ -407,12 +395,6 @@ const getNews = () => {
     &-button {
       position: absolute;
       bottom: 20px;
-    }
-  }
-  &__posts {
-    margin-top: 10px;
-    &-item {
-      margin: 0 -10px 10px -10px;
     }
   }
 }

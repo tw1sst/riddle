@@ -19,69 +19,51 @@
         <EllipsisHorizontalIcon style="height: 24px; width: 24px;" />
       </div>
     </div>
-    <div class="post__title" 
-      v-if="state.post.title"
-      :class="props.type == 'full' ? 'post__content-full' : ''"
-      @click="$router.push({ name: 'ContentPostPage', params: { id: state.post.id, post: JSON.stringify(state.post) } })">
-      {{ state.post?.title }}
-    </div>
     
-    <template v-if="props.type == 'full'">
-      <div class="post__image">
-        <img :src="state.post.image">
-      </div>
-      <div class="post__content" 
-        v-if="state.post.content"
-        :class="props.type == 'full' ? 'post__content-full' : ''">
-        {{ state.post?.content }}
-      </div>  
-    </template>
-    <template v-else>
-      <div class="post__content" 
-        v-if="state.post.content"
-        :class="props.type == 'full' ? 'post__content-full' : ''">
-        {{ state.post?.content }}
-      </div>  
-      <div class="post__image">
-        <img :src="state.post.image">
-      </div>
-    </template>
+    <div class="post__content" 
+      v-if="state.post.content"
+      @click="$router.push({ name: 'ContentPostPage', params: { id: state.post.id, post: JSON.stringify(state.post) } })"
+      :class="props.type == 'full' ? 'post__content-full' : ''">
+      {{ state.post?.content }}
+    </div>  
+    <div v-if="state.post.image" class="post__image">
+      <img :src="state.post.image">
+    </div>
     
     <div class="post__actions">
       <div class="post__actions-left">
         <div class="post__actions-item">
-          <EyeIcon style="height: 24px; width: 24px;" />
+          <ArrowPathRoundedSquareIcon style="height: 24px; width: 24px;" />
           <span class="post__actions-count">
             {{ state.post.viewsCount }}
           </span>
         </div>
       </div>
-      <div class="post__actions-right">
-        <div class="post__actions-item">
-          <span class="post__actions-count">
-            {{ state.post.opensCount }}
-          </span>
-          <BookOpenIcon style="height: 24px; width: 24px;" />
-        </div>
-        <div class="post__actions-item">
-          <span class="post__actions-count">
-            {{ state.post.comments.length }}
-          </span>
-         <ChatBubbleBottomCenterTextIcon style="height: 24px; width: 24px;" />
-        </div>
-        <div class="post__actions-item">
-          <span class="post__actions-count"
-            :class="state.post.isLiked ? 'post__actions-liked' : ''">
-            {{ state.post.likesCount }}
-          </span>
-          <HeartIcon v-if="state.post.isLiked" 
-            @click="postLikeTrigger()"
-            style="height: 24px; width: 24px;"
-            class="post__actions-liked" />
-          <HeartIcon v-else 
-            style="height: 24px; width: 24px;"
-            @click="postLikeTrigger()" />
-        </div>
+      
+      <div class="post__actions-item">
+        <span class="post__actions-count">
+          {{ state.post.opensCount }}
+        </span>
+        <BookOpenIcon style="height: 24px; width: 24px;" />
+      </div>
+      <div class="post__actions-item">
+        <span class="post__actions-count">
+          {{ state.post.comments.length }}
+        </span>
+       <ChatBubbleBottomCenterTextIcon style="height: 24px; width: 24px;" />
+      </div>
+      <div class="post__actions-item">
+        <span class="post__actions-count"
+          :class="state.post.isLiked ? 'post__actions-liked' : ''">
+          {{ state.post.likesCount }}
+        </span>
+        <HeartIcon v-if="state.post.isLiked" 
+          @click="postLikeTrigger()"
+          style="height: 24px; width: 24px;"
+          class="post__actions-liked" />
+        <HeartIcon v-else 
+          style="height: 24px; width: 24px;"
+          @click="postLikeTrigger()" />
       </div>
     </div>
   </div>
@@ -99,7 +81,7 @@ import { reactive } from "vue";
 import Comments from '@/components/content/Comments.vue'
 import Avatar from '@/components/account/Avatar.vue'
 import { allSchools } from '@/server/fakedata/skill/Schools.js'
-import { HeartIcon, ChatBubbleBottomCenterTextIcon, BookOpenIcon, EyeIcon, EllipsisHorizontalIcon } from '@heroicons/vue/24/outline'
+import { HeartIcon, ChatBubbleBottomCenterTextIcon, BookOpenIcon, ArrowPathRoundedSquareIcon, EllipsisHorizontalIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
   post: Object,
@@ -207,7 +189,7 @@ const postLikeTrigger = () => {
   box-sizing: border-box;
   width: auto;
   max-width: 100%;
-  padding: 10px 0;
+  padding: 10px 10px 0;
   &__swipe {
    pointer-events: none;
   }
@@ -256,24 +238,28 @@ const postLikeTrigger = () => {
     -moz-box-orient: vertical;
     display: -webkit-box;
     padding: 0 20px;
-    -webkit-line-clamp: 7;
+    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
-    line-clamp: 7;
+    line-clamp: 5;
     box-orient: vertical;
     &-full {
       display: block;
+    }
+  }
+  &__image {
+    padding: 0 20px;
+    max-width: 200px;
+    margin-bottom: 5px;
+    & img {
+      border-radius: 10px;
     }
   }
   &__actions {
     display: flex;
     justify-content: space-between;
     padding: 0 20px;
+    align-items: center;
     color: #C5C5C5;
-    &-right {
-      display: grid;
-      grid-template-columns: auto auto auto;
-      gap: 10px;
-    }
     &-item {
       display: flex;
       align-items: center;

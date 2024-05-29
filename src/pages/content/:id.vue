@@ -36,5 +36,8 @@ state.post = route.params?.post
 <style scoped lang="scss">
 .post {
   padding-bottom: 20px;
+  &__component {
+    margin: 0 -10px;
+  }
 }
 </style>

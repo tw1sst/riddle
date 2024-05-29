@@ -113,7 +113,7 @@ const dateFormat = (date) => {
     gap: 20px;
     align-items: center;
     &-item {
-      border-radius: 10px;
+      border-radius: 5px;
       overflow: hidden;
       opacity: 0.5;
       transition: 0.1s;

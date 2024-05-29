@@ -1,15 +1,23 @@
 <template>
 <HeaderFunc 
   :centerText="state.school.name"
-  :hideText="true"
+  :actions="headerActions"
   :backRouteName="'UserSchools'" />
+<a-tabs v-model:activeKey="state.activeSchoolTab"
+  class="school__tabs">
+  <a-tab-pane 
+    class="school__tabs-item"
+    v-for="item in schoolTabs" 
+    :key="item.id" 
+    :tab="item.name" />
+</a-tabs>
 
 <div class="school">
-  <div class="school__cover">
+  <div v-if="state.activeSchoolTab == 'overview'" class="school__cover">
     <img class="school__cover-img" :src="state.school.cover">
   </div>
   
-  <div class="school__head">
+  <div v-if="state.activeSchoolTab == 'overview'" class="school__head">
     <div class="school__head-avatar">
       <img class="school__header-img" :src="state.school.icon">
     </div>
@@ -27,7 +35,7 @@
     </div>
   </div>
   
-  <div class="school__info">
+  <div v-if="state.activeSchoolTab == 'overview'" class="school__info">
     <div class="school__info-name">
       <h3>{{ state.school.name }}</h3>
       <span class="school__info-username">@{{ state.school.username }}</span>
@@ -44,15 +52,6 @@
       {{ state.school.desc }} 
     </p>
   </div>
-  
-  <a-tabs v-model:activeKey="state.activeSchoolTab"
-    class="school__tabs">
-    <a-tab-pane 
-      class="school__tabs-item"
-      v-for="item in schoolTabs" 
-      :key="item.id" 
-      :tab="item.name" />
-  </a-tabs>
   
   <div class="school__content">
     <div class="school__content-block" v-if="state.activeSchoolTab == 'courses'">
@@ -92,7 +91,14 @@
         </div>
       </div>
     </div>
- 
+    
+    <div v-if="state.activeSchoolTab == 'gallery'" class="school__gallery">   
+      <div class="school__gallery-list">
+        <Item v-for="folder in folders.concat(folders).concat(folders)" 
+          class="school__gallery-item" 
+          :folder="folder"/>
+      </div>
+    </div>
   </div>
   
 </div>
@@ -106,19 +112,21 @@ import { useUserStore } from '@/stores/UserStore.js'
 
 import { allSchools } from '@/server/fakedata/skill/Schools.js'
 import { allCourses } from '@/server/fakedata/skill/Courses.js'
+import { folders } from '@/server/GalleryItems.js'
 import { allPosts } from '@/server/fakedata/content/Posts.js'
 import Avatar from '@/components/account/Avatar.vue'
+import Item from '@/components/services/gallery/Item.vue'
 import CourseCard from '@/components/skill/CourseCard.vue'
 import HeaderFunc from '@/components/account/HeaderFunc.vue'
 import Post from "@/components/content/Post.vue"
-import { GlobeAltIcon, ChatBubbleLeftRightIcon, BuildingStorefrontIcon, BellIcon, HeartIcon, MagnifyingGlassIcon } from '@heroicons/vue/24/outline'
+import { GlobeAltIcon, ChatBubbleLeftRightIcon, BuildingStorefrontIcon, BellIcon, HeartIcon, MagnifyingGlassIcon, StarIcon, ShareIcon } from '@heroicons/vue/24/outline'
 
 const userStore = useUserStore()
 const route = useRoute()
 const state = reactive({
   id: null,
   school: {},
-  activeSchoolTab: "courses",
+  activeSchoolTab: "overview",
   schoolCourses: [],
   schoolPosts: []
 });
@@ -141,12 +149,20 @@ const schoolTabs = [
     name: ""
   },
   {
+    id: "overview",
+    name: "Обзор"
+  },
+  {
     id: "courses",
     name: "Курсы"
   },
   {
     id: "content",
-    name: "Ридлы"
+    name: "Сообщество"
+  },
+  {
+    id: "gallery",
+    name: "Галерея"
   },
   {
     id: "market",
@@ -157,12 +173,23 @@ const schoolTabs = [
     name: "Общение"
   },
   {
-    id: "reviews",
-    name: "Отзывы"
-  },
-  {
     id: "null",
     name: ""
+  },
+]
+
+const headerActions = [
+  {
+    icon: StarIcon,
+    actionName: "",
+    routeName: "",
+    params: {}
+  },
+  {
+    icon: ShareIcon,
+    actionName: "",
+    routeName: "",
+    params: {}
   },
 ]
 </script>
@@ -170,8 +197,7 @@ const schoolTabs = [
 
 <style lang="scss" scoped>
 .school {
-  margin-top: -48px;
-  padding-bottom: 20px;
+  padding: 34px 0 20px;
   &__search {
     background-color: white;
     &-icon {
@@ -180,16 +206,19 @@ const schoolTabs = [
     }
   }
   &__tabs {
+    width: 105vw;
+    height: 46px;
+    position: fixed;
+    background-color: white;
+    z-index: 20;
+    top: 36px;
     margin: 0 -10px;
     &-item {
       padding: 0 20px;
     }
   }
   &__content {
-    margin-top: -16px;
-    &-block {
-      padding: 20px;
-    }
+    margin: 20px;
   }
   &__courses {
     display: grid;
@@ -199,10 +228,22 @@ const schoolTabs = [
     border-radius: 0 0 10px 10px;
   }
   &__posts {
-    margin: 20px -10px;
+    margin: 20px -30px;
     display: grid;
     grid-direction: rows;
     gap: 10px;
+  }
+  &__gallery {
+    margin: 0 -10px;
+    &-list {
+      column-count: 2;
+      grid-gap: 10px;
+    }
+    &-item {
+      display: inline-block;
+      width: 100%;
+      margin-bottom: 15px;
+    }
   }
   &__cover {
     position: relative;

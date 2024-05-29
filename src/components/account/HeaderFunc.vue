@@ -1,5 +1,6 @@
 <template>
-<div id="header" class="header" :class="state.scrollTop > 16 ? 'header__blur' : ''">
+<div id="header" class="header" 
+  :class="state.scrollTop > 16 ? 'header__blur' : '' || props.hideText ? 'header__hide' : 'header__bg'">
   <div class="header__left">
     <ArrowLeftIcon 
       @click="$router.push({ 
@@ -61,8 +62,14 @@ onMounted(() => {
   position: fixed;
   width: 100%;
   top: 0;
-  z-index: 100;
   transition: 0.3s;
+  z-index: 20;
+  &__bg {
+    background-color: white;
+  }
+  &__hide {
+    background-color: none;
+  }
   & > div {
     display: flex;
     align-items: center;
@@ -84,20 +91,21 @@ onMounted(() => {
     padding: 0 10px;
   }
   &__left {
-    min-width: 60px;
+    min-width: 80px;
     display: flex;
+    padding-left: 10px;
     justify-content: flex-start;
   }
   &__right {
-    min-width: 60px;
+    min-width: 80px;
     display: flex;
+    padding-right: 10px;
     justify-content: flex-end;
   }
   &__item {
     height: 30px;
     color: blue;
-    margin: 0 10px;
-    padding: 5px;
+    padding: 5px 10px;
     &-bordered {
       background-color: white;
       border-radius: 50%;
@@ -109,6 +117,7 @@ onMounted(() => {
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     box-shadow: 0 1px 0 0 #c8c7cb;
+    background-color: white;
   }
 }
 </style>
